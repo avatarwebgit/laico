@@ -1,0 +1,48 @@
+:root {
+ --main-color-one: #0b2f9f;
+
+ --main-color-two: #0b2f9f;
+
+ --main-color-three: #98ded9;
+
+ --main-color-four: #c7ffd8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ color: var(--main-color-one);
+}
+
+@media only screen and (max-width: 480px) {
+ :root {
+  --small-pc-padding: 0;
+ }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+ :root {
+  --small-pc-padding: 0;
+ }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+ :root {
+  --small-pc-padding: 1rem;
+ }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1200px) {
+ :root {
+  --small-pc-padding: 6rem;
+ }
+}
+
+@media only screen and (min-width: 1201px) {
+ :root {
+  --small-pc-padding: 6rem;
+ }
+}

@@ -1,12 +1,17 @@
 import React from 'react';
+import Swiper from 'swiper';
 
-import Header from '../components/layout/HorizontalLayout/Header';
+import Carusel from '../components/home/Carousel';
 
 import classes from './Home.module.css';
+import Content from '../components/common/Content';
 const Home = () => {
  return (
-  <div>
-   <Header />
+  <div className={classes.main}>
+   <Carusel />
+   <Content
+    sectionClassname={classes.section}
+    contentClassname={classes.content}></Content>
   </div>
  );
 };

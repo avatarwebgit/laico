@@ -12,7 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 // slices
-import { tokenSlice } from './auth/auth';
+import { tokenSlice } from './auth/authSlice';
 
 // Configuration
 const persistConfig = {
