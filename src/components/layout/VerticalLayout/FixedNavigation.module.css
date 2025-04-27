@@ -1,0 +1,26 @@
+@import url(../../../styles/variables.css);
+
+.main {
+ width: 100%;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 3rem;
+ z-index: 100;
+ display: flex;
+ align-items: center;
+ justify-content: space-evenly;
+ background-color: #000;
+ border-radius: 50px  50px 0px 0;
+}
+
+.svg {
+ color: white !important;
+}
+
+.avatar {
+ margin-right: 10px !important;
+ width: 35px !important;
+ height: 35px !important;
+}
