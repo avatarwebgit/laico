@@ -117,9 +117,8 @@ const Carusel = ({ windowSize }) => {
          </span>
         </div>
        </SwiperSlide>
-      ))}{' '}
+      ))}
       <div className={classes['navigation-wrapper']}>
-       {' '}
        <ArrowButton onClick={goNext} />
        <ArrowButton onClick={goPrev} direction={'right'} />
       </div>

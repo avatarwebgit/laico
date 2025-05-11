@@ -59,7 +59,7 @@ const Header = () => {
          horizontal: 'right',
         }}>
         <IconButton disableRipple={true}>
-         <Basket width={20} height={20} />
+         <Basket width={25} height={25} />
         </IconButton>
        </Badge>
        <Badge
@@ -69,23 +69,23 @@ const Header = () => {
          horizontal: 'right',
         }}>
         <IconButton disableRipple={true}>
-         <Heart width={20} height={20} />
+         <Heart width={25} height={25} />
         </IconButton>
        </Badge>
        <IconButton disableRipple={true}>
-        <Avatar width={20} height={20} />
+        <Avatar width={25} height={25} />
        </IconButton>
        <IconButton disableRipple={true} onClick={handleGoToLogin}>
-        <Login width={20} height={20} />
+        <Login width={25} height={25} />
        </IconButton>
       </div>
      </div>
     </Content>
-    <Content contentClassname={classes['middle-wrapper']}>
-     <div className={classes['middle-wrapper']}>
-      <img src={logo} alt='' width={120} height={80} />
-     </div>
-    </Content>
+    <div className={classes['middle-wrapper']}>
+     <a href='/'>
+      <img src={logo} alt='' width={125} height={80} />
+     </a>
+    </div>
     <Content contentClassname={classes['bottom-wrapper']}>
      <ul className={classes['buttom-wrapper']}>
       <div>
@@ -110,10 +110,15 @@ const Header = () => {
    </header>
    <motion.div
     initial={{ top: 0 }}
-    animate={{ top: scrollY < 100 ? -200 : 0 }}
+    animate={{ top: scrollY < 100 ? -250 : 0 }}
     className={classes['fixed-header']}>
     <Content contentClassname={`${classes['bottom-wrapper']} `}>
      <ul className={classes['buttom-wrapper']}>
+      <li style={{ zIndex: '10' }}>
+       <a href='/'>
+        <img src={logo} alt='' width={80} height={80} />
+       </a>
+      </li>
       <div>
        <li>خانه</li>
        <div className={classes['mega-paper']}></div>

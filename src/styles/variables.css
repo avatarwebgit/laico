@@ -6,6 +6,17 @@
  --main-color-three: #98ded9;
 
  --main-color-four: #c7ffd8;
+ --main-color-four-shadow: #e0ffe9;
+
+ --color-red: #ff5151;
+
+ --main-color-5: #cefbf9;
+ --main-color-5-shadow: rgb(241, 255, 254);
+
+ --text-grey: rgb(44, 44, 44);
+
+ 
+ --color-grey-1:#e7eeef;
 }
 
 h1,
@@ -14,7 +25,7 @@ h3,
 h4,
 h5,
 h6 {
- color: var(--main-color-one);
+ color: #373737;
 }
 
 @media only screen and (max-width: 480px) {

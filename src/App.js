@@ -11,12 +11,13 @@ import MobileHeader from './components/layout/VerticalLayout/Header';
 import FixedNavigation from './components/layout/VerticalLayout/FixedNavigation';
 
 import './App.css';
+import Footer from './components/layout/VerticalLayout/Footer';
 function App() {
  const isVertical = useIsVertical();
  const location = useLocation();
  const currentPath = location.pathname;
 
- const hideHeadersOnDesktop = ['/login', '/register', '/some-other-page'];
+ const hideHeadersOnDesktop = ['/login', '/register'];
 
  const shouldShowHeader = !(
   !isVertical && hideHeadersOnDesktop.includes(currentPath)
@@ -34,6 +35,7 @@ function App() {
      return <Route path={route.path} element={route.element} key={id} />;
     })}
    </Routes>
+   <Footer />
   </Suspense>
  );
 }
