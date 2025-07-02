@@ -22,9 +22,21 @@
 }
 
 @media only screen and (max-width: 480px) {
+    .wrapper,.content{
+        padding: 0;
+    }
+    .wrapper{
+        border-width:10px 20px ;
+    }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
+    .wrapper,.content{
+        padding: 0;
+    }
+    .wrapper{
+        border-width:10px 20px ;
+    }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {

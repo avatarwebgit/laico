@@ -9,7 +9,26 @@ import Brands from '../components/home/Brands';
 
 import classes from './Home.module.css';
 import 'swiper/css';
+import HeroBanner from '../components/home/HeroBanner';
 
+const mainBreakpoints = {
+ 320: {
+  slidesPerView: 1,
+  spaceBetween: 10,
+ },
+ 640: {
+  slidesPerView: 2,
+  spaceBetween: 10,
+ },
+ 768: {
+  slidesPerView: 3,
+  spaceBetween: 10,
+ },
+ 1023: {
+  slidesPerView: 3,
+  spaceBetween: 10,
+ },
+};
 const breakpoints = {
  320: {
   slidesPerView: 1,
@@ -116,13 +135,14 @@ const Home = () => {
      <ProductBox />,
     ]}
     slidesPerView={3}
-    breakpoints={breakpoints}
-    spaceBetween={40}
+    breakpoints={mainBreakpoints}
+    spaceBetween={60}
     autoplay={false}
    />
    <Banner />
    <Tabs items={items} title={' همه محصولات'} />
    <Brands />
+   <HeroBanner />
   </div>
  );
 };
