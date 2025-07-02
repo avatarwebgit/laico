@@ -16,6 +16,7 @@ const Slider = ({
  contentClassName = classes.content,
  swiperClassName,
  navigation = true,
+ centerSlides = false,
  autoplay = {
   delay: 5000,
   disableOnInteraction: false,
@@ -71,6 +72,7 @@ const Slider = ({
      modules={[Navigation, Autoplay]}
      className={swiperClassName}
      ref={swiperRef}
+     centeredSlides={centerSlides}
      navigation={{
       nextEl: nextButtonRef.current,
       prevEl: prevButtonRef.current,

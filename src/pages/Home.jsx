@@ -7,9 +7,10 @@ import Tabs from '../components/home/Tabs';
 import ProductBox from '../components/common/ProductBox';
 import Brands from '../components/home/Brands';
 
-import classes from './Home.module.css';
 import 'swiper/css';
 import HeroBanner from '../components/home/HeroBanner';
+import HomeBlogs from '../components/home/HomeBlogs';
+import classes from './Home.module.css';
 
 const mainBreakpoints = {
  320: {
@@ -143,6 +144,7 @@ const Home = () => {
    <Tabs items={items} title={' همه محصولات'} />
    <Brands />
    <HeroBanner />
+   <HomeBlogs />
   </div>
  );
 };

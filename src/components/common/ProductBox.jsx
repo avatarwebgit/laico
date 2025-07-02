@@ -28,7 +28,7 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
    onMouseEnter={() => setIsHovered(true)}
    onMouseLeave={() => setIsHovered(false)}>
    <div className={classes['image-wrapper']}>
-    <Link>
+    <Link to={'/product/1736236632/378'}>
      <img src={img} alt={alt} />
     </Link>
    </div>

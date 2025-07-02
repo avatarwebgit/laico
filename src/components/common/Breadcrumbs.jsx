@@ -1,11 +1,4 @@
-import React from 'react';
-import {
- Breadcrumbs as MuiBreadcrumbs,
- Typography,
- Link,
- Skeleton,
-} from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Link, Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
 
 // prop structure:
 // [ { pathname:'',url:'' }, {pathname:'',url:'' } ]
@@ -18,7 +11,7 @@ const Breadcrumbs = ({ linkDataProp }) => {
    sx={{
     marginBottom: '1rem',
     width: '100%',
-    direction: lng === 'fa' ? 'rtl' : 'ltr',
+    direction: 'rtl',
    }}>
    {linkDataProp.map((el, index) => {
     if (index === linkDataProp.length - 1) return;

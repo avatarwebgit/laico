@@ -10,6 +10,7 @@
  --main-color-four-shadow: #e0ffe9;
 
  --color-red: #ff5151;
+ --color-red-dark: #ff1d1d;
 
  --main-color-5: #cefbf9;
  --main-color-5-shadow: rgb(241, 255, 254);
@@ -18,6 +19,7 @@
 
  --color-grey-1: #e7eeef;
  --color-grey-2: rgb(247, 248, 249);
+
  --main-color-1: #161d6f;
  --main-color-2: #0b2f9f;
  --main-color-3: #98ded9;
@@ -28,6 +30,9 @@
  --color-black-1: #272727;
 
  --icon-size-sm: 25px;
+
+ --title-font: 18px;
+ --caption-font: 15px;
 }
 
 h1,

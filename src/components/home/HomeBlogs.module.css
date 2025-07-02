@@ -1,0 +1,12 @@
+.blogs {
+}
+
+.section {
+ padding: 100px 0;
+}
+
+@media screen and (max-width: 768px) {
+ .section {
+  padding-top: 0;
+ }
+}
