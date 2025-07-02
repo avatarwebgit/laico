@@ -11,7 +11,7 @@
 }
 
 html {
-  scrollbar-gutter: stable;
+ scrollbar-gutter: stable;
 }
 
 .css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root {
@@ -25,4 +25,64 @@ html {
 .css-2jtc7m-MuiFormControl-root-MuiTextField-root
  .MuiInputLabel-root.Mui-focused {
  margin-right: 15px !important;
+}
+
+.css-2ao5rv-MuiBadge-badge {
+ top: 30px !important;
+ right: 10px !important;
+ font-size: 10px !important;
+ background-color: #fff !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ min-width: 0 !important;
+}
+
+.MuiBreadcrumbs-li {
+ display: flex !important;
+}
+
+.ant-tabs-tab {
+ margin: 0 0 0 32px !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn {
+ text-shadow: 0 0 0.25px currentcolor;
+ position: relative;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-btn:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-remove:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab-btn:active,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-remove:active {
+ color: #373737 !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-focus
+ .ant-tabs-tab-btn,:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab:hover,:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+ color: #373737 !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn::after {
+ content: '';
+ bottom: 25%;
+ position: absolute;
+ left: 50%;
+ transform: translateX(-50%);
+ width: 100%;
+ height: 8px;
+ background-color: #ffb9b9;
+ z-index: -1;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-ink-bar {
+ display: none !important;
 }

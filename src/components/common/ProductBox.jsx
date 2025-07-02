@@ -42,8 +42,8 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
      variants={buttonVariants}
      animate={isHovered ? 'containerHover' : 'visible'}
      transition={{ type: 'tween', duration: 0.25, delay: 0 }}>
-     <IconButton className={classes.button}>
-      <Eye width={20} height={20} />
+     <IconButton className={classes.button} disableRipple>
+      <Eye width={25} height={25} />
      </IconButton>
     </motion.div>
     {isLiked ? (
@@ -52,8 +52,8 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
       variants={buttonVariants}
       animate={isHovered ? 'containerHover' : 'visible'}
       transition={{ type: 'tween', duration: 0.25, delay: 0.1 }}>
-      <IconButton className={classes.button}>
-       <RedHeart width={20} height={20} />
+      <IconButton className={classes.button} disableRipple>
+       <RedHeart width={25} height={25} />
       </IconButton>
      </motion.div>
     ) : (
@@ -62,8 +62,8 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
       variants={buttonVariants}
       animate={isHovered ? 'containerHover' : 'visible'}
       transition={{ type: 'tween', duration: 0.25, delay: 0.1 }}>
-      <IconButton className={classes.button}>
-       <Heart width={20} height={20} />
+      <IconButton className={classes.button} disableRipple>
+       <Heart width={25} height={25} />
       </IconButton>
      </motion.div>
     )}
@@ -72,8 +72,8 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
      variants={buttonVariants}
      animate={isHovered ? 'containerHover' : 'visible'}
      transition={{ type: 'tween', duration: 0.25, delay: 0.2 }}>
-     <IconButton className={classes.button}>
-      <Chart width={20} height={20} />
+     <IconButton className={classes.button} disableRipple>
+      <Chart width={25} height={25} />
      </IconButton>
     </motion.div>
    </div>
@@ -82,7 +82,7 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
     variants={buttonVariants}
     animate={isHovered ? 'shopButton' : 'visible'}
     transition={{ type: 'tween', duration: 0.5, delay: 0 }}>
-    <IconButton className={classes['shop-button']}>
+    <IconButton className={classes['shop-button']} disableRipple>
      افزودن به سبد خرید
     </IconButton>
    </motion.div>

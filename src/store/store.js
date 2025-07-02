@@ -12,7 +12,10 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 // slices
-import { tokenSlice } from './auth/authSlice';
+import tokenSlice from './auth/authSlice';
+import drawerSlice from './drawer/drawerSlice';
+import favoriteSlice from './favorites/favoriteSlice';
+import cartSlice from './cart/cartSlice';
 
 // Configuration
 const persistConfig = {
@@ -22,7 +25,10 @@ const persistConfig = {
 };
 
 const rootReducer = {
- tokenStore: tokenSlice.reducer,
+ userStore: tokenSlice.reducer,
+ cartStore: cartSlice.reducer,
+ favoriteStore: favoriteSlice.reducer,
+ drawerStore: drawerSlice.reducer,
 };
 
 const persistedReducer = persistReducer(

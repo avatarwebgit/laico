@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Badge, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Content from '../../common/Content';
 
-import { ReactComponent as Avatar } from '../../../assets/svgs/user.svg';
+import logo from '../../../assets/images/Logo.png';
+import { ReactComponent as Basket } from '../../../assets/svgs/add_basket.svg';
 import { ReactComponent as Heart } from '../../../assets/svgs/heart-svg.svg';
 import { ReactComponent as Login } from '../../../assets/svgs/login.svg';
-import { ReactComponent as Basket } from '../../../assets/svgs/add_basket.svg';
-import logo from '../../../assets/images/Logo.png';
+import { ReactComponent as Avatar } from '../../../assets/svgs/user.svg';
 
 import { useNavigation } from '../../../utils/helperFucntions';
 
-import classes from './Header.module.css';
+import '../../../styles/common.css';
 import Search from '../../common/Search';
+import classes from './Header.module.css';
 const Header = () => {
  const [scrollY, setScrollY] = useState(0);
- const token = useSelector(state => state.tokenStore.token);
+ const token = useSelector(state => state.userStore.token);
+
+ let height,
+  width = '20px';
 
  const { navigateTo } = useNavigation();
 
@@ -59,7 +63,7 @@ const Header = () => {
          horizontal: 'right',
         }}>
         <IconButton disableRipple={true}>
-         <Basket width={25} height={25} />
+         <Basket className='icon-normal' />
         </IconButton>
        </Badge>
        <Badge
@@ -69,21 +73,21 @@ const Header = () => {
          horizontal: 'right',
         }}>
         <IconButton disableRipple={true}>
-         <Heart width={25} height={25} />
+         <Heart className='icon-normal' />
         </IconButton>
        </Badge>
        <IconButton disableRipple={true}>
-        <Avatar width={25} height={25} />
+        <Avatar className='icon-normal' />
        </IconButton>
        <IconButton disableRipple={true} onClick={handleGoToLogin}>
-        <Login width={25} height={25} />
+        <Login className='icon-normal' />
        </IconButton>
       </div>
      </div>
     </Content>
     <div className={classes['middle-wrapper']}>
      <a href='/'>
-      <img src={logo} alt='' width={125} height={80} />
+      <img src={logo} alt='' width={95} height={80} />
      </a>
     </div>
     <Content contentClassname={classes['bottom-wrapper']}>

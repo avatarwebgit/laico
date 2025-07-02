@@ -1,15 +1,3 @@
-.main {
-}
-
-.section {
-}
-
-.content {
-}
-
-.most-sales-swiper {
-}
-
 h2 {
  width: 100%;
  text-align: center;
@@ -24,4 +12,10 @@ h2 {
  margin-top: 30px;
  z-index: 10000;
  justify-content: flex-end;
+}
+
+
+.swiper-slide-wrapper{
+    display: flex;
+    justify-content: center;
 }

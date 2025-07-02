@@ -7,11 +7,11 @@ import classes from './Banner.module.css';
 const Banner = () => {
  return (
   <Content>
-   <div className={classes['wrapper']}>
-    <div className={classes['content']}>
-     <p ># استایل جدید</p>
-     <h3 >نرمه</h3>
-     <a >بخر</a>
+   <div className={classes.wrapper}>
+    <div className={classes.content}>
+     <p># استایل جدید</p>
+     <h3>نرمه</h3>
+     <a>بخر</a>
     </div>
     <figure className={classes['image']}>
      <img src={image} alt='' />

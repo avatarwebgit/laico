@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Search as MUISearch, Menu } from '@mui/icons-material';
-import { Box, Drawer as MuiDrawer, IconButton, Input } from '@mui/material';
+import { Box, IconButton, Input, Drawer as MuiDrawer } from '@mui/material';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 import close from '../../../assets/svgs/close.svg';
 
-// import Search from '../components/Search';
-import MobileDrawerList from './MobileDrawerList';
 import Logo from '../../../assets/images/Logo.png';
+import MobileDrawerList from './MobileDrawerList';
 
 import classes from './Header.module.css';
+import '../../../styles/common.css';
 const MobileHeader = () => {
  const [drawerOpen, setDrawerOpen] = useState(false);
  const isHomePage = true;
@@ -62,7 +62,18 @@ const MobileHeader = () => {
     </div>
    </motion.span>
    <img src={Logo} alt='' width={70} height={70} />
-   <div>O</div>
+   <div className='dn'>
+    <IconButton onClick={() => closeDrawer(true)}>
+     <Menu
+      className={classes.card_icons}
+      sx={{
+       width: '25px',
+       height: '25px',
+       color: isHomePage ? '#000000 !important' : '#ffffff !important',
+      }}
+     />
+    </IconButton>
+   </div>
   </div>
  );
 };

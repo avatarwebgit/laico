@@ -24,10 +24,6 @@ hr {
  font-size: xx-small;
 }
 
-.left > * + * {
- margin-left: 8px;
-}
-
 .wrapper-top {
  background-color: var(--color-grey-1);
 }
@@ -136,7 +132,7 @@ hr {
  display: flex;
  position: fixed;
  background-color: var(--color-grey-1);
- z-index: 10000;
+ z-index: 100000;
  width: 100%;
 }
 

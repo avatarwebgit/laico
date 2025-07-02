@@ -1,14 +1,14 @@
-import React, { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
-import { authRoutes, publicRoutes } from './routes/index';
 import { useIsVertical } from './hooks/useIsVertical';
+import { authRoutes, publicRoutes } from './routes/index';
 
 import Loader from './components/common/Loader';
 
 import Header from './components/layout/HorizontalLayout/Header';
-import MobileHeader from './components/layout/VerticalLayout/Header';
 import FixedNavigation from './components/layout/VerticalLayout/FixedNavigation';
+import MobileHeader from './components/layout/VerticalLayout/Header';
 
 import './App.css';
 import Footer from './components/layout/VerticalLayout/Footer';
@@ -19,13 +19,13 @@ function App() {
 
  const hideHeadersOnDesktop = ['/login', '/register'];
 
- const shouldShowHeader = !(
+ const shouldHideHeader = !(
   !isVertical && hideHeadersOnDesktop.includes(currentPath)
  );
 
  return (
   <Suspense fallback={<Loader />}>
-   {shouldShowHeader && (isVertical ? <MobileHeader /> : <Header />)}
+   {shouldHideHeader && (isVertical ? <MobileHeader /> : <Header />)}
    {isVertical && <FixedNavigation />}
    <Routes className='App'>
     {authRoutes.map((route, id) => {
@@ -35,7 +35,7 @@ function App() {
      return <Route path={route.path} element={route.element} key={id} />;
     })}
    </Routes>
-   <Footer />
+   {shouldHideHeader && <Footer />}
   </Suspense>
  );
 }

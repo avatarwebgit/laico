@@ -16,7 +16,7 @@ const FixedNavigation = () => {
 
  const token = useSelector(state => state.userStore.token);
  const cart = useSelector(state => state.cartStore);
- const favorits = useSelector(state => state.favoriteStore.products);
+//  const favorits = useSelector(state => state.favoriteStore.products);
 
  const handleOpenCart = () => {
   //   dispatch(drawerActions.open());
@@ -47,7 +47,7 @@ const FixedNavigation = () => {
 
    <IconButton>
     <Badge
-     badgeContent={favorits?.length || 0}
+    //  badgeContent={favorits?.length || 0}
      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
      <Heart width={'35px'} height={'35px'} className={classes.svg} />
     </Badge>

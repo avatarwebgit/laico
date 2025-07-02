@@ -8,11 +8,11 @@
  right: 0;
  height: 3rem;
  z-index: 100;
- display: flex;
+ display: none;
  align-items: center;
  justify-content: space-evenly;
  background-color: #000;
- border-radius: 50px  50px 0px 0;
+ border-radius: 50px 50px 0px 0;
 }
 
 .svg {
@@ -23,4 +23,16 @@
  margin-right: 10px !important;
  width: 35px !important;
  height: 35px !important;
+}
+
+@media only screen and (max-width: 480px) {
+ .main {
+  display: flex;
+ }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+ .main {
+  display: flex;
+ }
 }

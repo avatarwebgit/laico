@@ -15,4 +15,5 @@ export const tokenSlice = createSlice({
  },
 });
 const tokenActions = tokenSlice.actions;
-export default tokenActions;
+
+export default tokenSlice;

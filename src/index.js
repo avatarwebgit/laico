@@ -1,18 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store, persistor } from './store/store';
-import { PersistGate } from 'redux-persist/integration/react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'; // Correct import
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
  PersistQueryClientProvider,
  persistQueryClient,
 } from '@tanstack/react-query-persist-client';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'; // Correct import
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ReactDOM from 'react-dom/client';
+import { I18nextProvider } from 'react-i18next';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './App';
+import './index.css';
+import { persistor, store } from './store/store';
+import i18next from './utils/i18next';
 
 const queryClient = new QueryClient({
  defaultOptions: {
@@ -43,7 +44,9 @@ root.render(
       client={queryClient}
       persistOptions={{ persister }}>
       <QueryClientProvider client={queryClient}>
-       <App />
+       <I18nextProvider i18n={i18next}>
+        <App />
+       </I18nextProvider>
       </QueryClientProvider>
      </PersistQueryClientProvider>
     </BrowserRouter>

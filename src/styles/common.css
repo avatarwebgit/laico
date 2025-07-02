@@ -1,8 +1,30 @@
 :root {
- --main-color-1: #161D6F;
- --main-color-2: #0B2F9F;
- --main-color-3: #98DED9;
- --main-color-4: #C7FFD8;
+ --main-color-1: #161d6f;
+ --main-color-2: #0b2f9f;
+ --main-color-3: #98ded9;
+ --main-color-4: #c7ffd8;
 
- --color-grey-1:#e7eeef;
+ --color-grey-1: #e7eeef;
+
+ --color-black-1: #272727;
+
+ --icon-size-sm: 25px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ color: #373737;
+}
+
+.icon-normal {
+ width: var(--icon-size-sm) !important;
+ height: var(--icon-size-sm) !important;
+}
+
+.dn {
+ visibility: hidden;
 }

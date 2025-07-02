@@ -4,7 +4,7 @@ import Arrow from '../../assets/svgs/arrow.svg';
 
 import classes from './ArrowButton.module.css';
 import { transform } from 'lodash';
-const ArrowButton = ({ children, direction, onClick }) => {
+const ArrowButton = ({ children, direction, onClick, className }) => {
  const returnDirection = () => {
   if (direction === 'right') return 'rotate(180deg)';
   if (direction === 'top') return 'rotate(90deg)';
@@ -12,7 +12,7 @@ const ArrowButton = ({ children, direction, onClick }) => {
   else return;
  };
  return (
-  <button className={classes.main} onClick={onClick}>
+  <button className={`${classes.main} ${className}`} onClick={onClick}>
    <img
     src={Arrow}
     style={{ transform: returnDirection() }}

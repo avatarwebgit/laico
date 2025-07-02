@@ -1,5 +1,6 @@
 :root {
  --main-color-one: #0b2f9f;
+ --primary: #0b2f9f;
 
  --main-color-two: #0b2f9f;
 
@@ -15,8 +16,7 @@
 
  --text-grey: rgb(44, 44, 44);
 
- 
- --color-grey-1:#e7eeef;
+ --color-grey-1: #e7eeef;
 }
 
 h1,

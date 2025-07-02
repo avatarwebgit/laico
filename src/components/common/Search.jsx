@@ -11,7 +11,7 @@ import search_black from '../../assets/svgs/search.svg';
 import SearchResult from './SearchResult';
 
 import classes from './Search.module.css';
-const Search = ({ isHomePage=true }) => {
+const Search = ({ isHomePage = true }) => {
  const [isFullSize, setIsFullSize] = useState(false);
  const [searchQuery, setSearchQuery] = useState('');
  const [searchTerm, setSearchTerm] = useState('');

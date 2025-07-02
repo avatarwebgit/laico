@@ -1,0 +1,31 @@
+@import url(../../styles/variables.css);
+
+.brands {
+}
+
+.wrapper {
+ display: flex;
+ background-color: var(--main-color-5-shadow);
+ border: solid var(--main-color-5-shadow);
+ border-width: 25px 45px;
+ width: 100%;
+ height: fit-content;
+ margin: 100px 0;
+}
+
+.content {
+ width: 100%;
+ padding: 20px 40px;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-around;
+}
+
+@media only screen and (max-width: 480px) {
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+}
