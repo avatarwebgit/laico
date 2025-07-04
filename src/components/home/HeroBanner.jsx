@@ -1,10 +1,9 @@
-import React from 'react';
 
 import img1 from '../../assets/images/1_2.png';
 import img2 from '../../assets/images/best-product-01.png';
 
-import classes from './HeroBanner.module.css';
 import RoundButton from '../common/RoundButton';
+import classes from './HeroBanner.module.css';
 const HeroBanner = () => {
  return (
   <div className={classes['hero-banner']}>

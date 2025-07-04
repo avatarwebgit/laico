@@ -17,14 +17,14 @@
  align-items: center;
  justify-content: center;
  position: absolute;
- left: 0;
+ left: 0; cursor: pointer;
 }
 
 .search_logo {
  width: 50%;
  height: 50%;
  object-fit: contain;
- cursor: pointer;
+
 }
 
 .search_input {
@@ -36,12 +36,7 @@
  width: 100%;
  font-size: 0.5rem;
  transition: all 0.25s;
- padding-left: 2rem;
-}
-
-.search_input::placeholder {
- font-size: 0.5rem;
- margin-right: 10px !important;
+ padding: 0 10px 0 35px;
 }
 
 .backdrop {
@@ -92,3 +87,5 @@
  align-items: center;
  justify-content: center;
 }
+
+

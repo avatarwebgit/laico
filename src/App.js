@@ -5,13 +5,13 @@ import { useIsVertical } from './hooks/useIsVertical';
 import { authRoutes, publicRoutes } from './routes/index';
 
 import Loader from './components/common/Loader';
-
 import Header from './components/layout/HorizontalLayout/Header';
 import FixedNavigation from './components/layout/VerticalLayout/FixedNavigation';
+import Footer from './components/layout/VerticalLayout/Footer';
 import MobileHeader from './components/layout/VerticalLayout/Header';
 
 import './App.css';
-import Footer from './components/layout/VerticalLayout/Footer';
+
 function App() {
  const isVertical = useIsVertical();
  const location = useLocation();

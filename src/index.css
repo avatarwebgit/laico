@@ -24,7 +24,7 @@ html {
 
 .css-2jtc7m-MuiFormControl-root-MuiTextField-root
  .MuiInputLabel-root.Mui-focused {
- margin-right: 15px !important;
+ margin-right: 10px !important;
 }
 
 .css-2ao5rv-MuiBadge-badge {
@@ -65,7 +65,11 @@ html {
 
 :where(.css-dev-only-do-not-override-1261szd).ant-tabs
  .ant-tabs-tab.ant-tabs-tab-focus
- .ant-tabs-tab-btn,:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab:hover,:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+ .ant-tabs-tab-btn,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab:hover,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn {
  color: #373737 !important;
 }
 
@@ -85,4 +89,41 @@ html {
 
 :where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-ink-bar {
  display: none !important;
+}
+
+.css-hvjq6j-MuiFormLabel-root-MuiInputLabel-root {
+ right: 10px !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > div
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > div
+ > .ant-tabs-nav::before {
+ display: none !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > div
+ > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > div
+ > .ant-tabs-nav {
+ margin: 0 !important;
+}
+
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab-btn {
+    font-size: 15px;
+}
+
+.css-1eex93v-MuiTooltip-tooltip{
+    font-size: 15px !important;
 }

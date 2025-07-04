@@ -1,0 +1,16 @@
+.color-section-main {
+ display: flex;
+ flex-direction: column;
+ margin: 20px 0;
+}
+
+.colors-wrapper {
+ display: flex;
+ flex-wrap: wrap;
+}
+
+.title {
+ font-size: var(--title-font);
+ color: var(--color-black-1);
+ margin-bottom: 20px;
+}

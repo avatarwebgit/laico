@@ -15,44 +15,36 @@ import classes from './Home.module.css';
 const mainBreakpoints = {
  320: {
   slidesPerView: 1,
-  spaceBetween: 10,
  },
  640: {
   slidesPerView: 2,
-  spaceBetween: 10,
  },
  768: {
   slidesPerView: 3,
-  spaceBetween: 10,
  },
  1023: {
   slidesPerView: 3,
-  spaceBetween: 10,
  },
 };
 const breakpoints = {
  320: {
   slidesPerView: 1,
-  spaceBetween: 10,
  },
  640: {
   slidesPerView: 2,
-  spaceBetween: 10,
  },
  768: {
   slidesPerView: 4,
-  spaceBetween: 10,
  },
  1024: {
   slidesPerView: 4,
-  spaceBetween: 10,
  },
 };
 
 const items = [
  {
   key: '1',
-  label: 'Tab 1',
+  label: 'تخت‌خواب', // Bed
   children: (
    <Slider
     items={[<ProductBox />, <ProductBox />]}
@@ -65,7 +57,7 @@ const items = [
  },
  {
   key: '2',
-  label: 'Tab 2',
+  label: 'کمد', // Wardrobe
   children: (
    <Slider
     items={[
@@ -84,7 +76,7 @@ const items = [
  },
  {
   key: '3',
-  label: 'Tab 3',
+  label: 'پاتختی', // Nightstand
   children: (
    <Slider
     items={[<ProductBox />]}
@@ -97,7 +89,7 @@ const items = [
  },
  {
   key: '4',
-  label: 'Tab 4',
+  label: 'آینه', // Mirror
   children: (
    <Slider
     items={[<ProductBox />]}
@@ -110,7 +102,46 @@ const items = [
  },
  {
   key: '5',
-  label: 'Tab 5',
+  label: 'فرش', // Carpet/Rug
+  children: (
+   <Slider
+    items={[<ProductBox />]}
+    slidesPerView={4}
+    breakpoints={breakpoints}
+    spaceBetween={30}
+    autoplay={false}
+   />
+  ),
+ },
+ {
+  key: '6',
+  label: 'پرده', // Curtain
+  children: (
+   <Slider
+    items={[<ProductBox />]}
+    slidesPerView={4}
+    breakpoints={breakpoints}
+    spaceBetween={30}
+    autoplay={false}
+   />
+  ),
+ },
+ {
+  key: '7',
+  label: 'چراغ خواب', // Bedside lamp
+  children: (
+   <Slider
+    items={[<ProductBox />]}
+    slidesPerView={4}
+    breakpoints={breakpoints}
+    spaceBetween={30}
+    autoplay={false}
+   />
+  ),
+ },
+ {
+  key: '8',
+  label: 'میز آرایش', // Dressing table
   children: (
    <Slider
     items={[<ProductBox />]}

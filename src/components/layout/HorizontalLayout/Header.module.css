@@ -49,6 +49,7 @@ hr {
  position: sticky;
  z-index: 10;
  padding: 5px 0;
+ padding-left: 8px;
 }
 
 .bottom-wrapper li {
@@ -112,8 +113,8 @@ hr {
 .mega-paper::after {
  content: '';
  position: absolute;
- top: -20px;
- height:50px;
+ top: -30px;
+ height: 30px;
  width: 100%;
 }
 

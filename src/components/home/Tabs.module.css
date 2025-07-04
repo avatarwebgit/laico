@@ -5,8 +5,17 @@
 
 .title {
  position: absolute;
- top: 0;
+ top: 15px;
  left: 0;
+}
+
+.ant-tabs-tab {
+ font-size: var(--title-font);
+ color: var(--caption-grey);
+}
+
+.ant-tabs-nav::before{
+    display: none !important;
 }
 
 @media screen and (max-width: 768px) {

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
-  A11y,
-  FreeMode,
-  Navigation,
-  Pagination,
-  Scrollbar,
-  Thumbs,
+ A11y,
+ FreeMode,
+ Navigation,
+ Pagination,
+ Scrollbar,
+ Thumbs,
 } from 'swiper/modules';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,16 +19,17 @@ import { ReactComponent as Heart } from '../assets/svgs/heart.svg';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import Card from '../components/common/Card';
 import {
-  addToFavorite,
-  getProductDetails,
-  getProductDetailsWithId,
-  removeFromFavorite,
-  sendShoppingCart,
+ addToFavorite,
+ getProductDetails,
+ getProductDetailsWithId,
+ removeFromFavorite,
+ sendShoppingCart,
 } from '../services/api';
 
 import Content from '../components/common/Content';
 import ProductBox from '../components/common/ProductBox';
 
+import Slider from '../components/common/Slider';
 import { cartActions } from '../store/cart/cartSlice';
 import { drawerActions } from '../store/drawer/drawerSlice';
 import { favoriteActions } from '../store/favorites/favoriteSlice';
@@ -42,15 +43,26 @@ import 'swiper/css/thumbs';
 
 import Arrowbutton from '../components/common/ArrowButton';
 
-import ArrowButton from '../components/common/ArrowButton';
 import classes from './Product.module.css';
+import ColorSection from '../components/product/ColorSection';
+
+const colors = [
+ { id: '1', name: 'crimson', color: '#DC143C' },
+ { id: '2', name: 'forest', color: '#228B22' },
+ { id: '3', name: 'midnight', color: '#191970' },
+ { id: '4', name: 'gold', color: '#FFD700' },
+ { id: '5', name: 'orchid', color: '#DA70D6' },
+ { id: '6', name: 'slate', color: '#708090' },
+ { id: '7', name: 'coral', color: '#FF7F50' },
+ { id: '8', name: 'teal', color: '#008080' },
+ { id: '9', name: 'indigo', color: '#4B0082' },
+ { id: '10', name: 'salmon', color: '#FA8072' },
+];
 
 const Product = ({ windowSize }) => {
  const { id, variation } = useParams();
 
- const [zoomStyles, setZoomStyles] = useState({});
  const [detailsData, setDetailsData] = useState(null);
- const [isInViewbox, setIsInViewbox] = useState(false);
  const [quantity, setQuantity] = useState(1);
  const [isFavorite, setIsFavorite] = useState(false);
  const [shape, setShape] = useState('');
@@ -69,9 +81,8 @@ const Product = ({ windowSize }) => {
  const [isMoreThanQuantity, setIsMoreThanQuantity] = useState(false);
 
  const [thumbsSwiper, setThumbsSwiper] = useState(null);
- const [activeIndex, setActiveIndex] = useState(0);
+ const [selectedColor, setSelectedColor] = useState('');
 
- const imageRef = useRef();
  const primaryImg = useRef();
 
  const { t } = useTranslation();
@@ -85,37 +96,12 @@ const Product = ({ windowSize }) => {
  const dispatch = useDispatch();
  const navigate = useNavigate();
 
+ const nexElRef = useRef();
+ const prevElRef = useRef();
+
  useEffect(() => {
   window.scrollTo(0, 0);
  }, []);
-
- const handleMouseMove = e => {
-  if (!detailsData) return;
-  setIsInViewbox(true);
-  const { left, top, width, height } = imageRef.current.getBoundingClientRect();
-
-  const mouseX = e.clientX - left;
-  const mouseY = e.clientY - top;
-
-  const zoomX = (mouseX / width) * 100;
-  const zoomY = (mouseY / height) * 100;
-
-  setZoomStyles({
-   transform: `scale(2)`,
-   transformOrigin: `${zoomX}% ${zoomY}%`,
-   transition: 'transform 0.1s ease-out',
-  });
- };
-
- const handleMouseLeave = () => {
-  if (!detailsData) return;
-  setIsInViewbox(false);
-  setZoomStyles({
-   transform: `scale(1)`,
-   transformOrigin: `center center`,
-   transition: 'transform 0.25s ease-out',
-  });
- };
 
  useEffect(() => {
   const getDetails = async () => {
@@ -162,32 +148,6 @@ const Product = ({ windowSize }) => {
        attr => attr.attribute.name === 'Details',
       )?.value.name_fa,
      );
-    } else {
-     setShape(
-      serverRes.result.product_attributes.find(
-       attr => attr.attribute.name === 'Shape',
-      )?.value.name,
-     );
-     setColor(
-      serverRes.result.product_attributes.find(
-       attr => attr.attribute.name === 'Color',
-      )?.value.name,
-     );
-     setBrand(
-      serverRes.result.product_attributes.find(
-       attr => attr.attribute.name === 'Brand/Mine',
-      )?.value.name,
-     );
-     setCuttingStyle(
-      serverRes.result.product_attributes.find(
-       attr => attr.attribute.name === 'Cutting Style',
-      )?.value.name,
-     );
-     setDetails(
-      serverRes.result.product_attributes.find(
-       attr => attr.attribute.name === 'Details',
-      )?.value.name,
-     );
     }
    }
   };
@@ -200,15 +160,6 @@ const Product = ({ windowSize }) => {
   }
  }, [mainImage, productImages]);
 
- const handleSlideClick = index => {
-  if (primaryImg.current) {
-   primaryImg.current.src = allImages[index];
-  }
-  if (imageRef.current) {
-   imageRef.current.src = allImages[index];
-  }
- };
-
  useEffect(() => {
   if (detailsData) {
    document.title = `Seranoco / ${detailsData.product.name}`;
@@ -220,14 +171,14 @@ const Product = ({ windowSize }) => {
   }
  }, [detailsData]);
 
- //  const handleIncrement = () => {
- //   if (quantity < detailsData.product.quantity) setQuantity(quantity + 1);
- //  };
+ const handleIncrement = () => {
+  if (quantity < detailsData.product.quantity) setQuantity(quantity + 1);
+ };
 
- //  const handleDecrement = () => {
- //   if (quantity === 0) return;
- //   setQuantity(quantity - 1);
- //  };
+ const handleDecrement = () => {
+  if (quantity === 1) return;
+  setQuantity(quantity - 1);
+ };
 
  const handleAddToFavorites = async () => {
   const serverRes = await addToFavorite(token, id, +variation);
@@ -284,13 +235,13 @@ const Product = ({ windowSize }) => {
 
  return (
   <div className={classes.main}>
-   <Card className={classes.main_card}>
+   <Content className={classes.main_card}>
     {detailsData && (
      <Breadcrumbs
       linkDataProp={[
        { pathname: t('home'), url: ' ' },
-       { pathname: t('shop_by_shape'), url: 'shopbyshape' },
-       { pathname: detailsData.product?.name, url: null },
+       { pathname: t('categories'), url: 'category' },
+       { pathname: detailsData.product?.name_fa, url: null },
       ]}
      />
     )}
@@ -299,22 +250,30 @@ const Product = ({ windowSize }) => {
       {detailsData ? (
        <div className={classes['swiper-container']}>
         <div className={classes['navigation-wrapper']}>
-         <Arrowbutton className={classes.prevButton} direction={'right'} />
-         <Arrowbutton className={classes.nextButton} direction={'left'} />
+         <Arrowbutton
+          className={classes.prevButton}
+          ref={prevElRef}
+          direction={'right'}
+         />
+         <Arrowbutton
+          className={classes.nextButton}
+          ref={nexElRef}
+          direction={'left'}
+         />
         </div>
         <Swiper
          modules={[Navigation, Pagination, Scrollbar, A11y, Thumbs, FreeMode]}
          spaceBetween={0}
          slidesPerView={1}
          navigation={{
-          nextEl: `.${classes.nextButton}`,
-          prevEl: `.${classes.prevButton}`,
+          nextEl: nexElRef.current,
+          prevEl: prevElRef.current,
          }}
-         onSlideChange={swiper => {
-          setActiveIndex(swiper.realIndex);
-         }}
-         onSwiper={swiper => {
-          setActiveIndex(swiper.realIndex);
+         onInit={swiper => {
+          swiper.params.navigation.nextEl = nexElRef.current;
+          swiper.params.navigation.prevEl = prevElRef.current;
+          swiper.navigation.init();
+          swiper.navigation.update();
          }}
          thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
@@ -365,6 +324,7 @@ const Product = ({ windowSize }) => {
        />
       )}
      </div>
+
      <div
       className={classes.info}
       style={{ direction: lng === 'fa' ? 'rtl' : 'ltr' }}>
@@ -403,6 +363,12 @@ const Product = ({ windowSize }) => {
        />
       )}
 
+      <ColorSection
+       colors={colors}
+       setColor={setSelectedColor}
+       selectedColor={selectedColor}
+      />
+
       {detailsData ? (
        <Typography
         className={classes.product_serial}
@@ -438,6 +404,7 @@ const Product = ({ windowSize }) => {
         className={classes.product_serial}
        />
       )}
+
       {detailsData && (
        <div className={classes.price_wrapper}>
         <>
@@ -468,75 +435,29 @@ const Product = ({ windowSize }) => {
         </>
        </div>
       )}
+
       {detailsData && (
        <>
         <div className={classes.quantity_wrapper}>
          {detailsData ? (
           <div className={classes.flex}>
            <div className={classes.quantity_total_wrapper}>
-            <Typography
-             className={`${classes.product_serial} ${classes.border}`}
-             color='inherit'
-             href={`/${lng}/shopbyshape`}
-             variant='h3'
-             sx={{ borderRight: '1px solid' }}>
-             {t('quantity')}&nbsp;
-            </Typography>
-            <div className={classes.divider} />
             {variationDetail && (
              <div className={classes.input_wrapper}>
-              <p style={{ textAlign: lng === 'fa' ? 'right' : 'left' }}>
-               {t('quantity')}:
-              </p>
-              <input
-               type='number'
-               value={quantity}
-               onChange={e => {
-                const inputValue = e.target.value.replace(/[^0-9]/g, '');
-                const availableQuantity =
-                 +variationDetail?.product?.variation?.quantity;
-
-                if (
-                 variationDetail?.product?.variation?.is_not_available === 0 &&
-                 availableQuantity > 0
-                ) {
-                 const newQuantity = +inputValue;
-                 if (newQuantity > availableQuantity) {
-                  setIsMoreThanQuantity(true);
-                  setQuantity(availableQuantity);
-                 } else {
-                  setIsMoreThanQuantity(false);
-                  setQuantity(newQuantity);
-                 }
-                } else {
-                 setIsMoreThanQuantity(false);
-                 setQuantity(inputValue);
-                }
-               }}
-               className={classes.quantity_input}
-              />
-              {
-               <p
-                style={{
-                 opacity: `${isMoreThanQuantity ? 1 : 0}`,
-                 color: 'red',
-                 whiteSpace: 'nowrap',
-                }}>
-                {t('availableQuantity')}:
-                {+variationDetail.product.variation.quantity}
-               </p>
-              }
+              <button
+               className={classes['quantity-action-button']}
+               onClick={handleDecrement}>
+               -
+              </button>
+              <div className={classes.quantity}>{quantity}</div>
+              <button
+               className={classes['quantity-action-button']}
+               onClick={handleIncrement}>
+               +
+              </button>
              </div>
             )}
            </div>
-           {/* <span className={classes.btn_wrapper}>
-             <button className={classes.quantity_a_b} onClick={handleIncrement}>
-              +
-             </button>
-             <button className={classes.quantity_a_b} onClick={handleDecrement}>
-              -
-             </button>
-            </span> */}
           </div>
          ) : (
           <Skeleton
@@ -664,69 +585,24 @@ const Product = ({ windowSize }) => {
 
     <Content
      sectionClassname={classes.section}
-     contentClassname={classes['suggest-swiper']} >
+     contentClassname={classes['suggest-swiper']}>
      <h2>پر فروش ترین ها</h2>
-     <Swiper
-      spaceBetween={30}
-      slidesPerView={4}
-      modules={[Navigation]}
-      className={classes['most-sales-swiper']}
-      navigation={{
-       nextEl: `.${classes.suggestionsNext}`,
-       prevEl: `.${classes.suggestionsprev}`,
-      }}
-      onSlideChange={swiper => {
-       setActiveIndex(swiper.realIndex);
-      }}
-      onSwiper={swiper => {
-       setActiveIndex(swiper.realIndex);
-      }}
-      autoplay={{
-       delay: 7000,
-       disableOnInteraction: false,
-       reverseDirection: true,
-      }}
-      loop={true}
-      breakpoints={{
-       320: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-       },
-       640: {
-        slidesPerView: 2,
-        spaceBetween: 10,
-       },
-       768: {
-        slidesPerView: 3,
-        spaceBetween: 10,
-       },
-       1024: {
-        slidesPerView: 4,
-        spaceBetween: 10,
-       },
-      }}>
-      <SwiperSlide>
-       <ProductBox />
-      </SwiperSlide>
-      <SwiperSlide>
-       <ProductBox />
-      </SwiperSlide>
-      <SwiperSlide>
-       <ProductBox />
-      </SwiperSlide>
-      <SwiperSlide>
-       <ProductBox />
-      </SwiperSlide>
-      <SwiperSlide>
-       <ProductBox />
-      </SwiperSlide>
-     </Swiper>
-     <div className={classes['navigation-wrapper']}>
-      <ArrowButton className={classes.suggestionsprev} />
-      <ArrowButton className={classes.suggestionsNext} direction={'right'} />
-     </div>
+     <Slider
+      navigation={true}
+      autoplay={false}
+      slidesPerView={5}
+      spaceBetween={50}
+      items={[
+       <ProductBox />,
+       <ProductBox />,
+       <ProductBox />,
+       <ProductBox />,
+       <ProductBox />,
+       <ProductBox />,
+      ]}
+     />
     </Content>
-   </Card>
+   </Content>
   </div>
  );
 };

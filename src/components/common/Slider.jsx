@@ -10,8 +10,8 @@ import classes from './Slider.module.css';
 const Slider = ({
  title,
  items = [],
- slidesPerView = 3,
- spaceBetween = 70,
+ slidesPerView,
+ spaceBetween,
  sectionClassName = classes.section,
  contentClassName = classes.content,
  swiperClassName,
@@ -33,11 +33,11 @@ const Slider = ({
    spaceBetween: 10,
   },
   768: {
-   slidesPerView: 3,
+   slidesPerView: slidesPerView,
    spaceBetween: 10,
   },
   1024: {
-   slidesPerView: 3,
+   slidesPerView: slidesPerView,
    spaceBetween: 10,
   },
  },

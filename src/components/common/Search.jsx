@@ -74,20 +74,22 @@ const Search = ({ isHomePage = true }) => {
    className={classes.main}
    initial={initial}
    animate={{ width: isFullSize ? '250px' : 0 }}
-   transition={{ duration: 0.25, type: 'tween' }}>
+   transition={{ duration: 0.25, type: 'tween' }}
+   name='search-form'>
    <motion.input
     onChange={e => handleInputChange(e)}
     className={classes.search_input}
     type='text'
+    name='search-input'
     placeholder={isFullSize ? 'جست و جو کنید ...' : ''}
     transition={{ duration: 0.25, type: 'tween' }}
     initial={{
-     boxShadow: '0 0 5px rgba(65, 65, 65, 0)',
+     boxShadow: '0 0 5px rgb(154 154 154) 0px 3px 5px',
      background: 'rgba(0, 0, 0, 0)',
     }}
     animate={{
      boxShadow: isFullSize
-      ? '0 0 5px rgba(65, 65, 65, 1)'
+      ? 'rgb(154 154 154) 0px 3px 5px'
       : '0 0 5px rgba(65, 65, 65, 0)',
      background: isFullSize ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0)',
     }}
