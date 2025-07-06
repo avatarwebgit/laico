@@ -7,11 +7,14 @@ const Breadcrumbs = ({ linkDataProp }) => {
  return (
   <MuiBreadcrumbs
    aria-label='breadcrumb'
-   separator='>'
+   separator='/'
    sx={{
     marginBottom: '1rem',
     width: '100%',
     direction: 'rtl',
+    '& .MuiBreadcrumbs-separator': {
+     fontSize: '10px', 
+    },
    }}>
    {linkDataProp.map((el, index) => {
     if (index === linkDataProp.length - 1) return;
@@ -19,7 +22,7 @@ const Breadcrumbs = ({ linkDataProp }) => {
      <Link
       underline='hover'
       color='inherit'
-      href={`/${lng}/${el.url}`}
+      href={`/${el.url}`}
       sx={{
        fontSize: '0.5rem !important',
        textDecoration: 'underline !important',
@@ -32,7 +35,7 @@ const Breadcrumbs = ({ linkDataProp }) => {
    (
    <Typography
     color='black'
-    href={`/${lng}/${linkDataProp[linkDataProp.length - 1].url}`}
+    href={`/${linkDataProp[linkDataProp.length - 1].url}`}
     sx={{ fontSize: '0.5rem' }}>
     {linkDataProp[linkDataProp.length - 1].pathname}
    </Typography>

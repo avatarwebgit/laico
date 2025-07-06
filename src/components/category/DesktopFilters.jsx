@@ -54,9 +54,24 @@ const DesktopFilters = () => {
    />
    <DropDown type={'switch'} title={'تحویل در محل'} />
    <DropDown
-    type={'color'}
-    colorsOptions={colorItems.options}
-    title={colorItems.title}
+    type={'checkbox'}
+    checkBoxOptions={items.options}
+    title={items.title}
+   />
+   <DropDown
+    type={'checkbox'}
+    checkBoxOptions={items.options}
+    title={items.title}
+   />
+   <DropDown
+    type={'checkbox'}
+    checkBoxOptions={items.options}
+    title={items.title}
+   />
+   <DropDown
+    type={'checkbox'}
+    checkBoxOptions={items.options}
+    title={items.title}
    />
    <DropDown
     type={'checkbox'}

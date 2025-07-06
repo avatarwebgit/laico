@@ -10,6 +10,16 @@
  font-family: 'iranYekan' !important;
 }
 
+a{
+    color: unset;
+    text-decoration: none;
+}
+
+a:visited{
+    color: unset;
+    text-decoration: none;
+}
+
 html {
  scrollbar-gutter: stable;
 }
