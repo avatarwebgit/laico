@@ -127,3 +127,8 @@ html {
 .css-1eex93v-MuiTooltip-tooltip{
     font-size: 15px !important;
 }
+
+
+:where(.css-dev-only-do-not-override-1261szd).ant-switch.ant-switch-checked.ant-switch-checked{
+    background: var(--color-red) !important;
+}

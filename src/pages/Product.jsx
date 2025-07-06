@@ -16,8 +16,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { ReactComponent as Shop } from '../assets/svgs/add_basket-white.svg';
 import { ReactComponent as HeartRed } from '../assets/svgs/heart-red.svg';
 import { ReactComponent as Heart } from '../assets/svgs/heart.svg';
+
 import Breadcrumbs from '../components/common/Breadcrumbs';
-import Card from '../components/common/Card';
+import Slider from '../components/common/Slider';
+
 import {
  addToFavorite,
  getProductDetails,
@@ -29,7 +31,6 @@ import {
 import Content from '../components/common/Content';
 import ProductBox from '../components/common/ProductBox';
 
-import Slider from '../components/common/Slider';
 import { cartActions } from '../store/cart/cartSlice';
 import { drawerActions } from '../store/drawer/drawerSlice';
 import { favoriteActions } from '../store/favorites/favoriteSlice';
@@ -43,8 +44,8 @@ import 'swiper/css/thumbs';
 
 import Arrowbutton from '../components/common/ArrowButton';
 
-import classes from './Product.module.css';
 import ColorSection from '../components/product/ColorSection';
+import classes from './Product.module.css';
 
 const colors = [
  { id: '1', name: 'crimson', color: '#DC143C' },

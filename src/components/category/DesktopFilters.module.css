@@ -1,0 +1,29 @@
+.filters {
+ display: flex;
+ flex-direction: column;
+ padding: 10px;
+}
+
+.filters-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 10px 0;
+}
+
+.filters-header h5,
+.filters-header button {
+ font-size: var(--normal-font);
+}
+
+.filters-header h5 h5 {
+ color: var(--font-color-1);
+}
+
+.filters-header button {
+ background-color: transparent;
+ border: none;
+ outline: none;
+ color: var(--color-secondary);
+ cursor: pointer;
+}

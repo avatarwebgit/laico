@@ -12,6 +12,8 @@
  --color-red: #ff5151;
  --color-red-dark: #ff1d1d;
 
+ --color-secondary: #ff5151;
+
  --main-color-5: #cefbf9;
  --main-color-5-shadow: rgb(241, 255, 254);
 
@@ -19,13 +21,15 @@
 
  --color-grey-1: #e7eeef;
  --color-grey-2: rgb(247, 248, 249);
+ --color-grey-3: #636363;
 
  --main-color-1: #161d6f;
  --main-color-2: #0b2f9f;
  --main-color-3: #98ded9;
  --main-color-4: #c7ffd8;
 
- --color-grey-1: #e7eeef;
+ --font-color-1: #3f4064;
+
 
  --color-black-1: #272727;
 
@@ -33,6 +37,7 @@
 
  --title-font: 18px;
  --caption-font: 15px;
+ --normal-font: 13px;
 }
 
 h1,
@@ -41,7 +46,7 @@ h3,
 h4,
 h5,
 h6 {
- color: #373737;
+ color: #696969;
 }
 
 @media only screen and (max-width: 480px) {

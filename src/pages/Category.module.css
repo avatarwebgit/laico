@@ -1,0 +1,35 @@
+.category {
+ min-height: 100vh;
+ position: relative;
+}
+
+.content {
+ display: flex;
+ flex-direction: column;
+}
+
+.wrapper {
+ display: flex;
+ width: 100%;
+}
+
+.product-list-wrapper,
+.filter-list-wrapper {
+ padding: 10px;
+}
+
+.product-list-wrapper {
+ border: 1px solid var(--color-grey-1);
+ flex: 1 1 90%;
+ margin: 0 10px;
+ height: 200vh;
+}
+
+.filter-list-wrapper {
+ padding: 10px;
+ border: 1px solid var(--color-grey-1);
+ border-radius: 5px;
+ width: 25%;
+ height: fit-content;
+}
+
