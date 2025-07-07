@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import DropDown from '../common/DropDown';
 
+import { useState } from 'react';
 import classes from './DesktopFilters.module.css';
 
 const items = {
@@ -19,10 +20,16 @@ const items = {
   { id: 10, name: 'بلندگو' },
  ],
 };
+
 const colorItems = {
  title: 'رنگ ها',
  options: [
-  { id: 1, color: 'قرمز', hex: '#FF0000' },
+  {
+   id: 1,
+   color: 'قرمز',
+   hex: '#FF0000',
+   image: 'https://picsum.photos/id/237/500/500',
+  },
   { id: 2, color: 'آبی', hex: '#0000FF' },
   { id: 3, color: 'سبز', hex: '#00FF00' },
   { id: 4, color: 'زرد', hex: '#FFFF00' },
@@ -35,28 +42,48 @@ const colorItems = {
  ],
 };
 const DesktopFilters = () => {
+ const [removePointer, setRemovePointer] = useState(false);
+
  const { t } = useTranslation();
+
+ const handleRemoveFilters = () => {
+  // remove filter logic
+  setRemovePointer(!removePointer);
+ };
+
  return (
   <div className={classes.filters}>
    <div className={classes['filters-header']}>
     <h5>{t('filters')}</h5>
-    <button>{t('remove filters')}</button>
+    <button onClick={handleRemoveFilters}>{t('remove filters')}</button>
    </div>
    <DropDown
     type={'checkbox'}
     checkBoxOptions={items.options}
     title={items.title}
+    onChange={value => console.log(value)}
+    removeFilters={removePointer}
    />
    <DropDown
     type={'color'}
     colorsOptions={colorItems.options}
     title={colorItems.title}
+    onChange={value => console.log(value)}
+    removeFilters={removePointer}
    />
-   <DropDown type={'switch'} title={'تحویل در محل'} />
    <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
+    type={'price'}
+    title={'قیمت'}
+    priceOptions={[0, 10000000]}
+    onChange={value => console.log(value)}
+    removeFilters={removePointer}
+   />
+
+   <DropDown
+    type={'switch'}
+    title={'تحویل در محل'}
+    onChange={value => console.log(value)}
+    removeFilters={removePointer}
    />
    <DropDown
     type={'checkbox'}

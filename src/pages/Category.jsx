@@ -7,6 +7,7 @@ import CategoryProductBox from '../components/category/CategoryProductBox';
 
 import classes from './Category.module.css';
 import { Sort } from '@mui/icons-material';
+import MobileFilters from '../components/category/MobileFilters';
 const Category = () => {
  const { t } = useTranslation();
 
@@ -32,8 +33,8 @@ const Category = () => {
       <div className={classes['sort-wrapper']}>
        <ul dir='rtl'>
         <li>
-          <Sort fontSize='10' />
-          <span>مرتب سازی:</span>
+         <Sort fontSize='10' />
+         <span>مرتب سازی:</span>
         </li>
         <li>
          <label>
@@ -101,6 +102,7 @@ const Category = () => {
         </li>
        </ul>
       </div>
+      <MobileFilters />
       <div className={classes['product-list-wrapper']}>
        {Array.from({ length: 10 }, (_, i) => {
         return (

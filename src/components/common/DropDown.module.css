@@ -2,6 +2,8 @@
  margin: 10px 0;
  padding: 10px 0;
  border-bottom: 1px solid var(--color-grey-1);
+ width: fit-content;
+ position: relative;
 }
 
 .drop-down-header {
@@ -17,6 +19,7 @@
  top: 0;
  left: 0;
  overflow: hidden;
+ text-align: center;
 }
 
 .drop-down-header *,
@@ -96,8 +99,64 @@ input[type='checkbox']:checked + .custom-checkbox::after {
  height: 30px;
  border-radius: 5px;
  cursor: pointer;
+ background-size: 100% 100%;
+ background-position: center;
+ background-repeat: no-repeat;
 }
 
 .color-active {
  border-color: var(--font-color-1);
+}
+
+.input-wrapper {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ margin-bottom: 10px;
+}
+
+.input-wrapper input {
+ border: none;
+ outline: none;
+ border-bottom: 1px solid #000;
+ margin-left: 5px;
+ padding: 5px;
+}
+
+.active-filter {
+ position: relative;
+}
+
+.active-filter::after,
+.active-filter::before {
+ content: '';
+ position: absolute;
+ left: -20px;
+ top: 50%;
+ transform: translate(-50%, -50%);
+ width: 5px;
+ height: 5px;
+ border-radius: 50%;
+ background-color: var(--main-color-one);
+}
+
+.active-filter::after {
+ width: 3px;
+ height: 3px;
+ background-color: #fff;
+}
+
+.active-filter::before {
+ animation: ripple 1.2s infinite ease-in-out;
+}
+
+@keyframes ripple {
+ 0% {
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 1;
+ }
+ 100% {
+  transform: translate(-50%, -50%) scale(2.4);
+  opacity: 0;
+ }
 }
