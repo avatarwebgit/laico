@@ -1,5 +1,5 @@
 import Slider from '../../components/common/Slider';
-import DropDown from '../common/DropDown';
+import MobileDropDown from '../common/MobileDropDown';
 import classes from './MobileFilters.module.css';
 
 const items = {
@@ -43,55 +43,55 @@ const MobileFilters = () => {
  return (
   <div className={classes['slider-wrapper']}>
    <div className={classes['slider-sheet']}>
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'price'}
      priceOptions={[100000, 10000000]}
      title={'قیمت'}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'color'}
      colorsOptions={colorItems.options}
      title={colorItems.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}
      isStickyContent={true}
     />
-    <DropDown
+    <MobileDropDown
      type={'checkbox'}
      checkBoxOptions={items.options}
      title={items.title}

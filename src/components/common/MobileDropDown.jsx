@@ -1,12 +1,13 @@
+
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Slider } from '@mui/joy';
 import { IconButton, Tooltip } from '@mui/material';
 import { Switch } from 'antd';
 import { motion } from 'framer-motion';
 import { useCallback, useEffect, useState } from 'react';
-import classes from './DropDown.module.css';
+import classes from './MobileDropDown.module.css';
 
-const DropDown = ({
+const MobileDropDown = ({
  title,
  type,
  checkBoxOptions,
@@ -312,17 +313,17 @@ const DropDown = ({
       className={classes.switch}
      />
     )}
+    <motion.div
+     className={`${classes['drop-down-options_wrapper']}`}
+     initial={intialWrapper}
+     animate={animateWrapper}>
+     {checkBoxOptions && renderCheckBoxOptions()}
+     {colorsOptions && renderColorOptions()}
+     {priceOptions && renderPriceOptions()}
+    </motion.div>
    </div>
-   <motion.div
-    className={`${classes['drop-down-options_wrapper']}`}
-    initial={intialWrapper}
-    animate={animateWrapper}>
-    {checkBoxOptions && renderCheckBoxOptions()}
-    {colorsOptions && renderColorOptions()}
-    {priceOptions && renderPriceOptions()}
-   </motion.div>
   </div>
  );
 };
 
-export default DropDown;
+export default MobileDropDown;
