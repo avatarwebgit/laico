@@ -1,0 +1,18 @@
+.side-bar {
+ border: 1px solid var(--color-grey-1);
+ padding: 20px;
+}
+
+.side-bar ul {
+ list-style: none;
+}
+
+.side-bar ul li {
+ font-size: var(--normal-font);
+ padding: 10px 20px;
+ background-color: var(--main-color-1);
+ margin: 5px;
+ color: #fff;
+ border-radius: 10px;
+ cursor: pointer;
+}

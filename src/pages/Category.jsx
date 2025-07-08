@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
 
+import { Sort } from '@mui/icons-material';
+
+import CategoryProductBox from '../components/category/CategoryProductBox';
+import DesktopFilters from '../components/category/DesktopFilters';
+import MobileFilters from '../components/category/MobileFilters';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import Content from '../components/common/Content';
-import DesktopFilters from '../components/category/DesktopFilters';
-import CategoryProductBox from '../components/category/CategoryProductBox';
 
 import classes from './Category.module.css';
-import { Sort } from '@mui/icons-material';
-import MobileFilters from '../components/category/MobileFilters';
 const Category = () => {
  const { t } = useTranslation();
 
@@ -21,7 +22,6 @@ const Category = () => {
      linkDataProp={[
       { pathname: t('home'), url: ' ' },
       { pathname: t('categories'), url: 'category' },
-      { pathname: ' دسته بندی' },
      ]}
     />
     <div className={classes['wrapper']} dir={lng === 'fa' ? 'rtl' : 'ltr'}>
@@ -34,36 +34,36 @@ const Category = () => {
        <ul dir='rtl'>
         <li>
          <Sort fontSize='10' />
-         <span>مرتب سازی:</span>
+         <div>مرتب سازی:</div>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='most-relevant' hidden />
-          <span>مرتبط‌ترین</span>
+          <div>مرتبط‌ترین</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='most-viewed' hidden />
-          <span>پربازدیدترین</span>
+          <div>پربازدیدترین</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='newest' hidden />
-          <span>جدیدترین</span>
+          <div>جدیدترین</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='best-selling' hidden />
-          <span>پرفروش‌ترین‌</span>
+          <div>پرفروش‌ترین‌</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='cheapest' hidden />
-          <span>ارزان‌ترین</span>
+          <div>ارزان‌ترین</div>
          </label>
         </li>
         <li>
@@ -74,7 +74,7 @@ const Category = () => {
            value='most-expensive'
            hidden
           />
-          <span>گران‌ترین</span>
+          <div>گران‌ترین</div>
          </label>
         </li>
         <li>
@@ -85,24 +85,26 @@ const Category = () => {
            value='fastest-delivery'
            hidden
           />
-          <span>سریع‌ترین ارسال</span>
+          <div>سریع‌ترین ارسال</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='buyers-choice' hidden />
-          <span>پیشنهاد خریداران</span>
+          <div>پیشنهاد خریداران</div>
          </label>
         </li>
         <li>
          <label>
           <input type='radio' name='sort-option' value='featured' hidden />
-          <span>منتخب</span>
+          <div>منتخب</div>
          </label>
         </li>
        </ul>
       </div>
-      <MobileFilters />
+      <div className={classes['mobile-filter-wrapper']}>
+       <MobileFilters />
+      </div>
       <div className={classes['product-list-wrapper']}>
        {Array.from({ length: 10 }, (_, i) => {
         return (

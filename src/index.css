@@ -142,6 +142,9 @@ html {
  ).ant-switch.ant-switch-checked.ant-switch-checked {
  background: var(--color-red) !important;
 }
+.css-in8lwp-MuiSlider-root{
+  color:  var(--color-red) !important;
+}
 
 .css-1jq9w0k-JoySlider-track {
  background-color: var(--color-red) !important;
@@ -159,4 +162,9 @@ html {
 
 .css-sl4hj6-JoySlider-valueLabel::before {
  border-color: #fff !important;
+}
+
+.css-1tf7zj8-MuiButtonBase-root-MuiIconButton-root {
+ margin-right: auto !important;
+ margin-left: unset !important;
 }

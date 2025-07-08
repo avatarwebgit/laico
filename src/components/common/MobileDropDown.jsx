@@ -1,12 +1,18 @@
-
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Slider } from '@mui/joy';
-import { IconButton, Tooltip } from '@mui/material';
+import {
+ Box,
+ IconButton,
+ Menu,
+ MenuItem,
+ Slider,
+ TextField,
+ Tooltip,
+ Typography,
+} from '@mui/material';
 import { Switch } from 'antd';
-import { motion } from 'framer-motion';
 import { useCallback, useEffect, useState } from 'react';
-import classes from './MobileDropDown.module.css';
 
+import classes from './MobileDropDown.module.css';
 const MobileDropDown = ({
  title,
  type,
@@ -16,23 +22,22 @@ const MobileDropDown = ({
  onChange,
  removeFilters,
 }) => {
- const [isExpaned, setIsExpaned] = useState(false);
+ const [anchorEl, setAnchorEl] = useState(null);
  const [checkedItems, setCheckedItems] = useState([]);
  const [selectedColors, setSelectedColors] = useState([]);
  const [switchActive, setSwitchActive] = useState(false);
  const [sliderValue, setSliderValue] = useState([0, 0]);
  const [isFilterActive, setIsFilterActive] = useState(false);
 
+ const open = Boolean(anchorEl);
  const lng = 'fa';
 
- const intialWrapper = {
-  height: isExpaned ? 'auto' : 0,
-  margin: isExpaned ? '10px 0' : 0,
+ const handleClick = event => {
+  setAnchorEl(event.currentTarget);
  };
 
- const animateWrapper = {
-  height: isExpaned ? 'auto' : 0,
-  margin: isExpaned ? '10px 0' : 0,
+ const handleClose = () => {
+  setAnchorEl(null);
  };
 
  const handleValueChange = useCallback(
@@ -41,7 +46,7 @@ const MobileDropDown = ({
     onChange(value);
    }
   },
-  [type, onChange],
+  [onChange],
  );
 
  const handleCheckboxClick = useCallback(
@@ -138,36 +143,6 @@ const MobileDropDown = ({
   [handleValueChange],
  );
 
- const renderCheckBoxOptions = useCallback(() => {
-  if (type === 'checkbox') {
-   return (
-    <div className={classes['checkbox-wrapper']}>
-     {checkBoxOptions.map(option => (
-      <div
-       key={option.id}
-       className={`${classes['checkbox-input-wrapper']} ${classes.rtl}`}>
-       <label htmlFor={`checkbox-${option.id}`}>{option.name}</label>
-       <input
-        type='checkbox'
-        name={`checkbox-${option.id}`}
-        id={`checkbox-${option.id}`}
-        checked={checkedItems.includes(option.id)}
-        onChange={() => handleCheckboxClick(option.id)}
-        hidden
-       />
-       <div
-        className={`${classes['custom-checkbox']} ${
-         checkedItems.includes(option.id) ? classes.checked : ''
-        }`}
-        onClick={() => handleCheckboxClick(option.id)}
-       />
-      </div>
-     ))}
-    </div>
-   );
-  }
- }, [type, checkBoxOptions, checkedItems, handleCheckboxClick]);
-
  useEffect(() => {
   if (type === 'checkbox' && checkedItems.length > 0)
    return setIsFilterActive(true);
@@ -179,131 +154,132 @@ const MobileDropDown = ({
   )
    return setIsFilterActive(true);
   setIsFilterActive(false);
- }, [checkedItems, selectedColors, switchActive, sliderValue, priceOptions]);
+ }, [checkedItems, selectedColors, sliderValue, priceOptions, type]);
 
  useEffect(() => {
   setCheckedItems([]);
   setSelectedColors([]);
   setSliderValue(priceOptions);
   setSwitchActive(false);
- }, [removeFilters]);
+ }, [removeFilters, priceOptions]);
 
- const renderPriceOptions = useCallback(() => {
-  if (type === 'price') {
-   return (
-    <div className={classes['checkbox-price']}>
-     <div className={classes['input-wrapper']}>
-      <label htmlFor='price-from'>شروع قیمت</label>
-      <span>
-       <input
-        type='text'
-        id='price-from'
-        name='price-from'
-        value={formatDisplayValue(sliderValue[0])}
-        onChange={e => handleInputChange(0, e.target.value)}
-        dir='ltr'
-       />
-       تومان
-      </span>
-     </div>
-     <div className={classes['input-wrapper']}>
-      <label htmlFor='price-to'>تا</label>
-      <span>
-       <input
-        type='text'
-        id='price-to'
-        name='price-to'
-        value={formatDisplayValue(sliderValue[1])}
-        onChange={e => handleInputChange(1, e.target.value)}
-        dir='ltr'
-       />
-       تومان
-      </span>
-     </div>
-     <Slider
-      value={sliderValue}
-      min={priceOptions[0]}
-      max={priceOptions[1]}
-      onChange={handleSliderChange}
-      valueLabelDisplay='auto'
-      valueLabelFormat={value => formatDisplayValue(value)}
-      sx={{ width: '90%', margin: '20px auto 0 auto' }}
-      disableSwap={true}
-     />
-    </div>
-   );
-  }
- }, [type, sliderValue, priceOptions, handleInputChange, handleSliderChange]);
-
- const renderColorOptions = useCallback(() => {
-  if (type === 'color') {
-   return (
-    <div className={classes['checkbox-color']}>
-     {colorsOptions.map(option => (
-      <Tooltip
-       key={option.id}
-       title={option.color}
-       arrow
-       placement='top'
-       slotProps={{
-        tooltip: { sx: { fontSize: '10px' } },
-        arrow: { sx: { fontSize: '10px' } },
-       }}>
-       <div
-        className={`${classes['color-wrapper']} ${
-         selectedColors.includes(option.id) ? classes['color-active'] : ''
-        }`}>
-        <div className={`${classes['color-input-wrapper']} ${classes.rtl}`}>
+ const renderMenuContent = () => {
+  switch (type) {
+   case 'checkbox':
+    return (
+     <Box sx={{ p: 2 }}>
+      {checkBoxOptions.map(option => (
+       <MenuItem onClick={() => handleCheckboxClick(option.id)}>
+        <div
+         key={option.id}
+         className={`${classes['checkbox-input-wrapper']} ${classes.rtl}`}>
+         <label htmlFor={`checkbox-${option.id}`}>{option.name}</label>
          <input
-          type='color'
-          name={`color-${option.id}`}
-          id={`color-${option.id}`}
-          checked={selectedColors.includes(option.id)}
-          onChange={() => handleColorClick(option.id)}
+          type='checkbox'
+          name={`checkbox-${option.id}`}
+          id={`checkbox-${option.id}`}
+          checked={checkedItems.includes(option.id)}
+          onChange={() => handleCheckboxClick(option.id)}
           hidden
          />
          <div
-          className={`${classes['custom-color']}`}
-          style={{
-           background: option.image ? `url(${option.image})` : option.hex,
-           backgroundColor: option.hex,
-          }}
-          onClick={() => handleColorClick(option.id)}
+          className={`${classes['custom-checkbox']} ${
+           checkedItems.includes(option.id) ? classes.checked : ''
+          }`}
+          onClick={() => handleCheckboxClick(option.id)}
          />
         </div>
-       </div>
-      </Tooltip>
-     ))}
-    </div>
-   );
+       </MenuItem>
+      ))}
+     </Box>
+    );
+   case 'price':
+    return (
+     <Box sx={{ p: 2 }}>
+      <TextField
+       fullWidth
+       label='شروع قیمت'
+       value={formatDisplayValue(sliderValue[0])}
+       onChange={e => handleInputChange(0, e.target.value)}
+       margin='normal'
+      />
+      <TextField
+       fullWidth
+       label='تا'
+       value={formatDisplayValue(sliderValue[1])}
+       onChange={e => handleInputChange(1, e.target.value)}
+       margin='normal'
+      />
+      <Slider
+       value={sliderValue}
+       min={Math.min(priceOptions[0], priceOptions[1])}
+       max={Math.max(priceOptions[0], priceOptions[1])}
+       onChange={handleSliderChange}
+       valueLabelDisplay='auto'
+       valueLabelFormat={value => formatDisplayValue(value)}
+       sx={{ width: '90%', margin: '20px auto 0 auto' }}
+       disableSwap={true}
+      />
+     </Box>
+    );
+   case 'color':
+    return (
+     <Box
+      sx={{
+       p: 2,
+       display: 'grid',
+       gridTemplateColumns: 'repeat(4, 1fr)',
+       gap: 1,
+      }}>
+      {colorsOptions.map(option => (
+       <Tooltip key={option.id} title={option.color}>
+        <IconButton
+         onClick={() => handleColorClick(option.id)}
+         sx={{
+          border: selectedColors.includes(option.id)
+           ? '2px solid #000'
+           : '1px solid #ddd',
+          p: 0.5,
+          borderRadius: 1,
+         }}>
+         <Box
+          sx={{
+           width: 30,
+           height: 30,
+           borderRadius: 1,
+           background: option.hex,
+           backgroundImage: option.image ? `url(${option.image})` : undefined,
+           backgroundSize: 'cover',
+          }}
+         />
+        </IconButton>
+       </Tooltip>
+      ))}
+     </Box>
+    );
+   default:
+    return null;
   }
- }, [type, colorsOptions, selectedColors, handleColorClick]);
-
- useEffect(() => {
-  if (priceOptions) {
-   setSliderValue(priceOptions);
-   if (onChange) {
-    onChange({
-     type: 'price',
-     value: priceOptions,
-    });
-   }
-  }
- }, [priceOptions, onChange]);
+ };
 
  return (
-  <div className={classes['drop-down-main']} dir={lng === 'fa' ? 'rtl' : 'ltr'}>
-   <div className={`${classes['drop-down-header']}`}>
-    <div className={`${isFilterActive ? classes['active-filter'] : null}`}>
+  <Box sx={{ display: 'inline-block', m: 1, width: '150px' }}>
+   <Box
+    sx={{
+     display: 'flex',
+     alignItems: 'center',
+     border: '1px solid #ddd',
+     borderRadius: '20px',
+     p: 1,
+     position: 'relative',
+     bgcolor: isFilterActive ? 'rgba(25, 118, 210, 0.08)' : 'inherit',
+    }}>
+    <Typography variant='body1' sx={{ px: 1 }}>
      {title}
-    </div>
-
+    </Typography>
     {type !== 'switch' ? (
-     <IconButton
-      onClick={() => setIsExpaned(!isExpaned)}
-      size='small'
-      disableRipple={true}>
-      {isExpaned ? <ExpandMore /> : <ExpandLess />}
+     <IconButton onClick={handleClick} size='small' sx={{ ml: 'auto' }}>
+      {open ? <ExpandLess /> : <ExpandMore />}
      </IconButton>
     ) : (
      <Switch
@@ -313,16 +289,34 @@ const MobileDropDown = ({
       className={classes.switch}
      />
     )}
-    <motion.div
-     className={`${classes['drop-down-options_wrapper']}`}
-     initial={intialWrapper}
-     animate={animateWrapper}>
-     {checkBoxOptions && renderCheckBoxOptions()}
-     {colorsOptions && renderColorOptions()}
-     {priceOptions && renderPriceOptions()}
-    </motion.div>
-   </div>
-  </div>
+   </Box>
+
+   <Menu
+    anchorEl={anchorEl}
+    open={open}
+    onClose={handleClose}
+    anchorOrigin={{
+     vertical: 'bottom',
+     horizontal: 'left',
+    }}
+    transformOrigin={{
+     vertical: 'top',
+     horizontal: 'left',
+    }}
+    slotProps={{
+     paper: {
+      sx: {
+       width: 300,
+       height: 'fit-content',
+       overflow: 'auto',
+       mt: 1,
+      },
+     },
+    }}
+    disableScrollLock={true}>
+    {renderMenuContent()}
+   </Menu>
+  </Box>
  );
 };
 

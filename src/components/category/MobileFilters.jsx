@@ -39,65 +39,148 @@ const colorItems = {
  ],
 };
 
+const dropdownComponents = [
+ <MobileDropDown
+  key='filter1'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='price1'
+  type={'price'}
+  priceOptions={[60000000, 10000]}
+  title={'قیمت'}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='color1'
+  type={'color'}
+  colorsOptions={colorItems.options}
+  title={colorItems.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter2'
+  type={'switch'}
+  title={'تحویل فوری'}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter3'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter4'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter5'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter6'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+ <MobileDropDown
+  key='filter7'
+  type={'checkbox'}
+  checkBoxOptions={items.options}
+  title={items.title}
+  isStickyContent={true}
+ />,
+];
+
 const MobileFilters = () => {
  return (
-  <div className={classes['slider-wrapper']}>
-   <div className={classes['slider-sheet']}>
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'price'}
-     priceOptions={[100000, 10000000]}
-     title={'قیمت'}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'color'}
-     colorsOptions={colorItems.options}
-     title={colorItems.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    <MobileDropDown
-     type={'checkbox'}
-     checkBoxOptions={items.options}
-     title={items.title}
-     isStickyContent={true}
-    />
-    ,
+  <div className={classes['slider-main']}>
+   <div className={classes['slider-wrapper']}>
+    <div className={classes['slider-sheet']}>
+     <MobileDropDown
+      key='filter1'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='price1'
+      type={'price'}
+      priceOptions={[60000000, 10000]}
+      title={'قیمت'}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='color1'
+      type={'color'}
+      colorsOptions={colorItems.options}
+      title={colorItems.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter2'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter3'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter4'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter5'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter6'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+
+     <MobileDropDown
+      key='filter7'
+      type={'checkbox'}
+      checkBoxOptions={items.options}
+      title={items.title}
+      isStickyContent={true}
+     />
+    </div>
    </div>
   </div>
  );

@@ -74,7 +74,7 @@ const DesktopFilters = () => {
    <DropDown
     type={'price'}
     title={'قیمت'}
-    priceOptions={[0, 10000000]}
+    priceOptions={[40000000, 10000]}
     onChange={value => console.log(value)}
     removeFilters={removePointer}
    />

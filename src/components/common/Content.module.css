@@ -21,10 +21,25 @@
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
+ .content {
+  max-width: 1000px;
+ }
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {
+ .content {
+  max-width: 1000px;
+ }
 }
 
-@media only screen and (min-width: 1201px) {
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+ .content {
+  max-width: 1200px;
+ }
+}
+
+@media only screen and (min-width: 1401px) {
+ .content {
+  max-width: 1300px;
+ }
 }

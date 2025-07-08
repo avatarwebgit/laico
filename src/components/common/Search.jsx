@@ -86,12 +86,14 @@ const Search = ({ isHomePage = true }) => {
     initial={{
      boxShadow: '0 0 5px rgb(154 154 154) 0px 3px 5px',
      background: 'rgba(0, 0, 0, 0)',
+     display: 'none',
     }}
     animate={{
      boxShadow: isFullSize
       ? 'rgb(154 154 154) 0px 3px 5px'
       : '0 0 5px rgba(65, 65, 65, 0)',
      background: isFullSize ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0)',
+     display: isFullSize ? 'flex' : 'none',
     }}
    />
    <motion.div

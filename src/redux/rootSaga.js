@@ -5,6 +5,7 @@ import { favoritesSaga } from './favorites/favoritesSaga';
 import { userSaga } from './user/userSaga';
 import { orderSaga } from './orders/orderSaga';
 import { authSaga } from './auth/authSaga';
+import { drawerSaga } from './drawer/drawerSaga';
 
 export default function* rootSaga() {
  yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
   userSaga(),
   orderSaga(),
   authSaga(),
+  drawerSaga(),
  ]);
 }

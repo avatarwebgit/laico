@@ -6,6 +6,7 @@ import favoritesReducer from './favorites/favoritesReducer';
 import orderReducer from './orders/orderReducer';
 import productReducer from './products/productReducer';
 import userReducer from './user/userReducer';
+import drawerReducer from './drawer/drawerReducer';
 
 const rootReducer = combineReducers({
  cart: cartReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
  user: userReducer,
  orders: orderReducer,
  auth: authReducer,
+ drawer: drawerReducer,
 });
 
 export default rootReducer;

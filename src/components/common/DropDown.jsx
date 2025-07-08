@@ -183,7 +183,7 @@ const DropDown = ({
  useEffect(() => {
   setCheckedItems([]);
   setSelectedColors([]);
-  setSliderValue(priceOptions);
+  setSliderValue(priceOptions?.sort((a, b) => a - b));
   setSwitchActive(false);
  }, [removeFilters]);
 
@@ -221,8 +221,8 @@ const DropDown = ({
      </div>
      <Slider
       value={sliderValue}
-      min={priceOptions[0]}
-      max={priceOptions[1]}
+      min={Math.min(priceOptions[0], priceOptions[1])}
+      max={Math.max(priceOptions[0], priceOptions[1])}
       onChange={handleSliderChange}
       valueLabelDisplay='auto'
       valueLabelFormat={value => formatDisplayValue(value)}

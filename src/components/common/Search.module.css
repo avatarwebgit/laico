@@ -17,14 +17,14 @@
  align-items: center;
  justify-content: center;
  position: absolute;
- left: 0; cursor: pointer;
+ left: 0;
+ cursor: pointer;
 }
 
 .search_logo {
  width: 50%;
  height: 50%;
  object-fit: contain;
-
 }
 
 .search_input {
@@ -87,5 +87,3 @@
  align-items: center;
  justify-content: center;
 }
-
-
