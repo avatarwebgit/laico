@@ -19,8 +19,8 @@ const ArrowButton = forwardRef(
     <img
      src={Arrow}
      style={{ transform: getTransform() }}
-     width={30}
-     height={30}
+     width={20}
+     height={20}
      alt='Arrow button'
     />
     {children}

@@ -64,7 +64,7 @@ const Slider = ({
   <Content
    contentClassname={contentClassName}
    sectionClassname={sectionClassName}>
-   <div>
+   <div className={classes['swiper-wrapper']}>
     <h2>{title}</h2>
     <Swiper
      spaceBetween={spaceBetween}
@@ -99,14 +99,14 @@ const Slider = ({
      ))}
     </Swiper>
     {items.length > slidesPerView && navigation && (
-     <div className={classes['navigation-wrapper']}>
+     <>
       <ArrowButton onClick={goPrev} className={classes.nextEl} />
       <ArrowButton
        onClick={goNext}
        direction={'right'}
        className={classes.prevEl}
       />
-     </div>
+     </>
     )}
    </div>
   </Content>

@@ -27,6 +27,13 @@
 .content h3 {
  color: #000;
  font-size: xx-large;
+ text-shadow: 1px -13px 0px rgba(1, 2, 37, 0.102);
+}
+
+.shadow-text {
+ font-size: xx-large !important;
+ color: rgba(1, 2, 37, 0.102) !important;
+ margin-bottom: -70px !important;
 }
 
 .banner-image {

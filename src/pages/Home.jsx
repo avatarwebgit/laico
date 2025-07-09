@@ -11,6 +11,7 @@ import 'swiper/css';
 import HeroBanner from '../components/home/HeroBanner';
 import HomeBlogs from '../components/home/HomeBlogs';
 import classes from './Home.module.css';
+import { useEffect } from 'react';
 
 const mainBreakpoints = {
  320: {
@@ -20,10 +21,10 @@ const mainBreakpoints = {
   slidesPerView: 2,
  },
  768: {
-  slidesPerView: 3,
+  slidesPerView: 4,
  },
  1023: {
-  slidesPerView: 3,
+  slidesPerView: 4,
  },
 };
 const breakpoints = {
@@ -155,6 +156,13 @@ const items = [
 ];
 
 const Home = () => {
+        // useEffect(() => {
+        //   document.body.style.backgroundColor = '#1a1a2e';
+          
+        //   return () => {
+        //     document.body.style.backgroundColor = '';
+        //   };
+        // }, []);
  return (
   <div className={classes.main}>
    <Carusel />
@@ -166,9 +174,9 @@ const Home = () => {
      <ProductBox />,
      <ProductBox />,
     ]}
-    slidesPerView={3}
+    slidesPerView={4}
     breakpoints={mainBreakpoints}
-    spaceBetween={60}
+    spaceBetween={40}
     autoplay={false}
    />
    <Banner />

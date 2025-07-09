@@ -93,7 +93,7 @@ html {
  transform: translateX(-50%);
  width: 100%;
  height: 8px;
- background-color: #ffb9b9;
+ background-color: var(--main-color-four);
  z-index: -1;
 }
 
@@ -130,7 +130,7 @@ html {
 }
 
 :where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab-btn {
- font-size: 15px;
+ font-size: 13px;
 }
 
 .css-1eex93v-MuiTooltip-tooltip {
@@ -142,8 +142,8 @@ html {
  ).ant-switch.ant-switch-checked.ant-switch-checked {
  background: var(--color-red) !important;
 }
-.css-in8lwp-MuiSlider-root{
-  color:  var(--color-red) !important;
+.css-in8lwp-MuiSlider-root {
+ color: var(--color-red) !important;
 }
 
 .css-1jq9w0k-JoySlider-track {
@@ -167,4 +167,13 @@ html {
 .css-1tf7zj8-MuiButtonBase-root-MuiIconButton-root {
  margin-right: auto !important;
  margin-left: unset !important;
+}
+
+.css-9r7748-MuiTypography-root,
+.css-1jahree-MuiTypography-root-MuiLink-root {
+ font-size: var(--normal-font) !important;
+}
+
+.css-1uwp4ue-MuiBreadcrumbs-ol{
+  margin: 15px 0 !important;
 }

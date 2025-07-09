@@ -19,7 +19,7 @@ const ProductBox = ({ src, alt, title, isLiked, isInWishlist }) => {
    x: 0,
   },
   shopButton: {
-   y: -100,
+   y: -110,
   },
  };
  return (

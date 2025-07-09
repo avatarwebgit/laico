@@ -5,8 +5,9 @@
 
 .title {
  position: absolute;
- top: 15px;
+ top: 13px;
  left: 0;
+ font-size: var(--normal-font);
 }
 
 .ant-tabs-tab {
@@ -14,8 +15,8 @@
  color: var(--caption-grey);
 }
 
-.ant-tabs-nav::before{
-    display: none !important;
+.ant-tabs-nav::before {
+ display: none !important;
 }
 
 @media screen and (max-width: 768px) {

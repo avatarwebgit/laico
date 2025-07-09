@@ -9,10 +9,10 @@
  --main-color-four: #c7ffd8;
  --main-color-four-shadow: #e0ffe9;
 
- --color-red: #ff5151;
- --color-red-dark: #ff1d1d;
+ --color-red: #0b2f9f;
+ --color-red-dark: #98ded9;
 
- --color-secondary: #ff5151;
+ --color-secondary: #0b2f9f;
 
  --main-color-5: #cefbf9;
  --main-color-5-shadow: rgb(241, 255, 254);
@@ -30,13 +30,12 @@
 
  --font-color-1: #3f4064;
 
-
  --color-black-1: #272727;
 
  --icon-size-sm: 25px;
 
  --title-font: 18px;
- --caption-font: 15px;
+ --caption-font: 14px;
  --normal-font: 13px;
 }
 
