@@ -18,6 +18,7 @@ import PaymentMethod from '../components/checkout/PaymentMethod';
 import { formatNumber, notify } from '../utils/helperFucntions';
 
 import classes from './PreCheckout.module.css';
+import Content from '../components/common/Content';
 const PreCheckout = () => {
  const [step, setStep] = useState(0);
  const [isDataValid, setIsDataValid] = useState(true);
@@ -73,7 +74,7 @@ const PreCheckout = () => {
  return (
   <div className={classes.main}>
    <CustomStepper activeStep={step} className={classes.stepper} />
-   <Card className={classes.card}>
+   <Content className={classes.card}>
     {step === 0 && <ShoppingCart />}
     {step === 1 && <Checkout isDataValid={setIsDataValid} />}
     {step === 2 && <Payment />}
@@ -124,7 +125,7 @@ const PreCheckout = () => {
       </Button>
      )}
     </div>
-   </Card>
+   </Content>
   </div>
  );
 };

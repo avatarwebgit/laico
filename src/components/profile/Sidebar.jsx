@@ -1,6 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { User, ShoppingBag, Heart, Home, Settings, LogOut } from 'lucide-react';
+import {
+ User,
+ Heart,
+ Home,
+ Settings,
+ LogOut,
+ MapPin,
+ ShoppingBag,
+ Ticket,
+} from 'lucide-react';
 import styles from './Sidebar.module.css';
 
 const Sidebar = () => {
@@ -8,7 +17,6 @@ const Sidebar = () => {
  const location = useLocation();
 
  const menuItems = [
-  { id: 'home', title: 'خانه', url: '/profile', icon: <Home /> },
   {
    id: 'account',
    title: 'حساب کاربری',
@@ -22,16 +30,22 @@ const Sidebar = () => {
    icon: <ShoppingBag />,
   },
   {
+   id: 'addresses',
+   title: 'آدرس ها',
+   url: '/profile/addresses',
+   icon: <MapPin />,
+  },
+  {
    id: 'wishlist',
    title: 'لیست علاقه',
    url: '/profile/wishlist',
    icon: <Heart />,
   },
   {
-   id: 'settings',
-   title: 'تنظیمات',
-   url: '/profile/settings',
-   icon: <Settings />,
+   id: 'tickets',
+   title: 'تیکت ها',
+   url: '/profile/tickets',
+   icon: <Ticket />,
   },
  ];
 

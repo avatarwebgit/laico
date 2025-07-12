@@ -1,43 +1,69 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import Content from '../components/common/Content';
 import Sidebar from '../components/profile/Sidebar';
+import Card from '../components/common/Card';
+
+import Dashboard from '../components/profile/Dashboard';
+import Addresses from '../components/profile/Addresses';
+import Tickets from '../components/profile/Ticket';
+import Favorites from '../components/profile/Favorites';
+import Orders from '../components/profile/Orders';
 
 import classes from './Profile.module.css';
-import { useLocation } from 'react-router-dom';
+
 const Profile = () => {
- const [slug, setSlug] = useState('');
-
  const { t } = useTranslation();
-
  const location = useLocation();
+ const [activeComponent, setActiveComponent] = useState(null);
 
  useEffect(() => {
-  if (location) {
-   const slug = location.pathname.split('/').at(1);
-   setSlug(slug);
-  }
+  const pathSegments = location.pathname.split('/');
+  const slug = pathSegments[pathSegments.length - 1]; 
+  setActiveComponent(slug || 'dashboard'); 
  }, [location]);
+
+ const renderProfileContent = () => {
+  switch (activeComponent) {
+   case '':
+   case 'dashboard':
+    return <Dashboard />;
+   case 'orders':
+    return <Orders />;
+   case 'tickets':
+    return <Tickets />;
+   case 'wishlist':
+    return <Favorites />;
+   case 'addresses':
+    return <Addresses />;
+   default:
+    return <Dashboard />;
+  }
+ };
 
  return (
   <main>
    <Content contentClassname={classes.content}>
     <Breadcrumbs
      linkDataProp={[
-      { pathname: t('home'), url: ' ' },
-      { pathname: t('profile.profile'), url: 'profile' },
+      { pathname: t('home'), url: '/' },
+      { pathname: t('profile.profile'), url: '/profile' },
      ]}
     />
-    <div className={classes['sidebar-wrapper']}>
-     <Sidebar />
+    <div className={classes['bottom-wrapper']}>
+     <div className={classes['sidebar-wrapper']}>
+      <Sidebar />
+     </div>
+     <div className={classes['content-wrapper']}>
+      <Card>{renderProfileContent()}</Card>
+     </div>
     </div>
-    <div className={classes['content-wrapper']}></div>
    </Content>
   </main>
  );
 };
 
 export default Profile;
-

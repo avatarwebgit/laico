@@ -37,6 +37,20 @@
  --title-font: 18px;
  --caption-font: 14px;
  --normal-font: 13px;
+
+ /* sidebar variables */
+ --sidebar-bg: #1e293b;
+ --text-primary: #94a3b8;
+ --text-active: #ffffff;
+ --primary: #3b82f6;
+ --secondary: #8b5cf6;
+ --danger: #ef4444;
+ --hover-bg: rgba(255, 255, 255, 0.05);
+ --active-bg: rgba(59, 130, 246, 0.2);
+ --radius-sm: 4px;
+ --radius-md: 8px;
+ --radius-lg: 12px;
+ --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 h1,

@@ -7,7 +7,7 @@ import { authRoutes, publicRoutes } from './routes/index';
 import Loader from './components/common/Loader';
 import Header from './components/layout/HorizontalLayout/Header';
 import FixedNavigation from './components/layout/VerticalLayout/FixedNavigation';
-import Footer from './components/layout/VerticalLayout/Footer';
+import Footer from './components/layout/HorizontalLayout/Footer';
 import MobileHeader from './components/layout/VerticalLayout/Header';
 
 import './App.css';

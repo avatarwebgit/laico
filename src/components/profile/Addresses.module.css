@@ -1,0 +1,348 @@
+:root {
+ --main-color-1: #161d6f;
+ --main-color-2: #0b2f9f;
+ --main-color-3: #98ded9;
+ --main-color-4: #c7ffd8;
+ --base-bg: #0f172a;
+ --card-bg: #1e293b;
+ --border: #334155;
+ --text-light: #e2e8f0;
+ --text-muted: #b2cbed;
+ --text-white: #ffffff;
+ --red: #ef4444;
+ --red-light: #f87171;
+}
+
+.container {
+
+}
+
+/* Header */
+.header {
+ display: flex;
+ flex-direction: column;
+ margin-bottom: 2rem;
+}
+
+.headerContent {
+ flex-grow: 1;
+}
+
+.title {
+ font-size: 2rem;
+ font-weight: 700;
+ color: var(--text-light);
+}
+
+.subtitle {
+ margin-top: 0.25rem;
+ color: var(--text-muted);
+}
+
+.addButton {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.75rem 1.25rem;
+ border-radius: 0.5rem;
+ font-weight: 600;
+ font-size: 0.875rem;
+ color: var(--text-white);
+ background-color: var(--main-color-2);
+ border: none;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+ margin-top: 1rem;
+}
+
+.addButton:hover {
+ transform: scale(1.05);
+ box-shadow: 0 0 20px color-mix(in srgb, var(--main-color-3), transparent 70%);
+}
+
+@media (min-width: 768px) {
+ .header {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+ }
+ .addButton {
+  margin-top: 0;
+ }
+}
+
+/* Address Grid */
+.addressGrid {
+ display: grid;
+ grid-template-columns: repeat(1, 1fr);
+ gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+ .addressGrid {
+  grid-template-columns: repeat(2, 1fr);
+ }
+}
+
+@media (min-width: 1024px) {
+ .addressGrid {
+  grid-template-columns: repeat(3, 1fr);
+ }
+}
+
+/* Empty State */
+.emptyState {
+ text-align: center;
+ padding: 4rem 1.5rem;
+ border-radius: 0.5rem;
+ border: 2px dashed var(--border);
+ grid-column: 1 / -1;
+}
+
+.emptyStateIcon {
+ margin: 0 auto;
+ color: var(--text-muted);
+}
+
+.emptyState p:first-of-type {
+ margin-top: 1rem;
+ font-weight: 600;
+ color: var(--text-light);
+}
+
+.emptyState p:last-of-type {
+ margin-top: 0.5rem;
+ font-size: 0.875rem;
+ color: var(--text-muted);
+}
+
+/* Address Card */
+.card {
+ position: relative;
+ padding: 1.25rem;
+ border-radius: 0.75rem;
+ display: flex;
+ flex-direction: column;
+ background: rgba(30, 41, 59, 0.55);
+ backdrop-filter: blur(12px) saturate(150%);
+}
+
+.cardContent {
+ flex-grow: 1;
+}
+
+.defaultBadge {
+ position: absolute;
+ top: -0.75rem;
+ right: -0.75rem;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ width: 2rem;
+ height: 2rem;
+ border-radius: 9999px;
+ background-color: var(--main-color-3);
+}
+
+.defaultBadge svg {
+ color: black;
+}
+
+.cardName {
+ font-weight: 700;
+ font-size: 1.125rem;
+ color: var(--text-light);
+}
+
+.cardAddress {
+ margin-top: 0.5rem;
+ font-size: 0.875rem;
+ line-height: 1.6;
+ color: var(--text-muted);
+}
+
+.cardPostal {
+ margin-top: 0.25rem;
+ font-size: 0.875rem;
+ color: var(--text-muted);
+}
+
+.cardActions {
+ margin-top: 1rem;
+ padding-top: 1rem;
+ border-top: 1px solid var(--border);
+ display: flex;
+ align-items: center;
+ justify-content: flex-end;
+ gap: 0.5rem;
+}
+
+.actionButton {
+ padding: 0.5rem;
+ border-radius: 9999px;
+ background-color: transparent;
+ border: none;
+ cursor: pointer;
+ transition: background-color 0.2s ease, color 0.2s ease;
+ color: var(--text-muted);
+}
+
+.actionButton:hover {
+ background-color: rgba(255, 255, 255, 0.1);
+}
+
+.actionButton.delete {
+ color: var(--red-light);
+}
+
+.actionButton.delete:hover {
+ background-color: color-mix(in srgb, var(--red), transparent 80%);
+}
+
+/* Modal */
+.modalOverlay {
+ position: fixed;
+ inset: 0;
+ z-index: 50;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background-color: rgba(0, 0, 0, 0.6);
+ backdrop-filter: blur(4px);
+}
+
+.modalContent {
+ position: relative;
+ margin: 1rem;
+ width: 100%;
+ max-width: 32rem; /* lg */
+ border-radius: 1rem; /* 2xl */
+ padding: 1.5rem; /* p-6 */
+ background-color: var(--card-bg);
+ color: var(--text-light);
+ border: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+ .modalContent {
+  padding: 2rem; /* md:p-8 */
+ }
+}
+
+.modalHeader {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding-bottom: 1rem;
+ border-bottom: 1px solid var(--border);
+}
+
+.modalTitle {
+ font-size: 1.25rem;
+ font-weight: 700;
+ color: var(--text-white);
+}
+
+.closeButton {
+ padding: 0.25rem;
+ border-radius: 9999px;
+ background: none;
+ border: none;
+ cursor: pointer;
+ color: var(--text-muted);
+ transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.closeButton:hover {
+ background-color: rgba(255, 255, 255, 0.1);
+ color: var(--text-white);
+}
+
+/* Form */
+.form {
+ margin-top: 1.5rem;
+}
+
+.formFieldsGrid {
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 1rem;
+ margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+ .formFieldsGrid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+ }
+}
+
+.formGroup {
+ /* No styles needed, just a container */
+}
+
+.formLabel {
+ display: block;
+ font-size: 0.875rem;
+ font-weight: 500;
+ color: var(--text-muted);
+ margin-bottom: 0.5rem;
+}
+
+.formInput,
+.formTextarea {
+ width: 100%;
+ border-radius: 0.5rem;
+ padding: 0.75rem;
+ font-size: 0.875rem;
+ background-color: var(--base-bg);
+ border: 1px solid var(--border);
+ color: var(--text-light);
+ transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+ outline: none;
+ border-color: var(--main-color-2);
+ box-shadow: 0 0 0 3px color-mix(in srgb, var(--main-color-2), transparent 70%);
+}
+
+.formTextarea {
+ resize: vertical;
+ min-height: 80px;
+}
+
+.formActions {
+ display: flex;
+ justify-content: flex-end;
+ gap: 1rem;
+ padding-top: 1.5rem;
+ margin-top: 1.5rem;
+ border-top: 1px solid var(--border);
+}
+
+.formButton {
+ padding: 0.5rem 1.5rem;
+ border-radius: 0.5rem;
+ font-weight: 600;
+ border: none;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+}
+
+.formButton.cancel {
+ background-color: var(--border);
+ color: var(--text-light);
+}
+.formButton.cancel:hover {
+ background-color: #475569; /* a bit lighter */
+}
+
+.formButton.save {
+ background-color: var(--main-color-2);
+ color: var(--text-white);
+}
+.formButton.save:hover {
+ filter: brightness(1.15);
+}
