@@ -22,20 +22,16 @@ export const scrollToTarget = (targetRef, headerHeight = 80) => {
  }
 };
 
-export function formatNumber(value) {
- let strValue = value.toString().replace(/,/g, '');
+export function formatNumber(amount, currency = 'toman') {
+ const value = currency === 'toman' ? amount / 10 : amount;
 
- let [integerPart, decimalPart] = strValue.split(',');
+ const formatted = new Intl.NumberFormat('fa-IR').format(value);
 
- let reversedInteger = integerPart.split('').reverse().join('');
-
- let formattedReversed = reversedInteger.replace(/(\d{3})(?=\d)/g, '$1,');
-
- let formattedInteger = formattedReversed.split('').reverse().join('');
-
- let integerOnly = formattedInteger.split('.')[0];
-
- return integerOnly;
+ return (
+  <div style={{whiteSpace:'nowrap'}}>
+   {currency === 'toman' ? ` ${formatted} تومان` : `${formatted} ریال`}
+  </div>
+ );
 }
 
 export const notify = message =>
@@ -56,5 +52,3 @@ export const useNavigation = () => {
 export const title = string => {
  document.title = `${string}`;
 };
-
-

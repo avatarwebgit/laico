@@ -10,6 +10,7 @@ const PreCheckout = lazy(() => import('../pages/PreCheckout'));
 const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Category = lazy(() => import('../pages/Category'));
 const Profile = lazy(() => import('../pages/Profile'));
+const Checkout = lazy(() => import('../pages/Checkout'));
 const NotFound = lazy(() => import('../pages/404'));
 
 export const publicRoutes = [
@@ -20,7 +21,7 @@ export const publicRoutes = [
  { path: '/blogs', element: <Blogs /> },
  { path: '/blogs/:id', element: <BlogPost /> },
  { path: '/category', element: <Category /> },
- { path: '/checkout', element: <PreCheckout /> },
+ { path: '/checkout', element: <Checkout /> },
  { path: '/profile/test', element: <Profile /> },
  { path: '/profile/*', element: <Profile /> },
  { path: '/loader', element: <Loader /> },
@@ -28,6 +29,6 @@ export const publicRoutes = [
 ];
 
 export const authRoutes = [
- { path: '/checkout', element: <PreCheckout /> },
+ //  { path: '/checkout', element: <PreCheckout /> },
  { path: '/profile', element: <Profile /> },
 ];
