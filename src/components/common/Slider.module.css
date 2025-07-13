@@ -19,17 +19,17 @@ h2 {
  z-index: 10000;
  justify-content: space-between;
  position: absolute;
- top: 20%;
+ top: 30%;
  transform: translateY(-50%);
 }
 
 .nextEl {
- transform: translateX(-20px);
+ transform: translateY(-50%) translateX(-50px);
  left: 0;
 }
 
 .prevEl {
- transform: translateX(20px);
+ transform: translateY(-50%) translateX(50px);
  right: 0;
 }
 

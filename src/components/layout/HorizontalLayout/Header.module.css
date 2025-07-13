@@ -70,7 +70,7 @@ hr {
   rgba(231, 238, 239, 1) 86%,
   rgba(255, 255, 255, 0) 90%
  );
- background: #f8f8f8
+ background: #f8f8f8;
 }
 
 .bottom-wrapper ul li img {
@@ -134,9 +134,10 @@ hr {
 .fixed-header {
  display: flex;
  position: fixed;
- background-color: var(--color-grey-1);
+ background-color: #fff;
  z-index: 100000;
  width: 100%;
+ border-bottom: 1px solid #d5d5d5;
 }
 
 .fixed-header div {

@@ -22,6 +22,7 @@ import { sliderContents, getNarrowBanners } from '../../services/api';
 
 import classes from './Carousel.module.css';
 import ArrowButton from '../common/ArrowButton';
+import Content from '../common/Content';
 const Carusel = ({ windowSize }) => {
  const [thumbsSwiper, setThumbsSwiper] = useState(null);
  const [activeIndex, setActiveIndex] = useState(0);

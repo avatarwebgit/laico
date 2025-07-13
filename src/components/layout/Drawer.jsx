@@ -1,26 +1,17 @@
-import { KeyboardArrowRight, Lock } from '@mui/icons-material';
-import {
- FormControlLabel,
- FormGroup,
- IconButton,
- Skeleton,
- styled,
- Switch,
-} from '@mui/material';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Close } from '../assets/svg/close.svg';
-import {
- accesModalActions,
- cartActions,
- drawerActions,
- walletActions,
-} from '../store/store';
-import CartProduct from '../components/card/CartProduct';
-import { formatNumber } from '../utils/helperFunctions';
+import { Lock, ShoppingCart, X } from 'lucide-react';
+
+import { FormControlLabel, FormGroup, styled, Switch } from '@mui/material';
+
+import { cartActions, drawerActions, walletActions } from '../../store/store';
+import { getShoppingCart } from '../../services/api';
+import { formatNumber } from '../../utils/helperFunctions';
+
+import CartProduct from './CartProduct';
 import classes from './Drawer.module.css';
 
 const IOSSwitch = styled(props => (
@@ -33,14 +24,17 @@ const IOSSwitch = styled(props => (
  '& .MuiSwitch-switchBase': {
   padding: 0,
   margin: 2,
-  transition: 'transform 300ms',
+  transitionDuration: '300ms',
   '&.Mui-checked': {
    transform: 'translateX(16px)',
    color: '#fff',
    '& + .MuiSwitch-track': {
-    backgroundColor: '#000',
+    backgroundColor: '#2d3748',
     opacity: 1,
     border: 0,
+   },
+   '&.Mui-disabled + .MuiSwitch-track': {
+    opacity: 0.5,
    },
   },
  },
@@ -48,39 +42,92 @@ const IOSSwitch = styled(props => (
   boxSizing: 'border-box',
   width: 22,
   height: 22,
-  transition: 'all 300ms',
  },
  '& .MuiSwitch-track': {
-  borderRadius: 13,
-  backgroundColor: '#c2c2c2',
+  borderRadius: 26 / 2,
+  backgroundColor: '#E9E9EA',
   opacity: 1,
-  transition: 'background-color 300ms',
+  transition: theme.transitions.create(['background-color'], {
+   duration: 500,
+  }),
  },
 }));
 
-const Drawer = ({ children, size }) => {
+const drawerVariants = {
+ open: lng => ({
+  x: 0,
+  transition: { type: 'spring', stiffness: 350, damping: 40 },
+ }),
+ closed: lng => ({
+  x: lng === 'fa' ? '-100%' : '100%',
+  transition: { type: 'spring', stiffness: 350, damping: 40 },
+ }),
+};
+
+const listContainerVariants = {
+ hidden: { opacity: 0 },
+ visible: {
+  opacity: 1,
+  transition: {
+   staggerChildren: 0.08,
+   delayChildren: 0.2,
+  },
+ },
+};
+
+const listItemVariants = {
+ hidden: { y: 20, opacity: 0 },
+ visible: { y: 0, opacity: 1, transition: { type: 'spring' } },
+ exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
+};
+
+const Drawer = () => {
  const dispatch = useDispatch();
  const { t } = useTranslation();
+ const {
+  isOpen: drawerState,
+  products,
+  totalPrice,
+  euro,
+  totalPriceAfterDiscount,
+ } = useSelector(state => state.cartStore);
+ const { token } = useSelector(state => state.userStore);
+ const { balance: walletBalance, useWallet: walletStatus } = useSelector(
+  state => state.walletStore,
+ );
+ const lng = useSelector(state => state.localeStore.lng) || 'fa';
 
- // Selectors
- const drawerState = useSelector(state => state.drawer.cartDrawerOpen);
- const cart = useSelector(state => state.cartStore);
- const lng = 'fa';
- const token = useSelector(state => state.userStore.token);
- const walletBalance = useSelector(state => state.walletStore.balance);
- const walletStatus = useSelector(state => state.walletStore.useWallet);
- const isLoadingData = useSelector(state => state.drawerStore.isLoading);
-
- const [productData, setProductData] = useState([]);
- const [payWithWalletChecked, setPayWithWalletChecked] = useState(walletStatus);
+ const [isLoadingData, setIsLoadingData] = useState(true);
 
  const toggleDrawer = () => {
   dispatch(drawerActions.close());
  };
 
  useEffect(() => {
+  const handleGetShoppingCart = async () => {
+   setIsLoadingData(true);
+   try {
+    const serverRes = await getShoppingCart(token);
+    if (serverRes.response.ok) {
+     dispatch(cartActions.set(serverRes.result.cart));
+     dispatch(walletActions.setBalance(serverRes.result.wallet_balance));
+    }
+   } catch (error) {
+    console.error('Failed to get shopping cart:', error);
+   } finally {
+    setIsLoadingData(false);
+   }
+  };
+
   if (drawerState && token) {
-   dispatch(drawerActions.fetchCartRequest(token));
+   handleGetShoppingCart();
+  } else if (!token) {
+   setIsLoadingData(false);
+  }
+ }, [drawerState, token, dispatch]);
+
+ useEffect(() => {
+  if (drawerState) {
    document.body.style.overflow = 'hidden';
   } else {
    document.body.style.overflow = '';
@@ -89,209 +136,200 @@ const Drawer = ({ children, size }) => {
   return () => {
    document.body.style.overflow = '';
   };
- }, [drawerState, token, dispatch]);
-
- useEffect(() => {
-  if (cart.products || drawerState) {
-   setProductData(cart.products);
-  }
- }, [cart, drawerState]);
+ }, [drawerState]);
 
  useEffect(() => {
   if (walletBalance > 0) {
    if (walletStatus) {
     dispatch(
      cartActions.setTotalPriceAfterDiscout(
-      Math.max(cart?.totalPrice - walletBalance, 0),
+      Math.max(totalPrice - walletBalance, 0),
      ),
     );
    } else {
-    dispatch(cartActions.setTotalPriceAfterDiscout(cart?.totalPrice));
+    dispatch(cartActions.setTotalPriceAfterDiscout(totalPrice));
    }
   } else {
    dispatch(walletActions.setWalletUse(false));
   }
- }, [cart.totalPrice, walletBalance, walletStatus, dispatch]);
+ }, [totalPrice, walletBalance, walletStatus, dispatch]);
+
+ const renderContent = () => {
+  if (isLoadingData) {
+   return (
+    <div className={classes.loadingState}>
+     {[...Array(3)].map((_, i) => (
+      <div key={i} className={classes.skeletonItem} />
+     ))}
+    </div>
+   );
+  }
+
+  if (!products || products.length === 0) {
+   return (
+    <motion.div
+     className={classes.emptyState}
+     initial={{ opacity: 0, scale: 0.9 }}
+     animate={{ opacity: 1, scale: 1 }}
+     transition={{ delay: 0.2, ease: 'easeOut' }}>
+     <ShoppingCart size={64} className={classes.emptyStateIcon} />
+     <h3 className={classes.emptyStateTitle}>{t('shopping_cart.empty')}</h3>
+     <p className={classes.emptyStateText}>
+      {t(
+       'shopping_cart.empty_message',
+       "Looks like you haven't added anything yet.",
+      )}
+     </p>
+    </motion.div>
+   );
+  }
+
+  return (
+   <motion.div
+    className={classes.productList}
+    variants={listContainerVariants}
+    initial='hidden'
+    animate='visible'>
+    <AnimatePresence>
+     {products.map(item => (
+      <motion.div
+       key={item.variation_id}
+       layout
+       variants={listItemVariants}
+       exit={listItemVariants.exit}>
+       <CartProduct data={item} />
+      </motion.div>
+     ))}
+    </AnimatePresence>
+   </motion.div>
+  );
+ };
 
  return (
-  <motion.div
-   className={`${classes.main}`}
-   initial={{ display: 'none' }}
-   animate={{ display: drawerState ? 'flex' : 'none' }}
-   transition={{ duration: 0.3, delay: drawerState ? 0 : 0.3 }}>
-   <motion.div
-    className={classes.content}
-    initial={{ x: '-100%' }}
-    animate={{ x: drawerState ? 0 : '-100%' }}
-    transition={{ type: 'spring', bounce: false, duration: 0.3 }}>
-    {/* Header */}
+  <AnimatePresence>
+   {drawerState && (
     <div
-     className={classes.header_wrapper}
-     style={{ flexDirection: lng === 'fa' ? 'row-reverse' : 'row' }}>
-     <span className={classes.header_text}>
-      <h2>{t('shopping_cart.cart')}</h2>
-     </span>
-     <IconButton
-      className={classes.close_btn}
+     className={classes.container}
+     role='dialog'
+     aria-modal='true'
+     dir={lng === 'fa' ? 'rtl' : 'ltr'}>
+     <motion.div
+      className={classes.backdrop}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
       onClick={toggleDrawer}
-      disableRipple={true}>
-      <Close className={classes.close_icon} />
-     </IconButton>
-    </div>
+     />
+     <motion.div
+      className={classes.drawerContent}
+      custom={lng}
+      variants={drawerVariants}
+      initial='closed'
+      animate='open'
+      exit='closed'>
+      <header className={classes.header}>
+       <h2 className={classes.title}>{t('shopping_cart.cart')}</h2>
+       <motion.button
+        className={classes.closeButton}
+        onClick={toggleDrawer}
+        whileHover={{ scale: 1.1, rotate: 90 }}
+        whileTap={{ scale: 0.9 }}
+        aria-label='Close cart'>
+        <X size={20} />
+       </motion.button>
+      </header>
 
-    {/* Cart Items */}
-    <div className={classes.items_wrapper}>
-     <div className={classes.items_sheet}>
-      {productData.map(el => (
-       <CartProduct key={el.id} data={el} />
-      ))}
-     </div>
-    </div>
+      <main className={classes.body}>{renderContent()}</main>
 
-    {/* Wallet Section */}
-    <div className={classes.wallet_wrapper}>
-     {isLoadingData ? (
-      <Skeleton variant='text' className={classes.skeleton} animation='wave' />
-     ) : (
-      <div
-       className={classes.total}
-       style={{ direction: lng === 'fa' ? 'rtl' : 'ltr' }}>
-       <p>{t('shopping_cart.total')}&nbsp;:&nbsp;</p>
-       <div>
-        {cart.totalPrice && lng !== 'fa'
-         ? cart?.totalPrice?.toFixed(2)
-         : formatNumber(Math.round(cart.totalPrice * cart.euro))}
-        &nbsp;
-        {t('m_unit')}
-       </div>
-      </div>
-     )}
+      {token && products?.length > 0 && (
+       <footer className={classes.footer}>
+        <div className={classes.summary}>
+         <div className={classes.walletControl}>
+          <div className={classes.walletInfo}>
+           <span className={classes.walletLabel}>{t('wallet')}</span>
+           <span className={classes.walletBalance}>
+            {formatNumber(Math.round(walletBalance * euro))} {t('m_unit')}
+           </span>
+          </div>
+          <FormControlLabel
+           disabled={walletBalance <= 0}
+           control={
+            <IOSSwitch
+             checked={walletStatus}
+             onChange={e => {
+              dispatch(walletActions.setWalletUse(e.target.checked));
+              dispatch(walletActions.setUserIntraction());
+             }}
+            />
+           }
+           labelPlacement='start'
+           label={
+            <span className={classes.switchLabel}>{t('use_wallet')}</span>
+           }
+           sx={{ m: 0 }}
+          />
+         </div>
 
-     {/* <div className={classes.wallet_btn_wrapper}>
-      <FormGroup
-       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignContent: 'center',
-        justifyContent: 'center',
-        direction: 'rtl',
-       }}>
-       <FormControlLabel
-        disabled={walletBalance <= 0}
-        control={
-         <IOSSwitch
-          checked={walletStatus}
-          onChange={e => {
-           dispatch(walletActions.setWalletUse(e.target.checked));
-           dispatch(walletActions.setUserIntraction());
-          }}
-         />
-        }
-        label={t('use_wallet')}
-        sx={{
-         display: 'flex',
-         flexDirection: 'column-reverse',
-         alignContent: 'flex-start',
-         '& .MuiFormControlLabel-label': {
-          fontSize: '0.5rem',
-          color: '#000000',
-          padding: '0 5px',
-         },
-        }}
-       />
-      </FormGroup>
-
-      {isLoadingData && walletBalance > 0 ? (
-       <Skeleton variant='text' className={classes.skeleton} animation='wave' />
-      ) : (
-       <div
-        style={{
-         direction: lng === 'fa' ? 'rtl' : 'ltr',
-         display: 'flex',
-         color: walletStatus ? '#000000' : '#616161',
-        }}>
-        <p style={{ whiteSpace: 'nowrap' }}>{t('wallet')}&nbsp;:&nbsp;</p>
-        <span dir='ltr' style={{ margin: '0 10px' }}>
-         {lng !== 'fa'
-          ? walletBalance
-          : formatNumber(walletBalance * cart.euro)}
-         &nbsp;
-        </span>
-        {t('m_unit')}
-       </div>
-      )}
-     </div> */}
-    </div>
-
-    {/* Actions Section */}
-    <div className={classes.actions_wrapper}>
-     {token ? (
-      <Link to={`/${lng}/precheckout`} target='_blank'>
-       <IconButton className={classes.pay_btn} disableRipple={true}>
-        <KeyboardArrowRight fontSize='10' />
-        &nbsp;&nbsp; {t('shopping_cart.pay')}&nbsp;&nbsp;
-       </IconButton>
-      </Link>
-     ) : (
-      <IconButton
-       className={classes.pay_btn}
-       onClick={() => {
-        dispatch(accesModalActions.login());
-       }}>
-       <Lock fontSize='17px !important' />
-       &nbsp;&nbsp; {t('login')}&nbsp;&nbsp;
-      </IconButton>
-     )}
-
-     {isLoadingData ? (
-      <Skeleton variant='text' className={classes.skeleton} animation='wave' />
-     ) : (
-      <div
-       className={classes.total}
-       style={{ direction: lng === 'fa' ? 'rtl' : 'ltr' }}>
-       <p>{t('payment')}&nbsp;:&nbsp;</p>
-       <div>
-        {walletStatus ? (
-         <>
-          {cart.totalPrice && walletBalance && (
-           <>
-            {lng !== 'fa'
-             ? cart.totalPriceAfterDiscount.toFixed(2)
-             : formatNumber(
-                Math.round(cart.totalPriceAfterDiscount * cart.euro),
-               )}
-            &nbsp;
+         <div className={classes.summaryRow}>
+          <span>{t('shopping_cart.total')}</span>
+          <span>
+           {formatNumber(Math.round(totalPrice * euro))} {t('m_unit')}
+          </span>
+         </div>
+         {walletStatus && walletBalance > 0 && (
+          <div className={`${classes.summaryRow} ${classes.discount}`}>
+           <span>{t('wallet_discount', 'Wallet Discount')}</span>
+           <span>
+            -{' '}
+            {formatNumber(
+             Math.round(Math.min(totalPrice, walletBalance) * euro),
+            )}{' '}
             {t('m_unit')}
-           </>
-          )}
-         </>
-        ) : (
-         <>
-          {lng !== 'fa'
-           ? cart?.totalPrice?.toFixed(2)
-           : formatNumber(Math.round(cart.totalPrice * cart.euro))}
-          &nbsp;
-          {t('m_unit')}
-         </>
-        )}
-       </div>
-      </div>
-     )}
-    </div>
-   </motion.div>
+           </span>
+          </div>
+         )}
+         <div className={`${classes.summaryRow} ${classes.grandTotal}`}>
+          <span>{t('payment')}</span>
+          <span>
+           {formatNumber(Math.round(totalPriceAfterDiscount * euro))}{' '}
+           {t('m_unit')}
+          </span>
+         </div>
+        </div>
 
-   {/* Backdrop */}
-   <motion.div
-    className={classes.backdrop}
-    initial={{ display: 'none', opacity: 0 }}
-    animate={{
-     display: drawerState ? 'flex' : 'none',
-     opacity: drawerState ? 1 : 0,
-    }}
-    onClick={toggleDrawer}
-    transition={{ duration: 0.3 }}
-   />
-  </motion.div>
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+         <Link
+          to={`/${lng}/precheckout`}
+          target='_blank'
+          className={classes.checkoutButton}
+          onClick={toggleDrawer}>
+          {t('shopping_cart.pay')}
+         </Link>
+        </motion.div>
+       </footer>
+      )}
+
+      {!token && products?.length > 0 && (
+       <footer className={`${classes.footer} ${classes.loginFooter}`}>
+        <motion.button
+         className={classes.checkoutButton}
+         onClick={() => {
+          // This should trigger a login modal
+          toggleDrawer();
+          // dispatch(accesModalActions.login());
+         }}
+         whileHover={{ scale: 1.03 }}
+         whileTap={{ scale: 0.98 }}>
+         <Lock size={16} />
+         {t('login_to_continue', 'Login to Continue')}
+        </motion.button>
+       </footer>
+      )}
+     </motion.div>
+    </div>
+   )}
+  </AnimatePresence>
  );
 };
 

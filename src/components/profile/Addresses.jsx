@@ -6,17 +6,17 @@ import styles from './Addresses.module.css';
 const initialAddresses = [
  {
   id: 'addr1',
-  firstName: 'Cosmo',
-  lastName: 'Starlight',
-  address: '123 Nebula Lane, Starship City',
+  firstName: 'کازمو',
+  lastName: 'استارلایت',
+  address: '123 خیابان سحابی، شهر ستاره‌ای',
   postalCode: '98765',
   isDefault: true,
  },
  {
   id: 'addr2',
-  firstName: 'Galileo',
-  lastName: 'Quasar',
-  address: '456 Comet Trail, Planet Verde',
+  firstName: 'گالیله',
+  lastName: 'کوازار',
+  address: '456 مسیر دنباله‌دار، سیاره سبز',
   postalCode: '54321',
   isDefault: false,
  },
@@ -65,7 +65,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
      onClick={e => e.stopPropagation()}>
      <div className={styles.modalHeader}>
       <h2 className={styles.modalTitle}>
-       {address ? 'Edit Address' : 'Add New Address'}
+       {address ? 'ویرایش آدرس' : 'افزودن آدرس جدید'}
       </h2>
       <button onClick={onClose} className={styles.closeButton}>
        <X size={20} />
@@ -76,7 +76,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
       <div className={styles.formFieldsGrid}>
        <div className={styles.formGroup}>
         <label htmlFor={`${formId}-firstName`} className={styles.formLabel}>
-         First Name
+         نام
         </label>
         <input
          type='text'
@@ -90,7 +90,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
        </div>
        <div className={styles.formGroup}>
         <label htmlFor={`${formId}-lastName`} className={styles.formLabel}>
-         Last Name
+         نام خانوادگی
         </label>
         <input
          type='text'
@@ -105,7 +105,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
       </div>
       <div className={styles.formGroup}>
        <label htmlFor={`${formId}-address`} className={styles.formLabel}>
-        Address
+        آدرس
        </label>
        <textarea
         id={`${formId}-address`}
@@ -118,7 +118,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
       </div>
       <div className={styles.formGroup}>
        <label htmlFor={`${formId}-postalCode`} className={styles.formLabel}>
-        Postal Code
+        کد پستی
        </label>
        <input
         type='text'
@@ -138,14 +138,14 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`${styles.formButton} ${styles.cancel}`}>
-        Cancel
+        انصراف
        </motion.button>
        <motion.button
         type='submit'
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`${styles.formButton} ${styles.save}`}>
-        Save Address
+        ذخیره آدرس
        </motion.button>
       </div>
      </form>
@@ -164,7 +164,7 @@ const AddressCard = ({ address, onEdit, onDelete }) => (
   transition={{ type: 'spring', stiffness: 260, damping: 20 }}
   className={styles.card}>
   {address.isDefault && (
-   <div className={styles.defaultBadge}>
+   <div>
     <MapPin size={16} />
    </div>
   )}
@@ -173,7 +173,7 @@ const AddressCard = ({ address, onEdit, onDelete }) => (
     {address.firstName} {address.lastName}
    </p>
    <p className={styles.cardAddress}>{address.address}</p>
-   <p className={styles.cardPostal}>Postal Code: {address.postalCode}</p>
+   <p className={styles.cardPostal}>کد پستی: {address.postalCode}</p>
   </div>
   <div className={styles.cardActions}>
    <button onClick={() => onEdit(address)} className={styles.actionButton}>
@@ -219,9 +219,9 @@ const Addresses = () => {
   <div className={styles.container}>
    <header className={styles.header}>
     <div className={styles.headerContent}>
-     <h1 className={styles.title}>Your Addresses</h1>
+     <h1 className={styles.title}>آدرس‌های شما</h1>
      <p className={styles.subtitle}>
-      Manage your shipping and billing addresses.
+      آدرس‌های حمل و نقل و صورتحساب خود را مدیریت کنید.
      </p>
     </div>
     <motion.button
@@ -230,7 +230,7 @@ const Addresses = () => {
      whileTap={{ scale: 0.95 }}
      className={styles.addButton}>
      <Plus size={16} />
-     Add New Address
+     افزودن آدرس جدید
     </motion.button>
    </header>
 
@@ -249,8 +249,8 @@ const Addresses = () => {
     {addresses.length === 0 && (
      <div className={styles.emptyState}>
       <MapPin size={48} className={styles.emptyStateIcon} />
-      <p>No addresses found.</p>
-      <p>Add your first address to get started.</p>
+      <p>آدرسی یافت نشد.</p>
+      <p>برای شروع اولین آدرس خود را اضافه کنید.</p>
      </div>
     )}
    </div>

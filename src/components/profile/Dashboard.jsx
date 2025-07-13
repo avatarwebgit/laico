@@ -6,8 +6,8 @@ import styles from './Dashboard.module.css';
 const Dashboard = () => {
  const [isEditing, setIsEditing] = useState(false);
  const [userData, setUserData] = useState({
-  firstName: 'Cosmo',
-  lastName: 'Starlight',
+  firstName: 'کازمو',
+  lastName: 'استارلایت',
   email: 'cosmo.starlight@galaxy.net',
   phone: '+1-234-567-8900',
  });
@@ -25,7 +25,7 @@ const Dashboard = () => {
  const handleSave = () => {
   setUserData(tempUserData);
   setIsEditing(false);
-  // Here you would typically make an API call to save the data
+  // اینجا معمولاً یک درخواست API برای ذخیره داده‌ها ارسال می‌شود
  };
 
  const handleChange = e => {
@@ -36,8 +36,8 @@ const Dashboard = () => {
  return (
   <div className={styles.dashboard}>
    <header className={styles.header}>
-    <h1 className={styles.title}>Account Information</h1>
-    <p className={styles.subtitle}>View and edit your personal details.</p>
+    <h1 className={styles.title}>اطلاعات حساب کاربری</h1>
+    <p className={styles.subtitle}>مشاهده و ویرایش اطلاعات شخصی خود.</p>
    </header>
 
    <motion.div
@@ -46,15 +46,15 @@ const Dashboard = () => {
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.4, ease: 'easeOut' }}>
     <div className={styles.cardHeader}>
-     <h2 className={styles.cardTitle}>Personal Details</h2>
+     <h2 className={styles.cardTitle}>جزئیات شخصی</h2>
      {!isEditing && (
       <motion.button
        className={`${styles.button} ${styles.secondaryButton}`}
        onClick={handleEdit}
        whileHover={{ scale: 1.05 }}
        whileTap={{ scale: 0.95 }}>
-       <Edit3 size={16} style={{ marginRight: '8px' }} />
-       Edit
+       <Edit3 size={16} style={{ marginLeft: '8px' }} />
+       ویرایش
       </motion.button>
      )}
     </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
      <div className={styles.formGrid}>
       <div className={styles.formGroup}>
        <label htmlFor='firstName' className={styles.label}>
-        First Name
+        نام
        </label>
        <div className={styles.inputWrapper}>
         <User size={18} className={styles.inputIcon} />
@@ -80,7 +80,7 @@ const Dashboard = () => {
       </div>
       <div className={styles.formGroup}>
        <label htmlFor='lastName' className={styles.label}>
-        Last Name
+        نام خانوادگی
        </label>
        <div className={styles.inputWrapper}>
         <User size={18} className={styles.inputIcon} />
@@ -97,7 +97,7 @@ const Dashboard = () => {
       </div>
       <div className={`${styles.formGroup} ${styles.fullWidth}`}>
        <label htmlFor='email' className={styles.label}>
-        Email Address
+        آدرس ایمیل
        </label>
        <div className={styles.inputWrapper}>
         <Mail size={18} className={styles.inputIcon} />
@@ -114,7 +114,7 @@ const Dashboard = () => {
       </div>
       <div className={`${styles.formGroup} ${styles.fullWidth}`}>
        <label htmlFor='phone' className={styles.label}>
-        Phone Number
+        شماره تلفن
        </label>
        <div className={styles.inputWrapper}>
         <Smartphone size={18} className={styles.inputIcon} />
@@ -145,16 +145,16 @@ const Dashboard = () => {
         onClick={handleCancel}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}>
-        <X size={16} style={{ marginRight: '8px' }} />
-        Cancel
+        <X size={16} style={{ marginLeft: '8px' }} />
+        انصراف
        </motion.button>
        <motion.button
         className={`${styles.button} ${styles.primaryButton}`}
         onClick={handleSave}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}>
-        <Check size={16} style={{ marginRight: '8px' }} />
-        Save Changes
+        <Check size={16} style={{ marginLeft: '8px' }} />
+        ذخیره تغییرات
        </motion.button>
       </motion.div>
      )}

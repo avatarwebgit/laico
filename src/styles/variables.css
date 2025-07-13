@@ -39,18 +39,50 @@
  --normal-font: 13px;
 
  /* sidebar variables */
- --sidebar-bg: #1e293b;
- --text-primary: #94a3b8;
- --text-active: #ffffff;
+ --sidebar-bg: #ededed;
+ --text-primary: #282828;
+ --text-active: #000000;
  --primary: #3b82f6;
  --secondary: #8b5cf6;
  --danger: #ef4444;
- --hover-bg: rgba(255, 255, 255, 0.05);
+ --hover-bg: rgba(126, 167, 232, 0.2);
  --active-bg: rgba(59, 130, 246, 0.2);
  --radius-sm: 4px;
- --radius-md: 8px;
- --radius-lg: 12px;
+ --radius-md: 4px;
+ --radius-lg: 8px;
  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+ /* profile styles */
+ --base-bg: #0f172a;
+ --card-bg: #1e293b;
+ --border: #ededed;
+ --text-light: #b9c1cd;
+ --text-muted: #92aacb;
+ --text-white: #ffffff;
+ --red: #ef4444;
+ --red-light: #f87171;
+ --profile-modal-zindex: 100000;
+ --text-secondary: #202020;
+ --green: #4ade80;
+
+ /* Status Colors */
+ --status-delivered-bg: rgba(74, 222, 128, 0.1);
+ --status-delivered-text: #00ff5e;
+ --status-shipped-bg: rgba(59, 130, 246, 0.1);
+ --status-shipped-text: #0062ff;
+ --status-processing-bg: rgba(251, 191, 36, 0.1);
+ --status-processing-text: #775704;
+ --status-cancelled-bg: rgba(248, 113, 113, 0.1);
+ --status-cancelled-text: #e92525;
+
+ --status-open-bg: rgba(251, 191, 36, 0.1);
+ --status-open-text: #fbbf24;
+ --status-answered-bg: rgba(59, 130, 246, 0.1);
+ --status-answered-text: #3b82f6;
+ --status-closed-bg: rgba(74, 222, 128, 0.1);
+ --status-closed-text: #4ade80;
+
+ --input-disabled: #e8e8e8;
 }
 
 h1,

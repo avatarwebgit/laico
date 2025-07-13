@@ -21,10 +21,10 @@ const mainBreakpoints = {
   slidesPerView: 2,
  },
  768: {
-  slidesPerView: 4,
+  slidesPerView: 3,
  },
  1023: {
-  slidesPerView: 4,
+  slidesPerView: 3,
  },
 };
 const breakpoints = {
@@ -156,29 +156,32 @@ const items = [
 ];
 
 const Home = () => {
-        // useEffect(() => {
-        //   document.body.style.backgroundColor = '#1a1a2e';
-          
-        //   return () => {
-        //     document.body.style.backgroundColor = '';
-        //   };
-        // }, []);
+ // useEffect(() => {
+ //   document.body.style.backgroundColor = '#1a1a2e';
+
+ //   return () => {
+ //     document.body.style.backgroundColor = '';
+ //   };
+ // }, []);
  return (
   <div className={classes.main}>
    <Carusel />
-   <Slider
-    items={[
-     <ProductBox />,
-     <ProductBox />,
-     <ProductBox />,
-     <ProductBox />,
-     <ProductBox />,
-    ]}
-    slidesPerView={4}
-    breakpoints={mainBreakpoints}
-    spaceBetween={40}
-    autoplay={false}
-   />
+   <div className={classes['most-viwed-wrapper']}>
+    <Slider
+     items={[
+      <ProductBox />,
+      <ProductBox />,
+      <ProductBox />,
+      <ProductBox />,
+      <ProductBox />,
+     ]}
+     slidesPerView={3}
+     breakpoints={mainBreakpoints}
+     spaceBetween={60}
+     autoplay={false}
+    />
+   </div>
+
    <Banner />
    <Tabs items={items} title={' همه محصولات'} />
    <Brands />

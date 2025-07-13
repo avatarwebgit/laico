@@ -6,11 +6,11 @@ main {
  display: flex;
  flex-direction: column;
  width: 100%;
+ padding-bottom: 20px;
 }
 
 .bottom-wrapper {
  display: flex;
- gap: 20px;
 }
 
 .sidebar-wrapper {

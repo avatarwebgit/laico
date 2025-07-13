@@ -1,193 +1,172 @@
-:root {
-  --main-color-1: #161d6f;
-  --main-color-2: #0b2f9f;
-  --main-color-3: #98ded9;
-  --main-color-4: #c7ffd8;
-  --base-bg: #0f172a;
-  --card-bg: #1e293b;
-  --border: #334155;
-  --text-light: #e2e8f0;
-  --text-muted: #94a3b8;
-  --text-white: #ffffff;
-  
-  /* Status Colors */
-  --status-delivered-bg: rgba(74, 222, 128, 0.1);
-  --status-delivered-text: #4ade80;
-  --status-shipped-bg: rgba(59, 130, 246, 0.1);
-  --status-shipped-text: #3b82f6;
-  --status-processing-bg: rgba(251, 191, 36, 0.1);
-  --status-processing-text: #fbbf24;
-  --status-cancelled-bg: rgba(248, 113, 113, 0.1);
-  --status-cancelled-text: #f87171;
-}
-
 .container {
-  /* Full width */
+ /* Full width */
 }
 
 .header {
-  margin-bottom: 2rem;
+ margin-bottom: 2rem;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-light);
+ font-size: var(--title-font);
+ font-weight: 700;
+ color: var(--main-color-1);
 }
 
 .subtitle {
-  margin-top: 0.25rem;
-  color: var(--text-muted);
+ margin-top: 0.25rem;
+ color: #000;
 }
 
 .content {
-  border-radius: 1rem;
-  overflow: hidden;
-  /* Glassmorphism */
-  background: rgba(30, 41, 59, 0.55);
-  backdrop-filter: blur(12px) saturate(150%);
-  -webkit-backdrop-filter: blur(12px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0;
-  transition: all 0.3s ease;
+ border-radius: var(--radius-lg);
+ overflow: hidden;
+
+ background-color: #fff;
+ backdrop-filter: blur(12px) saturate(150%);
+ -webkit-backdrop-filter: blur(12px) saturate(150%);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ padding: 0;
+ transition: all 0.3s ease;
 }
 
 .content:hover {
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+ box-shadow: 0 8px 10px rgba(0, 0, 0, 0.25);
+ border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .tableWrapper {
-  overflow-x: auto;
-  display: none; /* Hidden on mobile by default */
+ overflow-x: auto;
+ display: none;
 }
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: right; /* RTL */
+ width: 100%;
+ border-collapse: collapse;
+ text-align: right;
 }
 
 .tableHead {
-  background-color: rgba(42, 58, 82, 0.7); /* Semi-transparent */
+ background-color: #fff;
 }
 
 .tableHeader {
-  padding: 1rem 1.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+ padding: 1rem 1.5rem;
+ font-size: var(--title-font);
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 0.05em;
+ color: var(--text-muted);
+ border-bottom: 1px solid #c2c2c2;
+
 }
 
 .tableCell {
-  padding: 1.25rem 1.5rem;
-  font-size: 0.9rem;
-  color: var(--text-light);
-  border-top: 1px solid var(--border);
-  white-space: nowrap;
+ padding: 1.25rem 1.5rem;
+ font-size: var(--caption-font);
+ color: #000;
+ border-top: 1px solid #ededed;
+ white-space: nowrap;
 }
 
 tbody tr {
-    transition: background-color 0.2s ease;
+ transition: background-color 0.2s ease;
 }
 
 tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.03);
+ background-color: rgba(255, 255, 255, 0.03);
 }
 
 .statusBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  font-weight: 500;
-  font-size: 0.8rem;
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.35rem 0.75rem;
+ border-radius: 9999px;
+ font-weight: 500;
+ font-size: var(--caption-font);
 }
 
 .delivered {
-  background-color: var(--status-delivered-bg);
-  color: var(--status-delivered-text);
+ background-color: var(--status-delivered-bg);
+ color: var(--status-delivered-text);
 }
 .shipped {
-  background-color: var(--status-shipped-bg);
-  color: var(--status-shipped-text);
+ background-color: var(--status-shipped-bg);
+ color: var(--status-shipped-text);
 }
 .processing {
-  background-color: var(--status-processing-bg);
-  color: var(--status-processing-text);
+ background-color: var(--status-processing-bg);
+ color: var(--status-processing-text);
 }
 .cancelled {
-  background-color: var(--status-cancelled-bg);
-  color: var(--status-cancelled-text);
+ background-color: var(--status-cancelled-bg);
+ color: var(--status-cancelled-text);
 }
 
 /* Mobile styles */
 .mobileList {
-    display: flex;
-    flex-direction: column;
+ display: flex;
+ flex-direction: column;
 }
 
 .card {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    transition: background-color 0.2s ease;
+ padding: 1rem 1.5rem;
+ border-bottom: 1px solid var(--border);
+ transition: background-color 0.2s ease;
 }
 
 .card:hover {
-    background-color: rgba(255, 255, 255, 0.03);
+ background-color: rgba(255, 255, 255, 0.03);
 }
 
 .card:last-child {
-    border-bottom: none;
+ border-bottom: none;
 }
 
 .cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 1rem;
 }
 
 .cardTitle {
-    font-weight: 600;
-    color: var(--text-light);
+ font-weight: 600;
+ color: var(--text-light);
 }
 
 .cardBody {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+ display: flex;
+ flex-direction: column;
+ gap: 0.5rem;
 }
 
 .cardRow {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ color: var(--text-muted);
+ font-size: 0.9rem;
 }
 
 .cardIcon {
-    color: var(--text-muted);
+ color: var(--text-muted);
 }
 
 .cardTotal {
-    font-weight: 600;
-    color: var(--text-light);
+ font-weight: 600;
+ color: var(--text-light);
 }
 
 /* Responsive Breakpoint */
 @media (min-width: 768px) {
-  .tableWrapper {
-    display: block;
-  }
-  .mobileList {
-    display: none;
-  }
-  .content {
-    /* Padding is not needed if the table/list is inside */
-  }
+ .tableWrapper {
+  display: block;
+ }
+ .mobileList {
+  display: none;
+ }
+ .content {
+  /* Padding is not needed if the table/list is inside */
+ }
 }
