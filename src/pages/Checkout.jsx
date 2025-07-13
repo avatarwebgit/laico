@@ -211,7 +211,7 @@ const Checkout = () => {
        duration={.5}
        useEasing={true}
        separator=','
-       formattingFn={value => value.toLocaleString('fa-IR')}
+       formattingFn={value => (value/10).toLocaleString('fa-IR')}
       />&nbsp;
       تومان
      </span>

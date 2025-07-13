@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import Content from '../components/common/Content';
@@ -19,6 +19,8 @@ const Profile = () => {
  const { t } = useTranslation();
  const location = useLocation();
  const [activeComponent, setActiveComponent] = useState(null);
+
+ const navigate = useNavigate()
 
  useEffect(() => {
   const pathSegments = location.pathname.split('/');
@@ -40,7 +42,7 @@ const Profile = () => {
    case 'addresses':
     return <Addresses />;
    default:
-    return <Dashboard />;
+    return navigate('/profile/dashboard');
   }
  };
 
