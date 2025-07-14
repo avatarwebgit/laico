@@ -1,19 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import {
- Check,
- ChevronRight,
- CreditCard,
- MapPin,
- Minus,
- Plus,
- ShoppingCart,
- Trash2,
- Truck,
+  Check,
+  ChevronLeft,
+  CreditCard,
+  MapPin,
+  Minus,
+  Plus,
+  ShoppingCart,
+  Trash2,
+  Truck
 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import CountUp from 'react-countup';
 import { formatNumber } from '../utils/helperFucntions';
 import styles from './Checkout.module.css';
-import CountUp from 'react-countup';
 
 const initialCartItems = [
  {
@@ -128,8 +128,8 @@ const Checkout = () => {
  );
 
  useEffect(() => {
-  setPrevPrice(currentPrice);
-  setCurrentPrice(total);
+  setPrevPrice(currentPrice / 10);
+  setCurrentPrice(total / 10);
  }, [total]);
 
  const handleNext = () => setStep(s => Math.min(s + 1, 3));
@@ -208,12 +208,12 @@ const Checkout = () => {
        className='account-balance'
        start={prevPrice}
        end={currentPrice}
-       duration={.5}
+       duration={0.5}
        useEasing={true}
        separator=','
-       formattingFn={value => (value/10).toLocaleString('fa-IR')}
-      />&nbsp;
-      تومان
+       formattingFn={value => value.toLocaleString('fa-IR')}
+      />
+      &nbsp; تومان
      </span>
     </div>
    </div>
@@ -383,7 +383,7 @@ const Checkout = () => {
           (step === 2 && !selectedAddressId)
          }>
          <span>ادامه</span>
-         <ChevronRight size={20} />
+         <ChevronLeft size={20} />
         </motion.button>
        ) : (
         <motion.button

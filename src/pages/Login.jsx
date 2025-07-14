@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { AdUnits, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
+ Button,
  createTheme,
  IconButton,
  InputAdornment,
@@ -7,37 +8,32 @@ import {
  ThemeProvider,
 } from '@mui/material';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-import {
- AdUnits,
- Google,
- Visibility,
- VisibilityOff,
-} from '@mui/icons-material';
-import { Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { notify, title, useNavigation } from '../utils/helperFucntions';
+import { useDispatch, useSelector } from 'react-redux';
+import { title, useNavigation } from '../utils/helperFucntions';
 
-// import { accesModalActions, signupActions } from '../../store/store';
-
-// import { getUserTokenGoogle, login, useUser } from '../../services/api';
-
-import { ReactComponent as Close } from '../assets/svgs/close.svg';
 import logo from '../assets/images/Logo.png';
 
-import { userActions } from '../store/store';
-
 import classes from './Login.module.css';
+import { drawerActions } from '../store/drawer/drawerSlice';
+import { useLocation } from 'react-router-dom';
 const Login = () => {
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
  const [isError, setIsError] = useState(false);
  const [isEmpty, setIsEmpty] = useState(false);
  const [showPassword, setShowPassword] = useState(false);
- const [token, settoken] = useState(null);
  const [errors, setErrors] = useState([]);
 
  const dispatch = useDispatch();
+
+ const { navigateTo } = useNavigation();
+ const location = useLocation();
+ const redirectAfterLogin = useSelector(
+  state => state.drawerStore.redirectAfterLogin,
+ );
+ const token = useSelector(state => state.userStore.token);
 
  const googleLogin = useGoogleLogin({
   onSuccess: token => console.log(token),
@@ -95,8 +91,6 @@ const Login = () => {
   },
  });
 
- const { navigateTo } = useNavigation();
-
  const handleGetScore = value => {
   try {
    //    console.log(value);
@@ -117,30 +111,19 @@ const Login = () => {
   //   dispatch(accesModalActions.otp());
  };
 
- const handleLogin = async () => {
-  //   const serverRes = await login(email, password);
-  //   if (serverRes.response.ok) {
-  //    if (serverRes.result.token) {
-  //     dispatch(userActions.set(serverRes.result.token));
-  //     dispatch(accesModalActions.close());
-  //     settoken(serverRes.result.token);
-  //     dispatch(
-  //      signupActions.set({
-  //       ...serverRes.result.user,
-  //       selectedCity: serverRes.result.user.Country,
-  //       selectedCountry: serverRes.result.user.Country,
-  //       createdAt: new Date().toISOString(),
-  //      }),
-  //     );
-  //    }
-  //   } else {
-  //    setErrors(serverRes.result.errors);
-  //   }
- };
+ const handleLogin = async () => {};
 
  useEffect(() => {
   title('لایکو-ورود');
  }, []);
+
+ useEffect(() => {
+  if (token) {
+   const redirectTo = location.state?.from || redirectAfterLogin || '/';
+   navigateTo(redirectTo);
+   dispatch(drawerActions.clearRedirectAfterLogin());
+  }
+ }, [token, navigateTo, location, redirectAfterLogin]);
 
  return (
   <div className={classes.bg}>

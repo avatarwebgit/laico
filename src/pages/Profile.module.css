@@ -1,4 +1,4 @@
-main {
+.profile-main {
  min-height: 100vh;
 }
 
@@ -21,13 +21,18 @@ main {
  flex: 1 1 auto;
 }
 
+h2,
+h3 {
+ text-align: unset;
+}
+
 @media only screen and (max-width: 480px) {
  .sidebar-wrapper {
   margin: 0;
   width: 100%;
  }
- .bottom-wrapper{
-    flex-direction: column;
+ .bottom-wrapper {
+  flex-direction: column;
  }
 }
 
@@ -36,8 +41,8 @@ main {
   margin: 0;
   width: 100%;
  }
- .bottom-wrapper{
-    flex-direction: column;
+ .bottom-wrapper {
+  flex-direction: column;
  }
 }
 

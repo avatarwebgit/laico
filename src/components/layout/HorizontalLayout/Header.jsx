@@ -1,7 +1,7 @@
 import { Badge, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Content from '../../common/Content';
 
@@ -16,9 +16,12 @@ import { useNavigation } from '../../../utils/helperFucntions';
 import '../../../styles/common.css';
 import Search from '../../common/Search';
 import classes from './Header.module.css';
+import { drawerActions } from '../../../store/drawer/drawerSlice';
 const Header = () => {
  const [scrollY, setScrollY] = useState(0);
  const token = useSelector(state => state.userStore.token);
+
+ const dispatch = useDispatch();
 
  let height,
   width = '20px';
@@ -26,7 +29,7 @@ const Header = () => {
  const { navigateTo } = useNavigation();
 
  const handleGoToLogin = () => {
-  navigateTo('/login');
+  navigateTo('/login', { state: {} });
  };
 
  useEffect(() => {
@@ -62,7 +65,9 @@ const Header = () => {
          vertical: 'top',
          horizontal: 'right',
         }}>
-        <IconButton disableRipple={true}>
+        <IconButton
+         disableRipple={true}
+         onClick={() => dispatch(drawerActions.cartOpen())}>
          <Basket className='icon-normal' />
         </IconButton>
        </Badge>
@@ -72,11 +77,15 @@ const Header = () => {
          vertical: 'top',
          horizontal: 'right',
         }}>
-        <IconButton disableRipple={true}>
+        <IconButton
+         disableRipple={true}
+         onClick={() => dispatch(drawerActions.favoritesOpen())}>
          <Heart className='icon-normal' />
         </IconButton>
        </Badge>
-       <IconButton disableRipple={true}>
+       <IconButton
+        disableRipple={true}
+        onClick={() => navigateTo('/profile/dashboard')}>
         <Avatar className='icon-normal' />
        </IconButton>
        <IconButton disableRipple={true} onClick={handleGoToLogin}>

@@ -46,8 +46,8 @@ const Profile = () => {
   }
  };
 
- return (
-  <main>
+  return (
+    <main className={classes['profile-main'] }>
    <Content contentClassname={classes.content}>
     <Breadcrumbs
      linkDataProp={[

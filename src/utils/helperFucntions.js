@@ -1,7 +1,6 @@
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { useState, useEffect } from 'react';
 
 export const toPersianNumber = num => {
  const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
@@ -28,7 +27,7 @@ export function formatNumber(amount, currency = 'toman') {
  const formatted = new Intl.NumberFormat('fa-IR').format(value);
 
  return (
-  <div style={{whiteSpace:'nowrap'}}>
+  <div style={{ whiteSpace: 'nowrap' }}>
    {currency === 'toman' ? ` ${formatted} تومان` : `${formatted} ریال`}
   </div>
  );

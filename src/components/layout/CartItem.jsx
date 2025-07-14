@@ -1,26 +1,25 @@
-import { Add, Delete, Info, Remove } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
+import { Info, Minus, Plus, Trash2 } from 'lucide-react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { getProductDetailsWithId, sendShoppingCart } from '../../services/api';
-
-import { Link } from 'react-router-dom';
 import classes from './CartItem.module.css';
 
-const CartItem = ({ data: productData }) => {
- const [quantity, setQuantity] = useState(1);
+const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
+ const [quantity, setQuantity] = useState(productData.selected_quantity || 1);
  const [variation, setVariation] = useState(null);
  const [isMoreThanQuantity, setIsMoreThanQuantity] = useState(false);
 
  const abortControllerRef = useRef(new AbortController());
 
  const { t } = useTranslation();
- const lng = useSelector(state => state.localeStore.lng);
- const euro = useSelector(state => state.cartStore.euro);
- const token = useSelector(state => state.userStore.token);
+ const lng = 'fa';
+ const euro = 1000;
+ const token = useSelector(state => state.userStore?.token);
  const dispatch = useDispatch();
 
  useEffect(() => {
@@ -77,20 +76,28 @@ const CartItem = ({ data: productData }) => {
    newQuantity = 1;
   }
 
+  let finalQuantity = newQuantity;
+
   if (!isByOrder && newQuantity > availableQuantity) {
    setQuantity(availableQuantity);
    handleUpdateCart(availableQuantity);
    setIsMoreThanQuantity(true);
+   finalQuantity = availableQuantity;
   } else {
    setQuantity(newQuantity);
    handleUpdateCart(newQuantity);
    setIsMoreThanQuantity(false);
   }
+
+  if (onQuantityUpdate) {
+   onQuantityUpdate(productData.id, finalQuantity);
+  }
  };
 
  const handleRemoveItem = async () => {
-  if (true) {
-  } else {
+  // In a real app, you would also call an API to remove the item from the backend.
+  if (onRemoveItem) {
+   onRemoveItem(productData.id);
   }
  };
 
@@ -122,11 +129,15 @@ const CartItem = ({ data: productData }) => {
      {t('color')}: {productData.color} | {t('size')}: {productData.size}
     </p>
     <p className={classes.itemPrice}>
-     {Math.round(productData.sale_price * euro)} {t('m_unit')}
+     {Math.round(productData.sale_price * euro).toLocaleString()} {t('m_unit')}
     </p>
    </div>
 
    <div className={classes.actionsWrapper}>
+    <p className={classes.totalPrice}>
+     {Math.round(quantity * productData.sale_price * euro).toLocaleString()}{' '}
+     {t('m_unit')}
+    </p>
     <div
      className={`${classes.quantityChanger} ${
       isMoreThanQuantity ? classes.error : ''
@@ -136,32 +147,28 @@ const CartItem = ({ data: productData }) => {
       className={classes.quantityButton}
       onClick={() => handleQuantityChange(quantity - 1)}
       disabled={quantity <= 1}>
-      <Remove fontSize='small' />
+      <Minus size={16} />
      </motion.button>
      <span className={classes.quantityDisplay}>{quantity}</span>
      <motion.button
       whileTap={{ scale: 0.9 }}
       className={classes.quantityButton}
       onClick={() => handleQuantityChange(quantity + 1)}>
-      <Add fontSize='small' />
+      <Plus size={16} />
      </motion.button>
     </div>
-
-    <p className={classes.totalPrice}>
-     {Math.round(quantity * productData.sale_price * euro)} {t('m_unit')}
-    </p>
-
-    <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
-     <Tooltip title={t('remove_item')} placement='top'>
-      <IconButton
-       onClick={handleRemoveItem}
-       className={classes.deleteButton}
-       size='small'>
-       <Delete fontSize='small' />
-      </IconButton>
-     </Tooltip>
-    </motion.div>
    </div>
+
+   <motion.div whileTap={{ scale: 0.9 }} className={classes.deleteAction}>
+    <Tooltip title={t('remove_item')} placement='top' arrow>
+     <IconButton
+      onClick={handleRemoveItem}
+      className={classes.deleteButton}
+      size='small'>
+      <Trash2 size={16} />
+     </IconButton>
+    </Tooltip>
+   </motion.div>
 
    {isByOrderProduct && (
     <Tooltip
@@ -169,7 +176,7 @@ const CartItem = ({ data: productData }) => {
      className={classes.tooltip}
      arrow
      placement={lng === 'fa' ? 'right' : 'left'}>
-     <Info className={classes.infoIcon} />
+     <Info size={16} className={classes.infoIcon} />
     </Tooltip>
    )}
    {isMoreThanQuantity && (

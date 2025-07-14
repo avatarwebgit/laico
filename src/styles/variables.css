@@ -83,6 +83,24 @@
  --status-closed-text: #4ade80;
 
  --input-disabled: #e8e8e8;
+
+ /* drawer  */
+ --drawer-bg: #ffffff;
+ --drawer-text: #111827;
+ --drawer-text-secondary: #4b5563;
+ --drawer-border: #e5e7eb;
+ --drawer-primary: #1a1a1a;
+ --drawer-primary-text: #ffffff;
+ --drawer-radius: 12px;
+ --drawer-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+  0 8px 10px -6px rgba(0, 0, 0, 0.1);
+ --danger-text: #ef4444;
+  --danger-color: #ef4444;
+ --primary-color: #3b82f6;
+ --text-color-primary: #1f2937;
+ --text-color-secondary: #6b7280;
+ --surface-color: #ffffff;
+ --border-color: #b8bbc0;
 }
 
 h1,

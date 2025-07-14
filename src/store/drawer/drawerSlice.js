@@ -1,22 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { drawerOpen: false, favoritesDrawer: false };
+const initialState = {
+ cartDrawer: false,
+ favoritesDrawer: false,
+ redirectAfterLogin: null,
+};
 
 const drawerSlice = createSlice({
  name: 'drawer',
  initialState,
  reducers: {
-  open(state) {
-   state.drawerOpen = true;
+  cartOpen(state) {
+   state.cartDrawer = true;
   },
-  close(state) {
-   state.drawerOpen = false;
+  cartClose(state) {
+   state.cartDrawer = false;
   },
   favoritesOpen(state) {
    state.favoritesDrawer = true;
   },
   favoritesClose(state) {
    state.favoritesDrawer = false;
+  },
+  setRedirectAfterLogin: (state, action) => {
+   state.redirectAfterLogin = action.payload;
+  },
+  clearRedirectAfterLogin: state => {
+   state.redirectAfterLogin = null;
   },
  },
 });
