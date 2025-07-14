@@ -14,6 +14,7 @@ import App from './App';
 import './index.css';
 import { persistor, store } from './store/store';
 import i18next from './utils/i18next';
+import { BackgroundProvider } from './context/BackgroundContent';
 
 const queryClient = new QueryClient({
  defaultOptions: {
@@ -45,7 +46,9 @@ root.render(
       persistOptions={{ persister }}>
       <QueryClientProvider client={queryClient}>
        <I18nextProvider i18n={i18next}>
-        <App />
+        <BackgroundProvider>
+         <App />
+        </BackgroundProvider>
        </I18nextProvider>
       </QueryClientProvider>
      </PersistQueryClientProvider>

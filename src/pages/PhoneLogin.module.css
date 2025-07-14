@@ -6,12 +6,17 @@
     align-items: center;
     justify-content: flex-end; /* Positions the form on the left for RTL */
     padding: 0 6rem;
+    background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9e?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
 }
 
 .formContainer {
     width: 100%;
     max-width: 450px;
-    padding: 3rem;
+    height: auto;
+    max-height: 95vh;
+    padding: 1rem;
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(15px) saturate(180%);
     -webkit-backdrop-filter: blur(15px) saturate(180%);
@@ -19,6 +24,27 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     color: var(--text-white);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+.formContainer::-webkit-scrollbar {
+    width: 6px;
+}
+.formContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+.formContainer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+.formContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.formWrapper {
+    padding: 2rem;
 }
 
 .logo {
@@ -68,6 +94,7 @@
     transform: translateY(-50%);
     color: var(--text-light);
     z-index: 2;
+    transition: color 0.3s ease;
 }
 
 .input {
@@ -85,16 +112,16 @@
     outline: none;
     border-color: var(--primary);
     background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
+
+.input:focus ~ .icon {
+    color: var(--primary);
+}
+
 
 .input::placeholder {
     color: var(--text-light);
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 1.5rem;
 }
 
 .link {
@@ -139,7 +166,10 @@
     }
     .formContainer {
         width: 100%;
-        padding: 2rem;
+        max-height: 90vh;
         background: rgba(0, 0, 0, 0.6);
+    }
+    .formWrapper {
+        padding: 1.5rem;
     }
 }

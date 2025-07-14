@@ -3,8 +3,10 @@ import Loader from '../components/common/Loader';
 
 const Home = lazy(() => import('../pages/Home'));
 const Login = lazy(() => import('../pages/Login'));
-const Product = lazy(() => import('../pages/Product'));
 const Signup = lazy(() => import('../pages/Signup'));
+const Otp = lazy(() => import('../pages/Otp'));
+const PhoneLogin = lazy(() => import('../pages/PhoneLogin'));
+const Product = lazy(() => import('../pages/Product'));
 const Blogs = lazy(() => import('../pages/Blogs'));
 const PreCheckout = lazy(() => import('../pages/PreCheckout'));
 const BlogPost = lazy(() => import('../pages/BlogPost'));
@@ -17,6 +19,8 @@ export const publicRoutes = [
  { path: '/', element: <Home /> },
  { path: '/login', element: <Login /> },
  { path: '/register', element: <Signup /> },
+ { path: '/otp', element: <Otp /> },
+ { path: '/login-with-phone', element: <PhoneLogin /> },
  { path: '/product/:id/:variation', element: <Product /> },
  { path: '/blogs', element: <Blogs /> },
  { path: '/blogs/:id', element: <BlogPost /> },
