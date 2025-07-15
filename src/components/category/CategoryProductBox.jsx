@@ -3,6 +3,7 @@ import { Tooltip } from '@mui/material';
 import Img from '../common/Img';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import classes from './CategoryProductBox.module.css';
+import ImagePixelated from '../common/ImagePixelated';
 
 const CategoryProductBox = ({ src, alt }) => {
  const [colors, setColors] = useState([
@@ -61,7 +62,7 @@ const CategoryProductBox = ({ src, alt }) => {
    className={classes['product-box']}
    href='http://localhost:3000/product/1736236632/378'>
    <div className={classes['img-wrapper']}>
-    <Img src={src} alt={alt} className={classes.img} />
+    <ImagePixelated src={src} alt={alt}  />
    </div>
    <div className={classes.title}>
     لپ تاپ 15.6 اینچی ایسوس مدل Vivobook 15 X1504VA-NJ107-i7 1355U-16GB DDR4-1TB

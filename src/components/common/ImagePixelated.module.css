@@ -1,0 +1,46 @@
+/* ImagePixelated.module.css */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.overlayGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+.block {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.loadingPlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--loading-bg, #f0f0f0);
+}
+
+/* For fixed block size */
+.fixedBlockSize {
+  composes: overlayGrid;
+  grid-auto-columns: var(--block-size);
+  grid-auto-rows: var(--block-size);
+}

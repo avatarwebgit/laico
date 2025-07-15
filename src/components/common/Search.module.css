@@ -9,8 +9,8 @@
 }
 
 .search_logo_wrapper {
- width: 1.5rem;
- height: 1.5rem;
+ width: 1.8rem;
+ height: 1.8rem;
  border-radius: 50%;
  background-color: transparent;
  display: flex;
@@ -28,7 +28,7 @@
 }
 
 .search_input {
- height: 1.5rem;
+ height: 1.8rem;
  width: calc(100% - 1.5rem);
  border-radius: 50px;
  outline: none;
@@ -36,7 +36,7 @@
  width: 100%;
  font-size: 0.5rem;
  transition: all 0.25s;
- /* padding: 0 10px 0 35px; */
+ padding: 0 10px 0 35px;
 }
 
 .backdrop {
