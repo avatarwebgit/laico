@@ -17,6 +17,7 @@ import '../../../styles/common.css';
 import Search from '../../common/Search';
 import classes from './Header.module.css';
 import { drawerActions } from '../../../store/drawer/drawerSlice';
+import { Mail, Phone } from 'lucide-react';
 
 const listVariants = {
  hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
@@ -345,7 +346,6 @@ const megaMenuData = [
  },
 ];
 
-
 const ImagePixelated = memo(({ src, alt }) => {
  const blocks = Array.from({ length: 100 }, (_, i) => i);
 
@@ -416,9 +416,13 @@ const Header = () => {
     <Content sectionClassname={classes['wrapper-top']}>
      <div className={classes['top-wrapper']}>
       <div className={classes.right}>
-       <p>شماره تماس : 09127070700</p>
-       <hr />
-       <p>ایمیل : test@gmail.com</p>
+       <p>
+        شماره تماس : 09127070700
+        <Phone className={classes['top-icon']} />
+       </p>
+       <p>
+        ایمیل : test@gmail.com <Mail className={classes['top-icon']} />
+       </p>
       </div>
       <div className={classes.left}>
        <Badge

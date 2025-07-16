@@ -1,18 +1,19 @@
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Breadcrumbs from '../components/common/Breadcrumbs';
+import Card from '../components/common/Card';
 import Content from '../components/common/Content';
 import Sidebar from '../components/profile/Sidebar';
-import Card from '../components/common/Card';
 
-import Dashboard from '../components/profile/Dashboard';
 import Addresses from '../components/profile/Addresses';
-import Tickets from '../components/profile/Ticket';
+import Dashboard from '../components/profile/Dashboard';
 import Favorites from '../components/profile/Favorites';
 import Orders from '../components/profile/Orders';
+import Tickets from '../components/profile/Ticket';
 
+import Wallet from '../components/profile/Wallet';
 import classes from './Profile.module.css';
 
 const Profile = () => {
@@ -41,6 +42,8 @@ const Profile = () => {
     return <Favorites />;
    case 'addresses':
     return <Addresses />;
+   case 'wallet':
+    return <Wallet />;
    default:
     return navigate('/profile/dashboard');
   }

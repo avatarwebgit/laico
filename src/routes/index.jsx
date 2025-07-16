@@ -8,7 +8,7 @@ const Otp = lazy(() => import('../pages/Otp'));
 const PhoneLogin = lazy(() => import('../pages/PhoneLogin'));
 const Product = lazy(() => import('../pages/Product'));
 const Blogs = lazy(() => import('../pages/Blogs'));
-const PreCheckout = lazy(() => import('../pages/PreCheckout'));
+const CheckoutSuccess = lazy(() => import('../pages/CheckoutSuccess'));
 const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Category = lazy(() => import('../pages/Category'));
 const Profile = lazy(() => import('../pages/Profile'));
@@ -26,6 +26,7 @@ export const publicRoutes = [
  { path: '/blogs/:id', element: <BlogPost /> },
  { path: '/category', element: <Category /> },
  { path: '/checkout', element: <Checkout /> },
+ { path: '/checkout-success', element: <CheckoutSuccess /> },
  { path: '/profile/test', element: <Profile /> },
  { path: '/profile/*', element: <Profile /> },
  { path: '/loader', element: <Loader /> },

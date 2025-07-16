@@ -9,6 +9,13 @@ import { ReactComponent as Login } from '../../../assets/svgs/user.svg';
 
 import classes from './FixedNavigation.module.css';
 import { Avatar, Badge, IconButton } from '@mui/material';
+import {
+ CircleUser,
+ HeartIcon,
+ Layers,
+ LogIn,
+ ShoppingBag,
+} from 'lucide-react';
 const FixedNavigation = () => {
  const [ModalOpen, setModalOpen] = useState(false);
 
@@ -16,7 +23,7 @@ const FixedNavigation = () => {
 
  const token = useSelector(state => state.userStore.token);
  const cart = useSelector(state => state.cartStore);
-//  const favorits = useSelector(state => state.favoriteStore.products);
+ //  const favorits = useSelector(state => state.favoriteStore.products);
 
  const handleOpenCart = () => {
   //   dispatch(drawerActions.open());
@@ -36,27 +43,34 @@ const FixedNavigation = () => {
    <>
     {token ? (
      <IconButton>
-      <Avatar className={classes.avatar} />
+      <CircleUser className={classes.avatar} />
      </IconButton>
     ) : (
      <IconButton onClick={handleOpenLogin}>
-      <Login width={'20px'} height={'20px'} className={classes.svg} />
+      <LogIn className={classes.svg} />
      </IconButton>
     )}
    </>
 
    <IconButton>
     <Badge
-    //  badgeContent={favorits?.length || 0}
+     //  badgeContent={favorits?.length || 0}
      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
-     <Heart width={'35px'} height={'35px'} className={classes.svg} />
+     <HeartIcon className={classes.svg} />
     </Badge>
    </IconButton>
    <IconButton onClick={handleOpenCart}>
     <Badge
      badgeContent={cart?.products.length || 0}
      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
-     <Basket width={'35px'} height={'35px'} className={classes.svg} />
+     <ShoppingBag className={classes.svg} />
+    </Badge>
+   </IconButton>
+   <IconButton onClick={handleOpenCart}>
+    <Badge
+     badgeContent={cart?.products.length || 0}
+     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+     <Layers className={classes.svg} />
     </Badge>
    </IconButton>
   </div>

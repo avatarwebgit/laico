@@ -6,16 +6,17 @@ import Tabs from '../components/home/Tabs';
 
 import ProductBox from '../components/common/ProductBox';
 import Brands from '../components/home/Brands';
+import CategoryGrid from '../components/home/CategoryGrid';
 
 import 'swiper/css';
 import HeroBanner from '../components/home/HeroBanner';
 import HomeBlogs from '../components/home/HomeBlogs';
 import classes from './Home.module.css';
-import { useEffect } from 'react';
 
 const mainBreakpoints = {
  320: {
-  slidesPerView: 1,
+  slidesPerView: 2,
+  spaceBetween: 10,
  },
  640: {
   slidesPerView: 2,
@@ -29,7 +30,8 @@ const mainBreakpoints = {
 };
 const breakpoints = {
  320: {
-  slidesPerView: 1,
+  slidesPerView: 2,
+  spaceBetween: 10,
  },
  640: {
   slidesPerView: 2,
@@ -166,21 +168,22 @@ const Home = () => {
  return (
   <div className={classes.main}>
    <Carusel />
-   <div className={classes['most-viwed-wrapper']}>
-    <Slider
-     items={[
-      <ProductBox />,
-      <ProductBox />,
-      <ProductBox />,
-      <ProductBox />,
-      <ProductBox />,
-     ]}
-     slidesPerView={3}
-     breakpoints={mainBreakpoints}
-     spaceBetween={60}
-     autoplay={false}
-    />
-   </div>
+   <CategoryGrid />
+
+   <Slider
+    title={'محصولات پرفروش'}
+    items={[
+     <ProductBox />,
+     <ProductBox />,
+     <ProductBox />,
+     <ProductBox />,
+     <ProductBox />,
+    ]}
+    slidesPerView={4}
+    breakpoints={mainBreakpoints}
+    spaceBetween={60}
+    autoplay={false}
+   />
 
    <Banner />
    <Tabs items={items} title={' همه محصولات'} />

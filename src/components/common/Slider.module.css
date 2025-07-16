@@ -19,7 +19,7 @@ h2 {
  z-index: 10000;
  justify-content: space-between;
  position: absolute;
- top: 30%;
+ top: 50%;
  transform: translateY(-50%);
 }
 
@@ -44,4 +44,12 @@ h2 {
 .swiper-slide-wrapper {
  display: flex;
  justify-content: center;
+}
+
+@media only screen and (max-width: 480px) {
+ .navigation-wrapper,
+ .nextEl,
+ .prevEl {
+  display: none;
+ }
 }

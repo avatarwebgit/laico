@@ -1,5 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Heart, LogOut, MapPin, ShoppingBag, Ticket, User } from 'lucide-react';
+import {
+ Heart,
+ LogOut,
+ MapPin,
+ ShoppingBag,
+ Ticket,
+ User,
+ Wallet,
+} from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import backgroundImage from '../../assets/images/profile-background.jpg';
@@ -29,6 +37,13 @@ const Sidebar = () => {
    url: '/profile/addresses',
    icon: <MapPin />,
   },
+  {
+   id: 'wallet',
+   title: 'کیف پول',
+   url: '/profile/wallet',
+   icon: <Wallet />,
+  },
+
   {
    id: 'wishlist',
    title: 'لیست علاقه',

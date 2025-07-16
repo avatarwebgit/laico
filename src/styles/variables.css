@@ -9,7 +9,7 @@
  --main-color-four: #c7ffd8;
  --main-color-four-shadow: #e0ffe9;
 
- --color-red: #0b2f9f;
+ --color-red: rgb(11, 47, 159);
  --color-red-dark: #98ded9;
 
  --color-secondary: #0b2f9f;
@@ -32,7 +32,7 @@
 
  --color-black-1: #272727;
 
- --icon-size: 20px;
+ --icon-size: 25px;
 
  --title-font: 18px;
  --caption-font: 14px;
@@ -67,7 +67,7 @@
 
  /* Status Colors */
  --status-delivered-bg: rgba(74, 222, 128, 0.1);
- --status-delivered-text: #00ff5e;
+ --status-delivered-text: #0cd255;
  --status-shipped-bg: rgba(59, 130, 246, 0.1);
  --status-shipped-text: #0062ff;
  --status-processing-bg: rgba(251, 191, 36, 0.1);

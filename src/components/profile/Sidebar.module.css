@@ -157,11 +157,11 @@
  background: rgba(30, 41, 59, 0.7);
  backdrop-filter: blur(12px) saturate(180%);
  -webkit-backdrop-filter: blur(12px) saturate(180%);
- border: 1px solid rgba(255, 255, 255, 0.1);
- border-radius: 1.5rem; /* More rounded for pill shape */
- z-index: 10;
- display: none; /* Hidden by default */
  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ border-radius: 1.5rem;
+ z-index: 10;
+ display: none; 
  margin: 0 auto;
 }
 
@@ -180,7 +180,7 @@
  align-items: center;
  justify-content: center;
  gap: 2px;
- color: var(--text-primary);
+ color: var(--text-white);
  cursor: pointer;
  flex-grow: 1;
  height: 100%;
@@ -190,7 +190,7 @@
 }
 
 .mobileNavItemActive {
- color: var(--text-active);
+ color: var(--text-white);
 }
 
 .mobileNavIndicator {
@@ -209,8 +209,10 @@
 .mobileNavText {
  font-size: var(--caption-font);
  font-weight: 500;
- color: var(--text-active);
+ color: var(--text-white);
  white-space: nowrap;
+ position: absolute;
+ top: -10px;
 }
 
 /* --- Responsive Media Query --- */
