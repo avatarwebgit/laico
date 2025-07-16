@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-import Loader from '../components/common/Loader';
 
 const Home = lazy(() => import('../pages/Home'));
 const Login = lazy(() => import('../pages/Login'));
@@ -13,6 +12,8 @@ const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Category = lazy(() => import('../pages/Category'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Checkout = lazy(() => import('../pages/Checkout'));
+const Contact = lazy(() => import('../pages/Contact'));
+const About = lazy(() => import('../pages/About'));
 const NotFound = lazy(() => import('../pages/404'));
 
 export const publicRoutes = [
@@ -27,9 +28,9 @@ export const publicRoutes = [
  { path: '/category', element: <Category /> },
  { path: '/checkout', element: <Checkout /> },
  { path: '/checkout-success', element: <CheckoutSuccess /> },
- { path: '/profile/test', element: <Profile /> },
  { path: '/profile/*', element: <Profile /> },
- { path: '/loader', element: <Loader /> },
+ { path: '/about-us', element: <About /> },
+ { path: '/contact-us', element: <Contact /> },
  { path: '/*', element: <NotFound /> },
 ];
 
