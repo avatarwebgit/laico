@@ -12,6 +12,7 @@ const ImagePixelated = memo(
   animationDelay = 0.04,
   blockSize = 'auto',
   loadingBg = '#f0f0f0',
+  isActive = true,
  }) => {
   const containerRef = useRef(null);
   const imgRef = useRef(null);
@@ -63,7 +64,7 @@ const ImagePixelated = memo(
   const totalBlocks = calculatedColumns * calculatedRows;
 
   const blockVariants = {
-   hidden: { opacity: 1 },
+   hidden: { opacity: 1, transition: { duration: 0.3 } },
    visible: i => ({
     opacity: 0,
     transition: {
@@ -114,7 +115,7 @@ const ImagePixelated = memo(
         className={styles.block}
         custom={index}
         initial='hidden'
-        animate={imageLoaded ? 'visible' : 'hidden'}
+        animate={imageLoaded && isActive ? 'visible' : 'hidden'}
         variants={blockVariants}
        />
       ))}

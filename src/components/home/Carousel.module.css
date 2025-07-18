@@ -1,4 +1,3 @@
-@import url(../../styles/variables.css);
 
 .slide {
  height: calc(100vh - var(--top-slider-height)) - 50px !important;
@@ -40,7 +39,6 @@
 }
 .title {
  font-size: 1.8rem !important;
- font-family: novares, Courier, monospace !important;
  letter-spacing: 1px;
 }
 .caption {
@@ -66,8 +64,8 @@
 }
 .product_img_wrapper {
  position: absolute;
- width: 17vw;
- height: 17vw;
+ width: 25vw;
+ height: 25vw;
  display: flex;
  align-items: center;
  justify-content: center;

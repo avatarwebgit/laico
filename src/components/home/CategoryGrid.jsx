@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Content from '../common/Content';
 import styles from './CategoryGrid.module.css';
 import { motion } from 'framer-motion';
+
 const categories = [
  {
   name: 'روتختی',
@@ -49,8 +50,6 @@ const categories = [
  },
 ];
 
-
-
 // Framer Motion Variants
 const gridContainerVariants = {
  hidden: { opacity: 0 },
@@ -72,7 +71,48 @@ const gridItemVariants = {
    ease: [0.16, 1, 0.3, 1],
   },
  },
- 
+};
+
+const cardHoverVariants = {
+ hover: {
+  y: -8,
+  boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+  transition: {
+   type: 'spring',
+   stiffness: 300,
+   damping: 20,
+  },
+ },
+};
+
+const cardImageHoverVariants = {
+ hover: {
+  scale: 1.08,
+  transition: {
+   duration: 0.6,
+   ease: [0.16, 1, 0.3, 1],
+  },
+ },
+};
+
+const cardOverlayHoverVariants = {
+ hover: {
+  opacity: 0,
+  transition: {
+   duration: 0.4,
+   ease: 'easeInOut',
+  },
+ },
+};
+
+const cardContentHoverVariants = {
+ hover: {
+  y: -8,
+  transition: {
+   duration: 0.4,
+   ease: [0.16, 1, 0.3, 1],
+  },
+ },
 };
 
 const CategoryCard = ({ category }) => (
@@ -80,16 +120,24 @@ const CategoryCard = ({ category }) => (
   href='#'
   className={styles.card}
   aria-label={`View category: ${category.name}`}
-  whileHover={{
-   y: -8,
-   boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
-  }}
-  transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-  <img src={category.image} alt={category.name} className={styles.cardImage} />
-  <div className={styles.cardOverlay} />
-  <div className={styles.cardContent}>
+  initial={false}
+  whileHover='hover'
+  variants={cardHoverVariants}>
+  <motion.img
+   src={category.image}
+   alt={category.name}
+   className={styles.cardImage}
+   variants={cardImageHoverVariants}
+  />
+  <motion.div
+   className={styles.cardOverlay}
+   variants={cardOverlayHoverVariants}
+  />
+  <motion.div
+   className={styles.cardContent}
+   variants={cardContentHoverVariants}>
    <h3 className={styles.cardTitle}>{category.name}</h3>
-  </div>
+  </motion.div>
  </motion.a>
 );
 
@@ -105,7 +153,7 @@ const CategoryGrid = () => {
   <Content>
    <section className={styles.section} aria-labelledby='category-grid-title'>
     <h2 id='category-grid-title' className='sr-only'>
-     Product Categories
+     دسته بندی محصولات
     </h2>
 
     {featuredCategories.length > 0 && (

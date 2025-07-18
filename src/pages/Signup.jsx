@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
- User,
- Phone,
- Mail,
- Lock,
+ CheckCircle,
  Eye,
  EyeOff,
- CheckCircle,
+ Lock,
+ Mail,
+ Phone,
+ User,
  XCircle,
 } from 'lucide-react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import styles from './Signup.module.css';
 import { BackgroundContext } from '../context/BackgroundContent';
+import styles from './Signup.module.css';
 
-import img from '../assets/images/photo_2025-04-13_11-44-04.jpg'
+import logo from '../assets/images/Logo.png';
+import img from '../assets/images/photo_2025-04-13_11-44-04.jpg';
 
 const containerVariants = {
  hidden: { opacity: 0 },
@@ -44,10 +45,10 @@ const Signup = () => {
  const [passwordsMatch, setPasswordsMatch] = useState(true);
  const [passwordCriteria, setPasswordCriteria] = useState({
   length: false,
-  uppercase: false,
-  lowercase: false,
-  number: false,
-  specialChar: false,
+  // uppercase: false,
+  // lowercase: false,
+  // number: false,
+  // specialChar: false,
  });
 
  const allCriteriaMet = Object.values(passwordCriteria).every(Boolean);
@@ -59,19 +60,20 @@ const Signup = () => {
 
  const validatePassword = value => {
   const length = value.length >= 8;
-  const uppercase = /[A-Z]/.test(value);
-  const lowercase = /[a-z]/.test(value);
-  const number = /[0-9]/.test(value);
-  const specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-  setPasswordCriteria({ length, uppercase, lowercase, number, specialChar });
-  return length && uppercase && lowercase && number && specialChar;
+  // const uppercase = /[A-Z]/.test(value);
+  // const lowercase = /[a-z]/.test(value);
+  // const number = /[0-9]/.test(value);
+  // const specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  // setPasswordCriteria({ length, uppercase, lowercase, number, specialChar });
+  setPasswordCriteria({ length });
+  return length;
  };
 
  useEffect(() => {
   if (confirmPassword.length > 0) {
    setPasswordsMatch(password === confirmPassword);
   } else {
-   setPasswordsMatch(true); // Don't show error if field is empty
+   setPasswordsMatch(true);
   }
  }, [password, confirmPassword]);
 
@@ -101,10 +103,10 @@ const Signup = () => {
 
  const validationItems = [
   { key: 'length', text: 'حداقل ۸ کاراکتر' },
-  { key: 'uppercase', text: 'یک حرف بزرگ (A-Z)' },
-  { key: 'lowercase', text: 'یک حرف کوچک (a-z)' },
-  { key: 'number', text: 'یک عدد (0-9)' },
-  { key: 'specialChar', text: 'یک کاراکتر خاص (@, #, $...)' },
+  // { key: 'uppercase', text: 'یک حرف بزرگ (A-Z)' },
+  // { key: 'lowercase', text: 'یک حرف کوچک (a-z)' },
+  // { key: 'number', text: 'یک عدد (0-9)' },
+  // { key: 'specialChar', text: 'یک کاراکتر خاص (@, #, $...)' },
  ];
 
  return (
@@ -123,7 +125,7 @@ const Signup = () => {
      <motion.div variants={itemVariants} className={styles.header}>
       <div className={styles.logo}>
        <Link to='/' className={styles.logoLink}>
-        فروشگاه
+        <img src={logo} alt='' />
        </Link>
       </div>
       <h1 className={styles.title}>ایجاد حساب کاربری</h1>
@@ -247,7 +249,7 @@ const Signup = () => {
            ) : (
             <XCircle size={16} />
            )}
-           <span>تکرار رمز عبور مطابقت دارد</span>
+           <span>تکرار رمز عبور مطابقت ندارد</span>
           </div>
          </div>
         </motion.div>

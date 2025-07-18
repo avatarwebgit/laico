@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import img from '../assets/images/photo_2025-04-13_11-44-04.jpg';
+import logo from '../assets/images/Logo.png';
+
+import { BackgroundContext } from '../context/BackgroundContent';
 import styles from './Otp.module.css';
 
 const containerVariants = {
@@ -22,6 +27,8 @@ const Otp = () => {
  const [timer, setTimer] = useState(60);
  const [canResend, setCanResend] = useState(false);
  const inputRefs = useRef([]);
+
+ const { setBackgroundImage } = useContext(BackgroundContext);
 
  useEffect(() => {
   if (timer > 0) {
@@ -46,14 +53,12 @@ const Otp = () => {
 
   setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
 
-  // Focus next input
   if (element.nextSibling) {
    element.nextSibling.focus();
   }
  };
 
  const handleKeyDown = (e, index) => {
-  // Move focus to the previous input field on backspace
   if (e.key === 'Backspace' && !otp[index] && e.target.previousSibling) {
    e.target.previousSibling.focus();
   }
@@ -65,6 +70,12 @@ const Otp = () => {
   console.log('Verifying OTP:', otp.join(''));
   navigate('/profile/dashboard');
  };
+
+ useEffect(() => {
+  setBackgroundImage(img);
+  inputRefs.current.at(0).focus();
+  return () => setBackgroundImage(null);
+ }, [setBackgroundImage]);
 
  return (
   <div className={styles.container}>
@@ -82,7 +93,7 @@ const Otp = () => {
      <motion.div variants={itemVariants} className={styles.header}>
       <div className={styles.logo}>
        <Link to='/' className={styles.logoLink}>
-        فروشگاه
+        <img src={logo} alt='' />
        </Link>
       </div>
       <h1 className={styles.title}>کد تایید را وارد کنید</h1>

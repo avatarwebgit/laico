@@ -1,6 +1,10 @@
-import { Phone } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Phone } from 'lucide-react';
+import { useContext, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BackgroundContext } from '../context/BackgroundContent';
+import img from '../assets/images/photo_2025-04-26_14-50-46.jpg';
+
 import styles from './PhoneLogin.module.css';
 
 const containerVariants = {
@@ -19,11 +23,21 @@ const itemVariants = {
 const PhoneLogin = () => {
  const navigate = useNavigate();
 
+ const { setBackgroundImage } = useContext(BackgroundContext);
+
+ const mobileInputRef = useRef();
+
  const handleSubmit = e => {
   e.preventDefault();
   // Handle phone registration logic here
   navigate('/otp');
  };
+
+ useEffect(() => {
+  setBackgroundImage(img);
+  mobileInputRef.current.focus();
+  return () => setBackgroundImage(null);
+ }, [setBackgroundImage]);
 
  return (
   <div className={styles.container}>
@@ -58,6 +72,7 @@ const PhoneLogin = () => {
         placeholder='مثال: ۰۹۱۲۳۴۵۶۷۸۹'
         required
         className={styles.input}
+        ref={mobileInputRef}
        />
       </motion.div>
 

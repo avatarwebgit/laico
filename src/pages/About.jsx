@@ -139,7 +139,10 @@ const About = () => {
      className={`${styles.storyContentWrapper} ${
       isStoryExpanded ? styles.expanded : ''
      }`}>
-     <div className={styles.storyContent}>
+     <div
+      className={`${styles.storyContent} ${
+       isStoryExpanded ? styles.expanded : ''
+      }`}>
       <p>
        داستان ما در یک شب صاف و پرستاره آغاز شد، زمانی که گروهی از دوستان،
        شیفته‌ی عظمت کیهان، دور یک تلسکوپ جمع شده بودند. آن شب، با دیدن حلقه‌های
@@ -167,7 +170,7 @@ const About = () => {
        است.
       </p>
      </div>
-     {!isStoryExpanded && <div className={styles.storyFade}></div>}
+     <div className={styles.storyFade}></div>
     </div>
     <motion.button
      className={styles.showMoreButton}

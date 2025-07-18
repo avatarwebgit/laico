@@ -14,12 +14,18 @@ import MobileHeader from './components/layout/VerticalLayout/Header';
 
 import './App.css';
 import ParallaxBackground from './components/common/ParallaxBackground';
+import TitleManager from './utils/TitleManager';
 function App() {
  const isVertical = useIsVertical();
  const location = useLocation();
  const currentPath = location.pathname;
 
- const hideHeadersOnDesktop = ['/login', '/register', '/otp'];
+ const hideHeadersOnDesktop = [
+  '/login',
+  '/register',
+  '/otp',
+  '/login-with-mobile',
+ ];
 
  const shouldHideLayout = !(
   !isVertical && hideHeadersOnDesktop.includes(currentPath)
@@ -42,6 +48,7 @@ function App() {
    <CartDrawer />
    <FavoritesDrawer />
    <ParallaxBackground />
+   <TitleManager />
 
    {shouldHideLayout && <Footer />}
   </Suspense>

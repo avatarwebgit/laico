@@ -21,7 +21,7 @@ const Sidebar = () => {
  const menuItems = [
   {
    id: 'dashboard',
-   title: 'حساب کاربری',
+   title: 'حساب ',
    url: '/profile/dashboard',
    icon: <User />,
   },

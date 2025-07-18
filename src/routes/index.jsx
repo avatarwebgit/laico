@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import Authmiddleware from './authMiddleware';
 
 const Home = lazy(() => import('../pages/Home'));
 const Login = lazy(() => import('../pages/Login'));
@@ -8,6 +9,7 @@ const PhoneLogin = lazy(() => import('../pages/PhoneLogin'));
 const Product = lazy(() => import('../pages/Product'));
 const Blogs = lazy(() => import('../pages/Blogs'));
 const CheckoutSuccess = lazy(() => import('../pages/CheckoutSuccess'));
+const CheckoutFailure = lazy(() => import('../pages/CheckoutFailure'));
 const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Category = lazy(() => import('../pages/Category'));
 const Profile = lazy(() => import('../pages/Profile'));
@@ -17,24 +19,59 @@ const About = lazy(() => import('../pages/About'));
 const NotFound = lazy(() => import('../pages/404'));
 
 export const publicRoutes = [
- { path: '/', element: <Home /> },
- { path: '/login', element: <Login /> },
- { path: '/register', element: <Signup /> },
- { path: '/otp', element: <Otp /> },
- { path: '/login-with-phone', element: <PhoneLogin /> },
- { path: '/product/:id/:variation', element: <Product /> },
- { path: '/blogs', element: <Blogs /> },
- { path: '/blogs/:id', element: <BlogPost /> },
- { path: '/category', element: <Category /> },
- { path: '/checkout', element: <Checkout /> },
- { path: '/checkout-success', element: <CheckoutSuccess /> },
- { path: '/profile/*', element: <Profile /> },
- { path: '/about-us', element: <About /> },
- { path: '/contact-us', element: <Contact /> },
- { path: '/*', element: <NotFound /> },
+ { path: '/', element: <Home />, name: 'صفحه اصلی' },
+ { path: '/login', element: <Login />, name: 'ورود' },
+ { path: '/register', element: <Signup />, name: 'ثبت نام' },
+ { path: '/otp', element: <Otp />, name: 'کد تأیید' },
+ {
+  path: '/login-with-mobile',
+  element: <PhoneLogin />,
+  name: 'ورود با موبایل',
+ },
+ { path: '/product/:id/:variation', element: <Product />, name: 'محصول' },
+ { path: '/blogs', element: <Blogs />, name: 'وبلاگ' },
+ { path: '/blogs/:id', element: <BlogPost />, name: 'مقاله' },
+ { path: '/category', element: <Category />, name: 'دسته بندی' },
+ { path: '/about-us', element: <About />, name: 'درباره ما' },
+ { path: '/contact-us', element: <Contact />, name: 'تماس با ما' },
+ { path: '/*', element: <NotFound />, name: 'صفحه پیدا نشد' },
 ];
 
 export const authRoutes = [
- //  { path: '/checkout', element: <PreCheckout /> },
- { path: '/profile', element: <Profile /> },
+ {
+  path: '/checkout',
+  element: (
+   <Authmiddleware>
+    <Checkout />
+   </Authmiddleware>
+  ),
+  name: 'پرداخت',
+ },
+ {
+  path: '/checkout-success',
+  element: (
+   <Authmiddleware>
+    <CheckoutSuccess />
+   </Authmiddleware>
+  ),
+  name: 'پرداخت موفق',
+ },
+ {
+  path: '/checkout-failure',
+  element: (
+   <Authmiddleware>
+    <CheckoutFailure />
+   </Authmiddleware>
+  ),
+  name: 'پرداخت ناموفق',
+ },
+ {
+  path: '/profile/*',
+  element: (
+   <Authmiddleware>
+    <Profile />
+   </Authmiddleware>
+  ),
+  name: 'پروفایل',
+ },
 ];

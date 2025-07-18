@@ -12,26 +12,3 @@ export default {
 
  refreshToken: () => api.post(endpoints.AUTH.REFRESH),
 };
-
-
-// import api from './index';
-
-// export default {
-//   async initialize() {
-//     await api.get('/sanctum/csrf-cookie');
-//   },
-
-//   login: async (credentials) => {
-//     await this.initialize();
-//     return api.post('/login', credentials);
-//   },
-
-//   register: async (userData) => {
-//     await this.initialize();
-//     return api.post('/register', userData);
-//   },
-
-//   logout: () => api.post('/logout'),
-
-//   getCurrentUser: () => api.get('/api/user')
-// };

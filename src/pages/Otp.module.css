@@ -53,11 +53,20 @@
 }
 
 .logoLink {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-white);
-    text-decoration: none;
-    letter-spacing: 2px;
+ display: block;
+ height: 100px;
+ width: 100px;
+ margin: 0 auto;
+ font-weight: 700;
+ color: var(--text-white);
+ text-decoration: none;
+ letter-spacing: 2px;
+}
+
+.logoLink img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
 }
 
 .header {
@@ -66,14 +75,14 @@
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: var(--title-font);
     font-weight: 600;
     margin: 0;
     color: var(--text-white);
 }
 
 .subtitle {
-    font-size: 1rem;
+    font-size: var(--caption-font);
     color: var(--text-light);
     margin-top: 0.5rem;
     line-height: 1.6;
@@ -99,7 +108,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
     color: var(--text-white);
-    font-size: 1.5rem;
+    font-size: var(--normal-font);
     text-align: center;
     transition: var(--transition);
     caret-color: var(--primary);
@@ -116,8 +125,8 @@
 .resendContainer {
     text-align: center;
     margin-bottom: 2rem;
-    color: var(--text-light);
-    font-size: 0.9rem;
+    color: #fff;
+    font-size: var(--normal-font);
     height: 20px;
 }
 
@@ -126,7 +135,7 @@
     border: none;
     color: var(--primary);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     padding: 0;
     font-family: inherit;
     font-weight: 500;
@@ -144,7 +153,7 @@
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: var(--normal-font);
     font-weight: 500;
     transition: var(--transition);
     margin-bottom: 1.5rem;
@@ -161,7 +170,7 @@
 .link {
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     font-weight: 500;
 }
 

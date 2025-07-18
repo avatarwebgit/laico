@@ -1,9 +1,14 @@
+import React, { useState, useEffect, memo } from 'react';
 import { Badge, IconButton } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Mail, Phone } from 'lucide-react';
 
 import Content from '../../common/Content';
+import Search from '../../common/Search';
+import { useNavigation } from '../../../utils/helperFucntions';
+import { drawerActions } from '../../../store/drawer/drawerSlice';
 
 import logo from '../../../assets/images/Logo.png';
 import { ReactComponent as Basket } from '../../../assets/svgs/add_basket.svg';
@@ -11,25 +16,10 @@ import { ReactComponent as Heart } from '../../../assets/svgs/heart-svg.svg';
 import { ReactComponent as Login } from '../../../assets/svgs/login.svg';
 import { ReactComponent as Avatar } from '../../../assets/svgs/user.svg';
 
-import { useNavigation } from '../../../utils/helperFucntions';
-
-import '../../../styles/common.css';
-import Search from '../../common/Search';
 import classes from './Header.module.css';
-import { drawerActions } from '../../../store/drawer/drawerSlice';
-import { Mail, Phone } from 'lucide-react';
+import '../../../styles/common.css';
 
-const listVariants = {
- hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
- visible: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
- hidden: { y: -10, opacity: 0 },
- visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
-};
-
-const megaMenuData = [
+const megaMenuChildren = [
  {
   category: 'کالای دیجیتال',
   image:
@@ -346,13 +336,67 @@ const megaMenuData = [
  },
 ];
 
+const pagesChildren = [
+ { path: '/', name: 'صفحه اصلی' },
+ { path: '/login', name: 'ورود' },
+ { path: '/register', name: 'ثبت نام' },
+ { path: '/otp', name: 'کد تأیید' },
+ { path: '/login-with-mobile', name: 'ورود با موبایل' },
+ { path: '/product/:id/:variation', name: 'محصول' },
+ { path: '/blogs', name: 'وبلاگ' },
+ { path: '/blogs/:id', name: 'مقاله' },
+ { path: '/category', name: 'دسته بندی' },
+ { path: '/about-us', name: 'درباره ما' },
+ { path: '/contact-us', name: 'تماس با ما' },
+ { path: '/checkout', name: 'پرداخت', requiresAuth: true },
+ { path: '/checkout-success', name: 'پرداخت موفق', requiresAuth: true },
+ { path: '/checkout-failure', name: 'پرداخت ناموفق', requiresAuth: true },
+ { path: '/profile/*', name: 'پروفایل', requiresAuth: true },
+ { path: '/*', name: 'صفحه پیدا نشد' },
+];
+
+export const headerMenuData = [
+ {
+  id: 'home',
+  name: 'خانه',
+  type: 'normal',
+  path: '/',
+ },
+ {
+  id: 'shop',
+  name: 'فروشگاه',
+  type: 'mega',
+  children: megaMenuChildren,
+ },
+ {
+  id: 'pages',
+  name: 'صفحات',
+  type: 'dropdown',
+  children: pagesChildren,
+ },
+ {
+  id: 'contact',
+  name: 'تماس با ما',
+  type: 'normal',
+  path: '/contact-us',
+ },
+];
+
+
+const listVariants = {
+ hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
+ visible: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
+};
+
+const itemVariants = {
+ hidden: { y: -10, opacity: 0 },
+ visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
+};
+
 const ImagePixelated = memo(({ src, alt }) => {
  const blocks = Array.from({ length: 100 }, (_, i) => i);
-
  const blockVariants = {
-  hidden: {
-   opacity: 1,
-  },
+  hidden: { opacity: 1 },
   visible: i => ({
    opacity: 0,
    transition: {
@@ -381,16 +425,102 @@ const ImagePixelated = memo(({ src, alt }) => {
  );
 });
 
+const MegaMenu = ({ data, isFixedHeader = false }) => {
+ const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+ const activeCategory = data[activeCategoryIndex];
+
+ return (
+  <div
+   className={`${classes['mega-paper']} ${
+    isFixedHeader ? classes['fixed-mega-paper'] : ''
+   }`}>
+   <div className={classes.categoryColumn} dir='ltr'>
+    <ul className={classes.categoryList}>
+     {data.map((item, index) => (
+      <li
+       key={item.category}
+       className={classes.categoryItem}
+       onMouseEnter={() => setActiveCategoryIndex(index)}>
+       {item.category}
+       {index === activeCategoryIndex && (
+        <motion.div
+         className={classes.activeCategoryIndicator}
+         layoutId='activeCategoryIndicator'
+         initial={false}
+         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        />
+       )}
+      </li>
+     ))}
+    </ul>
+   </div>
+   <AnimatePresence mode='wait'>
+    <motion.div
+     key={activeCategory.category}
+     className={classes.megaContentGrid}
+     initial={{ opacity: 0 }}
+     animate={{ opacity: 1 }}
+     exit={{ opacity: 0 }}
+     transition={{ duration: 0.15 }}>
+     <div className={classes.menuItemsFlow}>
+      <motion.ul
+       className={classes.menuList}
+       variants={listVariants}
+       initial='hidden'
+       animate='visible'>
+       {activeCategory.items.map(item => (
+        <motion.li
+         key={item}
+         className={classes.menuItem}
+         variants={itemVariants}>
+         {item}
+        </motion.li>
+       ))}
+      </motion.ul>
+     </div>
+     <div className={classes.megaImageColumn}>
+      <ImagePixelated
+       key={activeCategory.image}
+       src={activeCategory.image}
+       alt={activeCategory.category}
+      />
+     </div>
+    </motion.div>
+   </AnimatePresence>
+  </div>
+ );
+};
+
+const DropdownMenu = ({ data }) => {
+ return (
+  <div className={classes['dropwdown-paper']}>
+   <motion.ul
+    className={classes.menuList}
+    style={{ columnCount: 1 }}
+    variants={listVariants}
+    initial='hidden'
+    animate='visible'>
+    {data.map(item => (
+     <motion.li
+      key={item.name}
+      className={classes.menuItem}
+      variants={itemVariants}>
+      <Link to={item.path} target='_blank'>
+       {item.name}
+      </Link>
+     </motion.li>
+    ))}
+   </motion.ul>
+  </div>
+ );
+};
+
 const Header = () => {
  const [scrollY, setScrollY] = useState(0);
- const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+ const [hoveredItem, setHoveredItem] = useState(null); // e.g. { id: 'shop', instance: 'main' }
  const token = useSelector(state => state.userStore.token);
 
  const dispatch = useDispatch();
-
- let height,
-  width = '20px';
-
  const { navigateTo } = useNavigation();
 
  const handleGoToLogin = () => {
@@ -408,7 +538,34 @@ const Header = () => {
   };
  }, []);
 
- const activeCategory = megaMenuData[activeCategoryIndex];
+ const renderNavItems = instance => {
+  return headerMenuData.map(item => (
+   <div
+    key={`${instance}-${item.id}`}
+    onMouseEnter={() =>
+     item.type !== 'normal' && setHoveredItem({ id: item.id, instance })
+    }
+    onMouseLeave={() => item.type !== 'normal' && setHoveredItem(null)}
+    className={item.type !== 'normal' ? classes.shopContainer : ''}>
+    <li>
+     {item.type === 'normal' ? (
+      <Link to={item.path}>{item.name}</Link>
+     ) : (
+      item.name
+     )}
+    </li>
+
+    {hoveredItem?.id === item.id && hoveredItem?.instance === instance && (
+     <>
+      {item.type === 'mega' && (
+       <MegaMenu data={item.children} isFixedHeader={instance === 'fixed'} />
+      )}
+      {item.type === 'dropdown' && <DropdownMenu data={item.children} />}
+     </>
+    )}
+   </div>
+  ));
+ };
 
  return (
   <div>
@@ -427,10 +584,7 @@ const Header = () => {
       <div className={classes.left}>
        <Badge
         badgeContent={5}
-        anchorOrigin={{
-         vertical: 'top',
-         horizontal: 'right',
-        }}>
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <IconButton
          disableRipple={true}
          onClick={() => dispatch(drawerActions.cartOpen())}>
@@ -439,10 +593,7 @@ const Header = () => {
        </Badge>
        <Badge
         badgeContent={5}
-        anchorOrigin={{
-         vertical: 'top',
-         horizontal: 'right',
-        }}>
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <IconButton
          disableRipple={true}
          onClick={() => dispatch(drawerActions.favoritesOpen())}>
@@ -466,108 +617,22 @@ const Header = () => {
      </a>
     </div>
     <Content contentClassname={classes['bottom-wrapper']}>
-     <ul className={classes['buttom-wrapper']}>
-      <div>
-       <li>خانه</li>
-      </div>
-      <div>
-       <li>فروشگاه</li>
-       <div className={classes['mega-paper']}>
-        {/* Column 1: Categories */}
-        <div className={classes.categoryColumn} dir='ltr'>
-         <ul className={classes.categoryList}>
-          {megaMenuData.map((item, index) => (
-           <li
-            key={item.category}
-            className={classes.categoryItem}
-            onMouseEnter={() => setActiveCategoryIndex(index)}>
-            {item.category}
-            {index === activeCategoryIndex && (
-             <motion.div
-              className={classes.activeCategoryIndicator}
-              layoutId='activeCategoryIndicator'
-              initial={false}
-              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-             />
-            )}
-           </li>
-          ))}
-         </ul>
-        </div>
-
-        {/* Columns 2, 3, 4 & 5: Content Area (Menus + Image) */}
-        <AnimatePresence mode='wait'>
-         <motion.div
-          key={activeCategory.category}
-          className={classes.megaContentGrid}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}>
-          {/* Menu Items Area */}
-          <div className={classes.menuItemsFlow}>
-           <motion.ul
-            className={classes.menuList}
-            variants={listVariants}
-            initial='hidden'
-            animate='visible'>
-            {activeCategory.items.map(item => (
-             <motion.li
-              key={item}
-              className={classes.menuItem}
-              variants={itemVariants}>
-              {item}
-             </motion.li>
-            ))}
-           </motion.ul>
-          </div>
-
-          {/* Image Area */}
-          <div className={classes.megaImageColumn}>
-           <ImagePixelated
-            key={activeCategory.image}
-            src={activeCategory.image}
-            alt={activeCategory.category}
-           />
-          </div>
-         </motion.div>
-        </AnimatePresence>
-       </div>
-      </div>
-      <div>
-       <li>صفحات</li>
-      </div>
-      <div>
-       <li>تماس با ما</li>
-      </div>
-     </ul>
+     <ul className={classes['buttom-wrapper']}>{renderNavItems('main')}</ul>
      <Search />
     </Content>
    </header>
    <motion.div
-    initial={{ top: 0 }}
+    initial={{ top: -250 }}
     animate={{ top: scrollY < 100 ? -250 : 0 }}
     className={classes['fixed-header']}>
     <Content contentClassname={`${classes['bottom-wrapper']} `}>
      <ul className={classes['buttom-wrapper']}>
       <li style={{ zIndex: '10' }}>
        <a href='/'>
-        <img src={logo} alt='' width={80} height={80} />
+        <img src={logo} alt='' width={50} height={50} />
        </a>
       </li>
-      <div>
-       <li>خانه</li>
-      </div>
-      <div>
-       <li>فروشگاه</li>
-       <div className={classes['mega-paper']}></div>
-      </div>
-      <div>
-       <li>صفحات</li>
-      </div>
-      <div>
-       <li>تماس با ما</li>
-      </div>
+      {renderNavItems('fixed')}
      </ul>
      <Search />
     </Content>

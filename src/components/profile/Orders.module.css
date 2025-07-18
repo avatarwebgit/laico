@@ -35,7 +35,7 @@
 }
 
 .tableWrapper {
- overflow-x: auto;
+ /* overflow-x: auto; */
  display: none;
 }
 

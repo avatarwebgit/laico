@@ -8,8 +8,7 @@ import {
  Thumbs,
  Autoplay,
 } from 'swiper/modules';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '@mui/material';
 
 import 'swiper/css';
@@ -17,19 +16,41 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import 'swiper/css/scrollbar';
-import '../../styles/carousel.css';
-import { sliderContents, getNarrowBanners } from '../../services/api';
 
 import classes from './Carousel.module.css';
+import ImagePixelated from '../common/ImagePixelated';
 import ArrowButton from '../common/ArrowButton';
-import Content from '../common/Content';
+
+const mockSwiperData = [
+ {
+  image:
+   'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  image_2:
+   'https://cdn.pixabay.com/photo/2022/06/20/13/38/background-7273789_1280.png',
+  title: 'Vibrant Velocity',
+  text: 'Experience the rush of color and speed.',
+ },
+ {
+  image: 'https://images.pexels.com/photos/237371/pexels-photo-237371.jpeg',
+  image_2:
+   'https://cdn.pixabay.com/photo/2022/06/20/13/38/background-7273789_1280.png',
+  title: 'Urban Explorer',
+  text: 'Navigate the city in style and comfort.',
+ },
+ {
+  image: 'https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg',
+  image_2:
+   'https://cdn.pixabay.com/photo/2022/06/20/13/38/background-7273789_1280.png',
+  title: 'Classic Comfort',
+  text: 'Timeless design for everyday wear.',
+ },
+];
+
 const Carusel = ({ windowSize }) => {
  const [thumbsSwiper, setThumbsSwiper] = useState(null);
  const [activeIndex, setActiveIndex] = useState(0);
  const [isSmallSize, setIsSmallSize] = useState(false);
- const [swiperData, setSwiperData] = useState(null);
-
- const { t } = useTranslation();
+ const [swiperData, setSwiperData] = useState(mockSwiperData);
 
  const swiperRef = useRef(null);
 
@@ -40,18 +61,6 @@ const Carusel = ({ windowSize }) => {
    setIsSmallSize(false);
   }
  }, [windowSize]);
-
- const getImages = async () => {
-  setSwiperData(null);
-  const serverRes = await sliderContents();
-  if (serverRes.response.ok) {
-   setSwiperData(serverRes.result.data);
-  }
- };
-
- useEffect(() => {
-  getImages();
- }, []);
 
  const goNext = () => {
   if (swiperRef.current && swiperRef.current.swiper) {
@@ -94,73 +103,110 @@ const Carusel = ({ windowSize }) => {
       {swiperData.map((slide, index) => (
        <SwiperSlide key={index} className={classes.slide}>
         <div className={classes.slider_image_wrapper}>
-         <span className={classes.product_img_wrapper}>
-          <motion.img
-           className={classes.product_img}
-           src={slide.image_2}
-           alt=''
-           initial={{ scale: 0, opacity: 0 }}
-           animate={{
-            scale: index === activeIndex ? 1 : 0,
-            opacity: index === activeIndex ? 1 : 0,
-           }}
-           transition={{ duration: 0.5, type: 'tween' }}
-          />
-         </span>
-         <img
+         <ImagePixelated
           src={slide.image}
-          alt={`Slide ${index + 1}`}
-          style={{ width: '100%', height: '100%' }}
+          alt={`Background for ${slide.title}`}
+          isActive={index === activeIndex}
          />
-         <span className={classes.about_product}>
-          <p className={classes.title}>{slide.title}</p>
-          <p className={classes.caption}>{slide.text}</p>
-         </span>
+
+         <AnimatePresence>
+          {index === activeIndex && (
+           <>
+            <motion.span
+             key={`product-img-${index}`}
+             className={classes.product_img_wrapper}
+             initial={{ scale: 0.5, opacity: 0 }}
+             animate={{
+              scale: 1,
+              opacity: 1,
+              transition: {
+               duration: 0.8,
+               delay: 1.5,
+               type: 'spring',
+               stiffness: 100,
+              },
+             }}
+             exit={{
+              scale: 0.5,
+              opacity: 0,
+              transition: { duration: 0.3 },
+             }}>
+             <img
+              className={classes.product_img}
+              src={slide.image_2}
+              alt={slide.title}
+             />
+            </motion.span>
+
+            <motion.div
+             key={`about-${index}`}
+             className={classes.about_product}
+             initial='initial'
+             animate='animate'
+             exit='exit'
+             variants={{
+              initial: { opacity: 0 },
+              animate: {
+               opacity: 1,
+               transition: {
+                delay: 0.4,
+                staggerChildren: 0.2,
+               },
+              },
+              exit: {
+               opacity: 0,
+               transition: { duration: 0.3 },
+              },
+             }}>
+             <motion.p
+              className={classes.title}
+              variants={{
+               initial: { y: -50, opacity: 0 },
+               animate: {
+                y: 0,
+                opacity: 1,
+                transition: {
+                 duration: 1,
+                 ease: 'easeOut',
+                 delay: 1.5,
+                },
+               },
+              }}>
+              {slide.title}
+             </motion.p>
+             <motion.p
+              className={classes.caption}
+              variants={{
+               initial: { y: 50, opacity: 0 },
+               animate: {
+                y: 0,
+                opacity: 1,
+                transition: {
+                 duration: 1,
+                 ease: 'easeOut',
+                 delay: 1.5,
+                },
+               },
+              }}>
+              {slide.text}
+             </motion.p>
+            </motion.div>
+           </>
+          )}
+         </AnimatePresence>
         </div>
        </SwiperSlide>
       ))}
       <div className={classes['navigation-wrapper']}>
-       <ArrowButton onClick={goNext} />
-       <ArrowButton onClick={goPrev} direction={'right'} />
+       <ArrowButton
+        className={classes.navButton}
+        onClick={goPrev}></ArrowButton>
+       <ArrowButton
+        className={classes.navButton}
+        onClick={goNext}
+        direction='right'></ArrowButton>
       </div>
      </Swiper>
-
-     {/* ________________ THUMB SLIDER  ________________*/}
-     {/* <div className={classes.thumbs_wrapper}>
-      <Swiper
-       spaceBetween={0}
-       slidesPerView={swiperData?.length < 5 ? swiperData.length : 5}
-       onSwiper={setThumbsSwiper}
-       watchSlidesProgress='true'
-       modules={[Thumbs]}
-       className={classes.thumbs_slider}>
-       {swiperData.map((slide, index) => (
-        <SwiperSlide key={index} className={classes.thumb_wrapper}>
-         {({ isActive }) => (
-          <motion.div
-           style={{
-            opacity: activeIndex === index ? 1 : 0.7,
-            transform: activeIndex === index ? 'scale(1.2)' : 'scale(1)',
-           }}
-           onClick={() => thumbsSwiper.slideTo(index)}
-           className={classes.thumb}
-           initial={{ scale: 0.9, y: 0 }}
-           animate={{
-            scale: index === activeIndex ? 1.15 : 0.9,
-           }}
-           transition={{ type: 'tween' }}>
-           <motion.img
-            src={slide.thumbnail}
-            alt={`Thumbnail ${index + 1}`}
-            style={{ width: '100%', height: 'auto' }}
-            className={classes.thumb_img}
-           />
-          </motion.div>
-         )}
-        </SwiperSlide>
-       ))}
-      </Swiper>
-     </div> */}
     </div>
    ) : (
     <Skeleton

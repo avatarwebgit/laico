@@ -15,7 +15,7 @@
     height: auto;
     max-height: 95vh;
     padding: 1rem;
-    background: var(--card-bg);
+    background:rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-radius: var(--radius-lg);
@@ -51,12 +51,20 @@
 }
 
 .logoLink {
-    font-size: 2.5rem;
-    font-weight: 700;
+     display: block;
+ height: 100px;
+ width: 100px;
+ margin: 0 auto;
     color: var(--text-white);
     text-decoration: none;
     letter-spacing: 2px;
     text-shadow: 0 0 5px var(--primary-glow);
+}
+
+.logoLink img {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
 }
 
 .header {
@@ -65,14 +73,15 @@
 }
 
 .title {
-    font-size: 2rem;
+    font-size: var(--title-font);
+
     font-weight: 600;
     margin: 0;
     color: var(--text-white);
 }
 
 .subtitle {
-    font-size: 1rem;
+    font-size: var(--caption-font);
     color: var(--text-light);
     margin-top: 0.5rem;
 }
@@ -116,7 +125,7 @@
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     color: var(--text-white);
-    font-size: 1rem;
+    font-size: var(--normal-font);
     transition: var(--transition);
     text-align: right;
 }
@@ -147,7 +156,7 @@
 .link {
     color: var(--primary);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     font-weight: 500;
     transition: var(--transition);
 }
@@ -166,7 +175,7 @@
 }
 
 .validationHeader {
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     font-weight: 500;
     color: var(--text-light);
     margin: 0 0 1rem 0;
@@ -184,7 +193,7 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.8rem;
+    font-size: var(--normal-font);
     transition: color 0.3s ease;
     white-space: nowrap;
 }
@@ -210,7 +219,7 @@
     color: var(--danger-text);
     text-align: center;
     margin-bottom: 1rem;
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     font-weight: 500;
     background: rgba(244, 63, 94, 0.1);
     padding: 0.75rem;
@@ -226,7 +235,7 @@
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: var(--normal-font);
     font-weight: 700;
     transition: var(--transition);
     margin-bottom: 1.5rem;
@@ -239,7 +248,7 @@
 
 .footer {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: var(--normal-font);
     color: var(--text-light);
 }
 

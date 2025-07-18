@@ -3,9 +3,11 @@ import { Lock, Mail } from 'lucide-react';
 import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BackgroundContext } from '../context/BackgroundContent';
-import styles from './Login.module.css';
 
-import img from '../assets/images/photo_2025-04-26_14-50-41.jpg'
+import logo from '../assets/images/Logo.png';
+import img from '../assets/images/photo_2025-04-26_14-50-46.jpg';
+
+import styles from './Login.module.css';
 
 const Login = () => {
  const { setBackgroundImage } = useContext(BackgroundContext);
@@ -33,7 +35,7 @@ const Login = () => {
     <div className={styles.header}>
      <div className={styles.logo}>
       <Link to='/' className={styles.logoLink}>
-       فروشگاه
+       <img src={logo} alt='' />
       </Link>
      </div>
      <h1 className={styles.title}>ورود به حساب کاربری</h1>
@@ -67,9 +69,15 @@ const Login = () => {
       ورود
      </button>
     </form>
+    <Link
+     to={'/login-with-mobile'}
+     type='submit'
+     className={styles.submitButton}>
+     ورود با رمز یکبار مصرف
+    </Link>
     <div className={styles.footer}>
      <p>
-      حساب کاربری ندارید؟{' '}
+      حساب کاربری ندارید؟
       <Link to='/register' className={styles.link}>
        ثبت نام کنید
       </Link>

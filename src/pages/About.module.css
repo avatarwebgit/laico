@@ -1,268 +1,272 @@
 .container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
-  color: var(--text-primary);
+ max-width: 1100px;
+ margin: 0 auto;
+ padding: 2rem 1.5rem 4rem;
+ color: var(--text-primary);
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 4rem;
+ text-align: center;
+ margin-bottom: 4rem;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--main-color-1);
-  background: linear-gradient(135deg, var(--main-color-1), var(--main-color-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
+ font-size: 2.5rem;
+ font-weight: 700;
+ color: var(--main-color-1);
+ background: linear-gradient(135deg, var(--main-color-1), var(--main-color-2));
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ margin-bottom: 1rem;
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.7;
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ max-width: 600px;
+ margin: 0 auto;
+ line-height: 1.7;
 }
 
 /* Mission Section */
 .missionSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 5rem;
-  background: #fff;
-  padding: 3rem;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 60px -10px rgba(0,0,0,0.05);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 2rem;
+ margin-bottom: 5rem;
+ background: #fff;
+ padding: 3rem;
+ border-radius: var(--radius-lg);
+ box-shadow: 0 4px 60px -10px rgba(0, 0, 0, 0.05);
 }
 
 .missionContent {
-  flex: 1;
-  text-align: right;
+ flex: 1;
+ text-align: right;
 }
 
 .missionContent h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--main-color-2);
-  margin-bottom: 1rem;
+ font-size: 1.8rem;
+ font-weight: 700;
+ color: var(--main-color-2);
+ margin-bottom: 1rem;
 }
 
 .missionContent p {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-primary);
+ font-size: 1rem;
+ line-height: 1.8;
+ color: var(--text-primary);
 }
 
 .missionImage {
-  flex: 1;
-  max-width: 400px;
+ flex: 1;
+ max-width: 400px;
 }
 
 .missionImage img {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 10px 25px -5px rgba(11, 47, 159, 0.2);
+ width: 100%;
+ border-radius: var(--radius-lg);
+ box-shadow: 0 10px 25px -5px rgba(11, 47, 159, 0.2);
 }
 
 @media (min-width: 768px) {
-  .missionSection {
-    flex-direction: row;
-    gap: 4rem;
-  }
+ .missionSection {
+  flex-direction: row;
+  gap: 4rem;
+ }
 }
 
 /* Section General */
 .sectionTitle {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--main-color-1);
-  margin-bottom: 1rem;
+ text-align: center;
+ font-size: 2rem;
+ font-weight: 700;
+ color: var(--main-color-1);
+ margin-bottom: 1rem;
 }
 
 .sectionSubtitle {
-  text-align: center;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-bottom: 3rem;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+ text-align: center;
+ font-size: 1rem;
+ color: var(--text-secondary);
+ margin-bottom: 3rem;
+ max-width: 500px;
+ margin-left: auto;
+ margin-right: auto;
 }
 
 /* Values Section */
 .valuesSection {
-  margin-bottom: 5rem;
+ margin-bottom: 5rem;
 }
 
 .valuesGrid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
+ display: grid;
+ grid-template-columns: repeat(1, 1fr);
+ gap: 1.5rem;
 }
 
 .valueCard {
-  background: var(--surface-color);
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  text-align: center;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
+ background: var(--surface-color);
+ padding: 2rem;
+ border-radius: var(--radius-lg);
+ text-align: center;
+ border: 1px solid var(--border);
+ transition: all 0.3s ease;
 }
 
 .valueIcon {
-  display: inline-flex;
-  padding: 1rem;
-  border-radius: 50%;
-  background-color: var(--active-bg);
-  color: var(--primary);
-  margin-bottom: 1.5rem;
+ display: inline-flex;
+ padding: 1rem;
+ border-radius: 50%;
+ background-color: var(--active-bg);
+ color: var(--primary);
+ margin-bottom: 1.5rem;
 }
 
 .valueTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
+ font-size: 1.25rem;
+ font-weight: 600;
+ color: var(--text-primary);
+ margin-bottom: 0.5rem;
 }
 
 .valueDescription {
-  color: var(--text-secondary);
-  line-height: 1.6;
+ color: var(--text-secondary);
+ line-height: 1.6;
 }
 
 /* Team Section */
 .teamSection {
-  margin-bottom: 5rem;
+ margin-bottom: 5rem;
 }
 
 .teamGrid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
-  justify-items: center;
+ display: grid;
+ grid-template-columns: repeat(1, 1fr);
+ gap: 2rem;
+ justify-items: center;
 }
 
 .teamCard {
-  background-color: var(--card-bg);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  text-align: center;
-  width: 100%;
-  max-width: 300px;
-  transition: all 0.3s ease;
+ background-color: var(--card-bg);
+ border-radius: var(--radius-lg);
+ overflow: hidden;
+ text-align: center;
+ width: 100%;
+ max-width: 300px;
+ transition: all 0.3s ease;
 }
 
 .teamImage {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  object-position: center;
+ width: 100%;
+ height: 320px;
+ object-fit: cover;
+ object-position: center;
 }
 
 .teamInfo {
-  padding: 1.5rem;
-  background: white;
+ padding: 1.5rem;
+ background: white;
 }
 
 .teamName {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-primary);
+ font-size: 1.2rem;
+ font-weight: 600;
+ color: var(--text-primary);
 }
 
 .teamRole {
-  color: var(--primary);
-  font-weight: 500;
+ color: var(--primary);
+ font-weight: 500;
 }
-
 
 /* Story Section */
 .storySection {
-    background: #fff;
-    padding: 3rem;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 60px -10px rgba(0,0,0,0.05);
+ background: #fff;
+ padding: 3rem;
+ border-radius: var(--radius-lg);
+ box-shadow: 0 4px 60px -10px rgba(0, 0, 0, 0.05);
 }
 .storyContentWrapper {
-    position: relative;
-    margin-bottom: 1.5rem;
+ position: relative;
+ margin-bottom: 1.5rem;
 }
 
 .storyContent {
-    max-height: 130px; /* Approx 5 lines */
-    overflow: hidden;
-    transition: max-height 0.7s ease-in-out;
+ max-height: 130px; /* Approx 5 lines */
+ overflow: hidden;
+ transition: max-height 0.7s ease-in-out;
 }
 
 .storyContent.expanded {
-    max-height: 1000px; /* Large enough for content */
+ max-height: 1000px; /* Large enough for content */
 }
 
 .storyContent p {
-    line-height: 1.8;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
+ line-height: 1.8;
+ color: var(--text-primary);
+ margin-bottom: 1rem;
 }
 
 .storyFade {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, transparent, white);
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 80px;
+ background: linear-gradient(to bottom, transparent, white);
+ pointer-events: none;
+ transition: opacity 0.3s ease;
 }
 
 .expanded .storyFade {
-    opacity: 0;
+ opacity: 0;
 }
 
 .showMoreButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 auto;
-    padding: 0.6rem 1.25rem;
-    background-color: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    font-weight: 600;
-    color: var(--primary);
-    cursor: pointer;
-    transition: all 0.2s ease;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ margin: 0 auto;
+ padding: 0.6rem 1.25rem;
+ background-color: transparent;
+ border: 1px solid var(--border);
+ border-radius: var(--radius-lg);
+ font-weight: 600;
+ color: var(--primary);
+ cursor: pointer;
+ transition: all 0.2s ease;
 }
 
 .showMoreButton:hover {
-    background-color: var(--active-bg);
-    border-color: var(--active-bg);
+ background-color: var(--active-bg);
+ border-color: var(--active-bg);
 }
 
+@media (max-width: 640px) {
+ .storySection,
+ .missionSection {
+  padding: 1rem;
+ }
+}
 
-/* Responsive */
 @media (min-width: 640px) {
-  .valuesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .teamGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+ .valuesGrid {
+  grid-template-columns: repeat(2, 1fr);
+ }
+ .teamGrid {
+  grid-template-columns: repeat(2, 1fr);
+ }
 }
 
 @media (min-width: 992px) {
-  .valuesGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .teamGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-  }
+ .valuesGrid {
+  grid-template-columns: repeat(3, 1fr);
+ }
+ .teamGrid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+ }
 }
