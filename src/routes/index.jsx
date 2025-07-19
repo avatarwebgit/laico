@@ -16,6 +16,7 @@ const Profile = lazy(() => import('../pages/Profile'));
 const Checkout = lazy(() => import('../pages/Checkout'));
 const Contact = lazy(() => import('../pages/Contact'));
 const About = lazy(() => import('../pages/About'));
+const FAQ = lazy(() => import('../pages/FAQ'));
 const NotFound = lazy(() => import('../pages/404'));
 
 export const publicRoutes = [
@@ -34,6 +35,7 @@ export const publicRoutes = [
  { path: '/category', element: <Category />, name: 'دسته بندی' },
  { path: '/about-us', element: <About />, name: 'درباره ما' },
  { path: '/contact-us', element: <Contact />, name: 'تماس با ما' },
+ { path: '/FAQ', element: <FAQ />, name: 'سوالات متداول' },
  { path: '/*', element: <NotFound />, name: 'صفحه پیدا نشد' },
 ];
 

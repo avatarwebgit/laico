@@ -347,6 +347,7 @@ const pagesChildren = [
  { path: '/blogs/:id', name: 'مقاله' },
  { path: '/category', name: 'دسته بندی' },
  { path: '/about-us', name: 'درباره ما' },
+ { path: '/FAQ', name: 'سوالات متداول' },
  { path: '/contact-us', name: 'تماس با ما' },
  { path: '/checkout', name: 'پرداخت', requiresAuth: true },
  { path: '/checkout-success', name: 'پرداخت موفق', requiresAuth: true },
