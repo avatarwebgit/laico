@@ -18,6 +18,7 @@ const routeTitles = {
  '/checkout': 'تکمیل سفارش',
  '/checkout-success': 'سفارش با موفقیت ثبت شد',
  '/checkout-failure': 'خطا در پرداخت',
+ '/product': 'محصول',
  '/profile/*': 'پروفایل کاربری',
  '/about-us': 'درباره ما',
  '/contact-us': 'تماس با ما',

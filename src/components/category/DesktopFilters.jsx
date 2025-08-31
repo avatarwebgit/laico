@@ -1,112 +1,55 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import DropDown from '../common/DropDown';
+import DropDown from "../common/DropDown";
 
-import { useState } from 'react';
-import classes from './DesktopFilters.module.css';
+import { useState } from "react";
+import classes from "./DesktopFilters.module.css";
 
-const items = {
- title: 'فیلتر',
- options: [
-  { id: 1, name: 'لپتاپ' },
-  { id: 2, name: 'تلفن همراه' },
-  { id: 3, name: 'هدفون' },
-  { id: 4, name: 'صفحه کلید' },
-  { id: 5, name: 'ماوس' },
-  { id: 6, name: 'مانیتور' },
-  { id: 7, name: 'تبلت' },
-  { id: 8, name: 'ساعت هوشمند' },
-  { id: 9, name: 'دوربین' },
-  { id: 10, name: 'بلندگو' },
- ],
-};
+const DesktopFilters = ({ filtersConfig, onFilterChange, resetFilters }) => {
+  const [removePointer, setRemovePointer] = useState(false);
 
-const colorItems = {
- title: 'رنگ ها',
- options: [
-  {
-   id: 1,
-   color: 'قرمز',
-   hex: '#FF0000',
-   image: 'https://picsum.photos/id/237/500/500',
-  },
-  { id: 2, color: 'آبی', hex: '#0000FF' },
-  { id: 3, color: 'سبز', hex: '#00FF00' },
-  { id: 4, color: 'زرد', hex: '#FFFF00' },
-  { id: 5, color: 'بنفش', hex: '#800080' },
-  { id: 6, color: 'نارنجی', hex: '#FFA500' },
-  { id: 7, color: 'صورتی', hex: '#FFC0CB' },
-  { id: 8, color: 'قهوه‌ای', hex: '#A52A2A' },
-  { id: 9, color: 'سفید', hex: '#FFFFFF' },
-  { id: 10, color: 'مشکی', hex: '#000000' },
- ],
-};
-const DesktopFilters = () => {
- const [removePointer, setRemovePointer] = useState(false);
+  const { t } = useTranslation();
 
- const { t } = useTranslation();
+  const handleRemoveFilters = () => {
+    resetFilters();
+    setRemovePointer(!removePointer);
+  };
 
- const handleRemoveFilters = () => {
-  // remove filter logic
-  setRemovePointer(!removePointer);
- };
-
- return (
-  <div className={classes.filters}>
-   <div className={classes['filters-header']}>
-    <h5>{t('filters')}</h5>
-    <button onClick={handleRemoveFilters}>{t('remove filters')}</button>
-   </div>
-   <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
-    onChange={value => console.log(value)}
-    removeFilters={removePointer}
-   />
-   <DropDown
-    type={'color'}
-    colorsOptions={colorItems.options}
-    title={colorItems.title}
-    onChange={value => console.log(value)}
-    removeFilters={removePointer}
-   />
-   <DropDown
-    type={'price'}
-    title={'قیمت'}
-    priceOptions={[40000000, 10000]}
-    onChange={value => console.log(value)}
-    removeFilters={removePointer}
-   />
-
-   <DropDown
-    type={'switch'}
-    title={'تحویل در محل'}
-    onChange={value => console.log(value)}
-    removeFilters={removePointer}
-   />
-   <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
-   />
-   <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
-   />
-   <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
-   />
-   <DropDown
-    type={'checkbox'}
-    checkBoxOptions={items.options}
-    title={items.title}
-   />
-  </div>
- );
+  return (
+    <div className={classes.filters}>
+      <div className={classes["filters-header"]}>
+        <h5>{t("filters")}</h5>
+        <button onClick={handleRemoveFilters}>{t("remove filters")}</button>
+      </div>
+      <DropDown
+        type={"checkbox"}
+        checkBoxOptions={filtersConfig.categories.options}
+        title={filtersConfig.categories.title}
+        onChange={(value) => onFilterChange("categories", value)}
+        removeFilters={removePointer}
+      />
+      <DropDown
+        type={"color"}
+        colorsOptions={filtersConfig.colors.options}
+        title={filtersConfig.colors.title}
+        onChange={(value) => onFilterChange("colors", value)}
+        removeFilters={removePointer}
+      />
+      <DropDown
+        type={"price"}
+        title={filtersConfig.price.title}
+        priceOptions={filtersConfig.price.priceOptions}
+        onChange={(value) => onFilterChange("price", value)}
+        removeFilters={removePointer}
+      />
+      <DropDown
+        type={"switch"}
+        title={filtersConfig.delivery.title}
+        onChange={(value) => onFilterChange("fastestDelivery", value)}
+        removeFilters={removePointer}
+      />
+    </div>
+  );
 };
 
 export default DesktopFilters;

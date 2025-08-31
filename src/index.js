@@ -40,7 +40,7 @@ root.render(
  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
   <Provider store={store}>
    <PersistGate loading={null} persistor={persistor}>
-    <BrowserRouter >
+    <BrowserRouter basename='/'>
      <PersistQueryClientProvider
       client={queryClient}
       persistOptions={{ persister }}>
@@ -58,25 +58,3 @@ root.render(
  </GoogleOAuthProvider>,
 );
 
-// import auth from './api/auth';
-// auth.initialize().then(() => {
-//     root.render(
-//      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-//       <Provider store={store}>
-//        <PersistGate loading={null} persistor={persistor}>
-//         <BrowserRouter>
-//          <PersistQueryClientProvider
-//           client={queryClient}
-//           persistOptions={{ persister }}>
-//           <QueryClientProvider client={queryClient}>
-//            <I18nextProvider i18n={i18next}>
-//             <App />
-//            </I18nextProvider>
-//           </QueryClientProvider>
-//          </PersistQueryClientProvider>
-//         </BrowserRouter>
-//        </PersistGate>
-//       </Provider>
-//      </GoogleOAuthProvider>,
-//     );
-// });
