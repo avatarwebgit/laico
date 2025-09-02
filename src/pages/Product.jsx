@@ -94,10 +94,10 @@ const Product = ({ windowSize }) => {
 
   const { t } = useTranslation();
   const lng = "fa";
-  const token = useSelector((state) => state.userStore.token);
-  const favorites = useSelector((state) => state.favoriteStore.products);
-  const favoritesCount = useSelector((state) => state.favoriteStore.count);
-  const euro = useSelector((state) => state.cartStore.euro);
+  const token = useSelector((state) => state.user.token);
+  const favorites = useSelector((state) => state.favorites.products);
+  const favoritesCount = useSelector((state) => state.favorites.count);
+  const euro = useSelector((state) => state.cart.euro);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -711,7 +711,19 @@ const Product = ({ windowSize }) => {
             slidesPerView={5}
             spaceBetween={50}
             items={[
-              <ProductBox product={{ isOutOfStock: true }} />,
+              <ProductBox
+                product={{
+                  id: "1736236632",
+                  variationId: "378",
+                  name: "محصول نمونه زیبا",
+                  price: 12000000,
+                  originalPrice: 15000000,
+                  isLiked: false,
+                  rating: 4.5,
+                  totalViews: 1800,
+                  isOutOfStock: true,
+                }}
+              />,
               <ProductBox />,
               <ProductBox />,
               <ProductBox />,

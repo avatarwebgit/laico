@@ -13,7 +13,6 @@ import { ReactComponent as RedHeart } from "../../assets/svgs/red-heart.svg";
 
 import classes from "./ProductBox.module.css";
 
-// Default product data for when no props are passed, ensuring component doesn't break
 const mockProduct = {
   id: "1736236632",
   variationId: "378",
@@ -93,6 +92,10 @@ const ProductBox = ({ product = mockProduct }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {discount > 0 && (
+        <div className={classes.discountBadge}>-{discount}%</div>
+      )}
+
       <div className={classes["image-wrapper"]}>
         <Link to={`/product/${id}/${variationId}`}>
           <img src={imageUrl} alt={name} />
@@ -148,18 +151,19 @@ const ProductBox = ({ product = mockProduct }) => {
           <div className={classes.outOfStockText}>ناموجود</div>
         ) : (
           <div className={classes.priceSection}>
-            {discount > 0 && originalPrice && (
-              <del className={classes.originalPrice}>
-                {originalPrice.toLocaleString("fa-IR")} <span>تومان</span>
-              </del>
-            )}
+            <p className={classes["previous-price"]}>
+              {discount > 0 && originalPrice && (
+                <del className={classes.originalPrice}>
+                  {originalPrice.toLocaleString("fa-IR")} <span>تومان</span>
+                </del>
+              )}
+            </p>
+            <p className={classes.finalPrice}>
+              {price.toLocaleString("fa-IR")}
+              <span>تومان</span>
+            </p>
             <div className={classes.priceWrapper}>
               <div className={classes.pricing}>
-                <p className={classes.finalPrice}>
-                  {price.toLocaleString("fa-IR")}
-                  <br />
-                  <span>تومان</span>
-                </p>
                 {discount > 0 && originalPrice && (
                   <div className={classes.profitBadge}>
                     سود شما: {(originalPrice - price).toLocaleString("fa-IR")}{" "}
@@ -167,9 +171,6 @@ const ProductBox = ({ product = mockProduct }) => {
                   </div>
                 )}
               </div>
-              {discount > 0 && (
-                <div className={classes.discountBadge}>-{discount}%</div>
-              )}
             </div>
           </div>
         )}

@@ -1,7 +1,7 @@
 import * as actionTypes from './cartActionTypes';
 
 const initialState = {
- items: [],
+ products: [],
  totalPrice: 0,
  totalPriceAfterDiscount: 0,
  finalCart: [],

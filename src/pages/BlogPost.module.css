@@ -1,79 +1,271 @@
-.card {
+.pageWrapper {
+  background-color: #fff;
+}
+
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--primary);
+  transform-origin: 0%;
+  z-index: 10001;
+  box-shadow: 0 0 12px var(--primary), 0 0 6px var(--primary);
+}
+
+.header {
+  position: relative;
+  height: 75vh;
+  min-height: 450px;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  overflow: hidden;
+}
+
+.headerImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax effect */
+  transform: scale(1.05);
+}
+
+.headerOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.headerContent {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 5rem;
+  width: 100%;
+}
+
+:global(.MuiBreadcrumbs-root a),
+:global(.MuiBreadcrumbs-root p) {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: var(--normal-font) !important;
+}
+:global(.MuiBreadcrumbs-root a:hover) {
+  text-decoration: underline !important;
+}
+:global(.MuiBreadcrumbs-separator) {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.mainTitle {
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 900px;
+  margin-top: 1.5rem;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.7);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: var(--caption-font);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.starIcon {
+  color: #ffc107;
+}
+
+.articleContainer {
+  padding: 5rem 0;
+  background-color: #fff;
+}
+
+.articleBody {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 2;
+  color: var(--text-primary);
+}
+
+.articleBody h2,
+.articleBody h3 {
+  font-weight: 700;
+  color: var(--main-color-1);
+  margin-top: 3.5rem;
+  margin-bottom: 1.75rem;
+  line-height: 1.4;
+}
+
+.articleBody h2 {
+  font-size: 2.2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.articleBody h3 {
+  font-size: 1.8rem;
+}
+
+.articleBody p {
+  margin-bottom: 2rem;
+}
+
+.articleBody a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  background-image: linear-gradient(
+    to top,
+    var(--primary-light) 0%,
+    var(--primary-light) 100%
+  );
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  transition: background-size 0.3s ease;
+}
+
+.articleBody a:hover {
+  background-size: 100% 100%;
+  color: var(--primary-dark);
+}
+
+.articleBody blockquote {
+  border-right: 4px solid var(--primary);
+  margin: 2.5rem 0;
+  padding: 1.5rem 2rem;
+  background-color: var(--base-bg);
+  font-style: italic;
+  color: var(--text-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.articleBody ul,
+.articleBody ol {
+  margin: 2rem 0;
+  padding-right: 2.5rem;
+}
+.articleBody li {
+  margin-bottom: 1rem;
+}
+
+.error {
+  padding: 4rem 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--danger-color);
+}
+.commentsContainer {
+    padding-bottom: 5rem;
+}
+.sectionTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+.commentForm {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    align-items: flex-start;
+}
+.commentAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.commentInput {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background-color: var(--base-bg);
+    resize: vertical;
+    min-height: 50px;
+    transition: all 0.2s ease;
+}
+.commentInput:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+.commentSubmit {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-lg);
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+.commentSubmit:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+}
+.commentSubmit:disabled {
+    background-color: var(--text-secondary);
+    cursor: not-allowed;
+}
+.commentsList {
     display: flex;
     flex-direction: column;
-   }
-   
-   .img_wrapper {
-    height: 50vh;
-    width: 50%;
-   }
-   
-   .img_wrapper img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-   }
-   
-   .top_wrapper {
+    gap: 1.5rem;
+}
+.comment {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-   }
-   
-   .close_caption {
-    padding: 15px 0;
-    width: 40%;
-   }
-   
-   .close_caption h2 {
-    margin-top: 15px;
-    color: rgb(22, 22, 22);
-   }
-   
-   .close_caption p {
-    font-size: 20px;
-    padding: 15px;
-   }
-   
-   .text {
-    margin-top: 1rem;
-    width: 100%;
-    text-align: justify;
-    font-size: 18px;
-   }
-   
-   @media only screen and (max-width: 480px) {
-    .top_wrapper {
-     flex-direction: column;
-    }
-    .img_wrapper,
-    .close_caption {
-     width: 100%;
-     padding: 0;
-    }
-    .close_caption h2 {
-     padding: 0;
-     margin-top: 15px;
-    }
-    .close_caption p {
-     padding: 15px;
-    }
-   }
-   
-   @media only screen and (min-width: 481px) and (max-width: 768px) {
-    .top_wrapper {
-     flex-direction: column;
-    }
-    .img_wrapper,
-    .close_caption {
-     width: 100%;
-     padding: 0;
-    }
-    .close_caption h2 {
-     padding: 0;
-     margin-top: 15px;
-    }
-    .close_caption p {
-     padding: 15px;
-    }
-   }
+    gap: 1rem;
+}
+.commentContent {
+    background-color: var(--base-bg);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    flex-grow: 1;
+}
+.commentAuthor {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+.commentText {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 65vh;
+  }
+  .mainTitle {
+    font-size: 2.5rem;
+  }
+  .articleBody {
+    font-size: 1.1rem;
+    line-height: 1.9;
+  }
+}

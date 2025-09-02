@@ -385,7 +385,7 @@ hr {
 }
 
 .fixed-header {
- z-index: 1000;
+ z-index: 1000000;
 }
 
 .mega-paper {

@@ -172,9 +172,10 @@
 
 .priceSection {
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
 .priceWrapper {
@@ -194,6 +195,10 @@
 .originalPrice {
   font-size: 13px;
   color: #999;
+}
+
+.previous-price {
+  grid-area: 1/1/1/3;
 }
 
 .finalPrice {
@@ -219,7 +224,6 @@
   font-size: 12px;
   font-weight: bold;
   z-index: 3;
-
 }
 
 .profitBadge {
@@ -289,9 +293,8 @@
   color: #888;
 }
 
-/* OUT OF STOCK STYLES */
 .main.outOfStock {
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
 }
 
 .main.outOfStock .image-wrapper img {
@@ -299,11 +302,10 @@
 }
 
 .outOfStockText {
-  font-size: 1.2rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #999;
   margin-top: auto;
-  text-align: left;
   padding-bottom: 10px;
 }
 
@@ -312,10 +314,9 @@
     overflow: visible;
   }
 
-  /* Disable desktop hover effects */
   .main:hover {
     transform: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Keep default shadow on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   .main:hover .image-wrapper img {
     transform: none;
@@ -327,32 +328,31 @@
     color: var(--font-color-1);
   }
 
-  /* Hide hover-only icons */
   .button-wrapper {
     display: none;
   }
 
-  /* Stack stars and views */
   .metaWrapper {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
 
-  /* Ensure price wrapper doesn't push itself to the bottom, allowing natural flow */
   .priceSection {
-    /* Use the new wrapper */
-    margin-top: 1rem;
+    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 
-  /* Make shop button always visible and part of the flow */
+  .previous-price{
+    grid-area: 1/1/1/2;
+  }
+
   .shopButtonContainer {
     position: relative;
-    bottom: auto;
     width: 100%;
-    padding: 0 15px 15px; /* Add padding at the bottom of the card */
+    padding: 0 15px 15px;
     box-sizing: border-box;
-    /* Override framer-motion inline style */
     transform: translateY(0) !important;
   }
 
@@ -363,5 +363,10 @@
 
   .shop-button:hover::after {
     left: -150%;
+  }
+
+  .shopButtonContainer {
+    bottom: 0;
+    padding: 0;
   }
 }

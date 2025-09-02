@@ -5,14 +5,14 @@ h3,
 h4,
 h5,
 h6 {
- color: #373737;
+  color: #373737;
 }
 
 .icon-normal {
- width: var(--icon-size-sm) !important;
- height: var(--icon-size-sm) !important;
+  width: var(--icon-size-sm) !important;
+  height: var(--icon-size-sm) !important;
 }
 
 .dn {
- visibility: hidden;
+  visibility: hidden;
 }
