@@ -711,7 +711,7 @@ const Product = ({ windowSize }) => {
             slidesPerView={5}
             spaceBetween={50}
             items={[
-              <ProductBox />,
+              <ProductBox product={{ isOutOfStock: true }} />,
               <ProductBox />,
               <ProductBox />,
               <ProductBox />,

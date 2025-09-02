@@ -29,6 +29,7 @@ const mockProducts = [
     deliveryTime: 2,
     isFeatured: true,
     views: 5000,
+    isOutOfStock: false,
   },
   {
     id: 2,
@@ -47,6 +48,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: false,
     views: 8000,
+    isOutOfStock: false,
   },
   {
     id: 3,
@@ -62,6 +64,7 @@ const mockProducts = [
     deliveryTime: 4,
     isFeatured: true,
     views: 7500,
+    isOutOfStock: false,
   },
   {
     id: 4,
@@ -77,6 +80,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: false,
     views: 4000,
+    isOutOfStock: false,
   },
   {
     id: 5,
@@ -92,6 +96,7 @@ const mockProducts = [
     deliveryTime: 3,
     isFeatured: false,
     views: 6000,
+    isOutOfStock: false,
   },
   {
     id: 6,
@@ -107,6 +112,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: true,
     views: 6500,
+    isOutOfStock: false,
   },
   {
     id: 7,
@@ -122,6 +128,7 @@ const mockProducts = [
     deliveryTime: 5,
     isFeatured: false,
     views: 9000,
+    isOutOfStock: false,
   },
   {
     id: 8,
@@ -140,6 +147,7 @@ const mockProducts = [
     deliveryTime: 2,
     isFeatured: true,
     views: 10000,
+    isOutOfStock: false,
   },
   {
     id: 9,
@@ -155,6 +163,7 @@ const mockProducts = [
     deliveryTime: 6,
     isFeatured: false,
     views: 3000,
+    isOutOfStock: true,
   },
   {
     id: 10,
@@ -173,6 +182,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: false,
     views: 5500,
+    isOutOfStock: false,
   },
   {
     id: 11,
@@ -188,6 +198,7 @@ const mockProducts = [
     deliveryTime: 3,
     isFeatured: false,
     views: 5200,
+    isOutOfStock: false,
   },
   {
     id: 12,
@@ -206,6 +217,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: true,
     views: 12000,
+    isOutOfStock: false,
   },
   {
     id: 13,
@@ -221,6 +233,7 @@ const mockProducts = [
     deliveryTime: 4,
     isFeatured: false,
     views: 3500,
+    isOutOfStock: false,
   },
   {
     id: 14,
@@ -236,6 +249,7 @@ const mockProducts = [
     deliveryTime: 2,
     isFeatured: false,
     views: 4800,
+    isOutOfStock: false,
   },
   {
     id: 15,
@@ -251,6 +265,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: true,
     views: 9500,
+    isOutOfStock: false,
   },
   {
     id: 16,
@@ -266,6 +281,7 @@ const mockProducts = [
     deliveryTime: 5,
     isFeatured: false,
     views: 3200,
+    isOutOfStock: false,
   },
   {
     id: 17,
@@ -281,6 +297,7 @@ const mockProducts = [
     deliveryTime: 7,
     isFeatured: false,
     views: 2500,
+    isOutOfStock: true,
   },
   {
     id: 18,
@@ -299,6 +316,7 @@ const mockProducts = [
     deliveryTime: 2,
     isFeatured: true,
     views: 8800,
+    isOutOfStock: false,
   },
   {
     id: 19,
@@ -314,6 +332,7 @@ const mockProducts = [
     deliveryTime: 4,
     isFeatured: true,
     views: 4500,
+    isOutOfStock: false,
   },
   {
     id: 20,
@@ -333,6 +352,7 @@ const mockProducts = [
     deliveryTime: 1,
     isFeatured: true,
     views: 7000,
+    isOutOfStock: false,
   },
 ];
 

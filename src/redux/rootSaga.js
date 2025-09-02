@@ -6,6 +6,7 @@ import { userSaga } from './user/userSaga';
 import { orderSaga } from './orders/orderSaga';
 import { authSaga } from './auth/authSaga';
 import { drawerSaga } from './drawer/drawerSaga';
+import { blogSaga } from './blogs/blogSaga';
 
 export default function* rootSaga() {
  yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
   orderSaga(),
   authSaga(),
   drawerSaga(),
+  blogSaga(),
  ]);
 }

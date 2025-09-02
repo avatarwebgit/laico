@@ -28,6 +28,7 @@ const mainBreakpoints = {
   slidesPerView: 3,
  },
 };
+
 const breakpoints = {
  320: {
   slidesPerView: 2,
@@ -40,7 +41,7 @@ const breakpoints = {
   slidesPerView: 4,
  },
  1024: {
-  slidesPerView: 4,
+  slidesPerView: 5,
  },
 };
 
@@ -179,7 +180,7 @@ const Home = () => {
      <ProductBox />,
      <ProductBox />,
     ]}
-    slidesPerView={4}
+    slidesPerView={6}
     breakpoints={mainBreakpoints}
     spaceBetween={60}
     autoplay={false}

@@ -5,8 +5,10 @@ import api from '../../api/auth';
 
 function* loginSaga(action) {
  try {
-  const user = yield call(api.login, action.payload);
-  yield put(actions.loginSuccess(user));
+  const response = yield call(api.login, action.payload);
+  // Assuming response contains user and token
+  yield put(actions.loginSuccess(response));
+  localStorage.setItem('authToken', response.token);
  } catch (error) {
   yield put(actions.loginFailure(error.message));
  }
@@ -14,8 +16,10 @@ function* loginSaga(action) {
 
 function* registerSaga(action) {
  try {
-  const user = yield call(api.register, action.payload);
-  yield put(actions.registerSuccess(user));
+  const response = yield call(api.register, action.payload);
+  // Assuming response contains user and token
+  yield put(actions.registerSuccess(response));
+  localStorage.setItem('authToken', response.token);
  } catch (error) {
   yield put(actions.registerFailure(error.message));
  }
@@ -25,6 +29,7 @@ function* logoutSaga() {
  try {
   yield call(api.logout);
   yield put(actions.logoutSuccess());
+  localStorage.removeItem('authToken');
  } catch (error) {
   yield put(actions.logoutFailure(error.message));
  }

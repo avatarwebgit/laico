@@ -11,3 +11,8 @@ export const UPDATE_CART_ITEM_SUCCESS = 'cart/UPDATE_CART_ITEM_SUCCESS';
 export const UPDATE_CART_ITEM_FAILURE = 'cart/UPDATE_CART_ITEM_FAILURE';
 
 export const CLEAR_CART = 'cart/CLEAR_CART';
+export const SET_CART = 'cart/SET_CART';
+export const SET_FINAL_CART = 'cart/SET_FINAL_CART';
+export const SET_EURO_RATE = 'cart/SET_EURO_RATE';
+export const SET_SELECTED_ADDRESS = 'cart/SET_SELECTED_ADDRESS';
+export const SET_PAYMENT_METHOD = 'cart/SET_PAYMENT_METHOD';

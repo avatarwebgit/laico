@@ -5,7 +5,7 @@ import api from '../../api/user';
 
 function* fetchUserProfileSaga(action) {
  try {
-  const profile = yield call(api.fetchUserProfile, action.payload);
+  const profile = yield call(api.getProfile, action.payload);
   yield put(actions.fetchUserProfileSuccess(profile));
  } catch (error) {
   yield put(actions.fetchUserProfileFailure(error.message));
@@ -15,7 +15,7 @@ function* fetchUserProfileSaga(action) {
 function* updateUserProfileSaga(action) {
  try {
   const { userId, profileData } = action.payload;
-  const updatedProfile = yield call(api.updateUserProfile, userId, profileData);
+  const updatedProfile = yield call(api.updateProfile, userId, profileData);
   yield put(actions.updateUserProfileSuccess(updatedProfile));
  } catch (error) {
   yield put(actions.updateUserProfileFailure(error.message));

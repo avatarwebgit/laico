@@ -42,3 +42,12 @@ export const logoutFailure = error => ({
  type: actionTypes.LOGOUT_FAILURE,
  payload: error,
 });
+
+export const setToken = token => ({
+ type: actionTypes.SET_TOKEN,
+ payload: token,
+});
+
+export const removeToken = () => ({
+ type: actionTypes.REMOVE_TOKEN,
+});

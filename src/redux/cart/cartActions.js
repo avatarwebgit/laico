@@ -48,3 +48,27 @@ export const updateCartItemFailure = error => ({
 export const clearCart = () => ({
  type: actionTypes.CLEAR_CART,
 });
+
+export const setCart = cartData => ({
+ type: actionTypes.SET_CART,
+ payload: cartData,
+});
+
+export const setFinalCart = () => ({
+ type: actionTypes.SET_FINAL_CART,
+});
+
+export const setEuroRate = rate => ({
+ type: actionTypes.SET_EURO_RATE,
+ payload: rate,
+});
+
+export const setSelectedAddress = addressId => ({
+ type: actionTypes.SET_SELECTED_ADDRESS,
+ payload: addressId,
+});
+
+export const setPaymentMethod = methodId => ({
+ type: actionTypes.SET_PAYMENT_METHOD,
+ payload: methodId,
+});

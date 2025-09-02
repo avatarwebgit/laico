@@ -1,13 +1,20 @@
+import * as actionTypes from './drawerActionTypes';
 
-import {
- OPEN_CART_DRAWER,
- CLOSE_CART_DRAWER,
- OPEN_FAVORITES_DRAWER,
- CLOSE_FAVORITES_DRAWER,
-} from './actionTypes';
+export const openCartDrawer = () => ({ type: actionTypes.OPEN_CART_DRAWER });
+export const closeCartDrawer = () => ({ type: actionTypes.CLOSE_CART_DRAWER });
 
-export const openCartDrawer = () => ({ type: OPEN_CART_DRAWER });
-export const closeCartDrawer = () => ({ type: CLOSE_CART_DRAWER });
+export const openFavoritesDrawer = () => ({
+ type: actionTypes.OPEN_FAVORITES_DRAWER,
+});
+export const closeFavoritesDrawer = () => ({
+ type: actionTypes.CLOSE_FAVORITES_DRAWER,
+});
 
-export const openFavoritesDrawer = () => ({ type: OPEN_FAVORITES_DRAWER });
-export const closeFavoritesDrawer = () => ({ type: CLOSE_FAVORITES_DRAWER });
+export const setRedirectAfterLogin = path => ({
+ type: actionTypes.SET_REDIRECT_AFTER_LOGIN,
+ payload: path,
+});
+
+export const clearRedirectAfterLogin = () => ({
+ type: actionTypes.CLEAR_REDIRECT_AFTER_LOGIN,
+});

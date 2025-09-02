@@ -2,19 +2,24 @@ import { takeLatest, put, select } from 'redux-saga/effects';
 import * as actionTypes from './cartActionTypes';
 import * as actions from './cartActions';
 
+// This saga demonstrates how you could add logic before updating the state,
+// for example, checking if an item already exists.
 function* addToCartSaga(action) {
  try {
   const { items } = yield select(state => state.cart);
-  const existingItem = items.find(item => item.id === action.payload.id);
+  const existingItemIndex = items.findIndex(
+   item => item.id === action.payload.id,
+  );
 
-  if (existingItem) {
-   yield put(
-    actions.updateCartItemSuccess({
-     ...existingItem,
-     quantity: existingItem.quantity + 1,
-    }),
-   );
+  if (existingItemIndex > -1) {
+   // Item exists, update quantity
+   const updatedItem = {
+    ...items[existingItemIndex],
+    quantity: items[existingItemIndex].quantity + action.payload.quantity,
+   };
+   yield put(actions.updateCartItemSuccess(updatedItem));
   } else {
+   // New item, add to cart
    yield put(actions.addToCartSuccess(action.payload));
   }
  } catch (error) {
@@ -24,6 +29,7 @@ function* addToCartSaga(action) {
 
 function* removeFromCartSaga(action) {
  try {
+  // In a real app, you might call an API here.
   yield put(actions.removeFromCartSuccess(action.payload));
  } catch (error) {
   yield put(actions.removeFromCartFailure(error.message));
@@ -32,6 +38,7 @@ function* removeFromCartSaga(action) {
 
 function* updateCartItemSaga(action) {
  try {
+  // In a real app, you might call an API here.
   yield put(actions.updateCartItemSuccess(action.payload));
  } catch (error) {
   yield put(actions.updateCartItemFailure(error.message));

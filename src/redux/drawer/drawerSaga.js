@@ -1,32 +1,27 @@
-// src/store/drawer/saga.js
-import { takeLatest, put } from 'redux-saga/effects';
-import {
- OPEN_CART_DRAWER,
- CLOSE_CART_DRAWER,
- OPEN_FAVORITES_DRAWER,
- CLOSE_FAVORITES_DRAWER,
-} from './actionTypes';
+import { takeLatest } from 'redux-saga/effects';
+import * as actionTypes from './drawerActionTypes';
 
-// Example: could add side effects here, e.g., logging or async work
-function* openCartDrawerSaga() {
- yield put({ type: OPEN_CART_DRAWER });
+// Sagas for drawer actions are straightforward as they are synchronous.
+// They are included for consistency in handling all actions through sagas.
+function* handleOpenCartDrawer() {
+ // You could add side effects here if needed, e.g., logging.
 }
 
-function* closeCartDrawerSaga() {
- yield put({ type: CLOSE_CART_DRAWER });
-}
+function* handleCloseCartDrawer() {}
 
-function* openFavoritesDrawerSaga() {
- yield put({ type: OPEN_FAVORITES_DRAWER });
-}
+function* handleOpenFavoritesDrawer() {}
 
-function* closeFavoritesDrawerSaga() {
- yield put({ type: CLOSE_FAVORITES_DRAWER });
-}
+function* handleCloseFavoritesDrawer() {}
 
 export function* drawerSaga() {
- yield takeLatest(OPEN_CART_DRAWER, openCartDrawerSaga);
- yield takeLatest(CLOSE_CART_DRAWER, closeCartDrawerSaga);
- yield takeLatest(OPEN_FAVORITES_DRAWER, openFavoritesDrawerSaga);
- yield takeLatest(CLOSE_FAVORITES_DRAWER, closeFavoritesDrawerSaga);
+ yield takeLatest(actionTypes.OPEN_CART_DRAWER, handleOpenCartDrawer);
+ yield takeLatest(actionTypes.CLOSE_CART_DRAWER, handleCloseCartDrawer);
+ yield takeLatest(
+  actionTypes.OPEN_FAVORITES_DRAWER,
+  handleOpenFavoritesDrawer,
+ );
+ yield takeLatest(
+  actionTypes.CLOSE_FAVORITES_DRAWER,
+  handleCloseFavoritesDrawer,
+ );
 }

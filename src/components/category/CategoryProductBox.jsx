@@ -6,7 +6,7 @@ import classes from "./CategoryProductBox.module.css";
 import ImagePixelated from "../common/ImagePixelated";
 
 const CategoryProductBox = ({ product }) => {
-  const { imageUrl, name, caption, price, colors, id } = product;
+  const { imageUrl, name, caption, price, colors, id, isOutOfStock } = product;
   const renderColors = useCallback(() => {
     return colors.slice(0, 4).map((option) => (
       <Tooltip
@@ -42,16 +42,30 @@ const CategoryProductBox = ({ product }) => {
   }, [colors]);
 
   return (
-    <a className={classes["product-box"]} href={`/product/${id}/${id}`}>
+    <a
+      className={`${classes["product-box"]} ${
+        isOutOfStock ? classes.outOfStock : ""
+      }`}
+      href={isOutOfStock ? "#" : `/product/${id}/${id}`}
+    >
       <div className={classes["img-wrapper"]}>
+        {isOutOfStock && (
+          <div className={classes.outOfStockOverlay}>
+            <span>ناموجود</span>
+          </div>
+        )}
         <ImagePixelated src={imageUrl} alt={name} />
       </div>
       <div className={classes.title}>{name}</div>
       <div className={classes.caption}>{caption}</div>
-      <div className={classes.price}>
-        <span>{price.toLocaleString("fa-IR")}</span>
-        <span>تومان</span>
-      </div>
+      {isOutOfStock ? (
+        <div className={classes.outOfStockText}>ناموجود</div>
+      ) : (
+        <div className={classes.price}>
+          <span>{price.toLocaleString("fa-IR")}</span>
+          <span>تومان</span>
+        </div>
+      )}
       <div className={classes["color-wrapper-main"]}>
         {renderColors()}
         {colors.length > 5 && (

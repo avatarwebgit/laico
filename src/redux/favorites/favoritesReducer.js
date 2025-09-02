@@ -2,6 +2,7 @@ import * as actionTypes from './favoritesActionTypes';
 
 const initialState = {
  items: [],
+ count: 0,
  loading: false,
  error: null,
 };
@@ -21,6 +22,7 @@ const favoritesReducer = (state = initialState, action) => {
    return {
     ...state,
     items: action.payload,
+    count: action.payload.length,
     loading: false,
    };
 
@@ -45,6 +47,12 @@ const favoritesReducer = (state = initialState, action) => {
     ...state,
     loading: false,
     error: action.payload,
+   };
+
+  case actionTypes.SET_FAVORITES_COUNT:
+   return {
+    ...state,
+    count: action.payload,
    };
 
   default:

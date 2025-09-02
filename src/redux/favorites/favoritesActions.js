@@ -44,3 +44,8 @@ export const removeFromFavoritesFailure = error => ({
  type: actionTypes.REMOVE_FROM_FAVORITES_FAILURE,
  payload: error,
 });
+
+export const setFavoritesCount = count => ({
+ type: actionTypes.SET_FAVORITES_COUNT,
+ payload: count,
+});
