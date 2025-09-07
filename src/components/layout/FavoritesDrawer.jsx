@@ -1,13 +1,18 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Lock, ShoppingCart, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Heart, X } from "lucide-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { drawerActions } from "../../store/drawer/drawerSlice";
+import { closeFavoritesDrawer } from "../../redux/drawer/drawerActions";
+import {
+  fetchFavoritesRequest,
+  removeFavoriteRequest,
+} from "../../redux/user/userActions";
 
 import FavoriteItem from "./FavoriteItem";
 import classes from "./FavoritesDrawer.module.css";
+import Spinner from "../common/Spinner";
 
 const listContainerVariants = {
   hidden: { opacity: 0 },
@@ -26,43 +31,17 @@ const listItemVariants = {
   exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
 };
 
-const dummyFavorites = [
-  {
-    id: 4,
-    variation_id: 404,
-    name: "Stylish Leather Jacket",
-    alias: "stylish-leather-jacket",
-    primary_image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80",
-    color: "Brown",
-    size: "L",
-    sale_price: 250,
-    selected_quantity: 1,
-  },
-  {
-    id: 5,
-    variation_id: 505,
-    name: "Cozy Wool Scarf",
-    alias: "cozy-wool-scarf",
-    primary_image:
-      "https://images.unsplash.com/photo-1542489441-336c54093c4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "Grey",
-    size: "One Size",
-    sale_price: 45,
-    selected_quantity: 1,
-  },
-];
-
 const FavoritesDrawer = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const drawerState = useSelector((state) => state.drawer.favoritesDrawer);
-
-  const products = dummyFavorites;
-
-  const { token } = useSelector((state) => state.user);
-
-  const lng = "fsa";
+  const drawerState = useSelector((state) => state.drawer.favoritesDrawerOpen);
+  const {
+    favorites: products,
+    favoritesLoading: isLoadingData,
+    favoritesError: error,
+  } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.auth);
+  const lng = "fa";
 
   const drawerVariants = {
     open: (lng) => ({
@@ -70,14 +49,23 @@ const FavoritesDrawer = () => {
       transition: { type: "spring", stiffness: 350, damping: 40 },
     }),
     closed: (lng) => ({
-      x: lng === "fa" ? "-100%" : "100%",
+      x: lng === "fa" ? "100%" : "-100%",
       transition: { type: "spring", stiffness: 350, damping: 40 },
     }),
   };
-  const [isLoadingData, setIsLoadingData] = useState(false);
+
+  useEffect(() => {
+    if (drawerState && token) {
+      dispatch(fetchFavoritesRequest());
+    }
+  }, [drawerState, dispatch, token]);
+
+  const handleRemoveItem = (productId) => {
+    dispatch(removeFavoriteRequest(productId));
+  };
 
   const toggleDrawer = () => {
-    dispatch(drawerActions.favoritesClose());
+    dispatch(closeFavoritesDrawer());
   };
 
   useEffect(() => {
@@ -96,10 +84,16 @@ const FavoritesDrawer = () => {
     if (isLoadingData) {
       return (
         <div className={classes.loadingState}>
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className={classes.skeletonItem} />
-          ))}
+          <Spinner />
         </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <motion.div className={classes.emptyState}>
+          <p>{error}</p>
+        </motion.div>
       );
     }
 
@@ -111,16 +105,9 @@ const FavoritesDrawer = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, ease: "easeOut" }}
         >
-          <ShoppingCart size={64} className={classes.emptyStateIcon} />
-          <h3 className={classes.emptyStateTitle}>
-            {t("shopping_cart.empty")}
-          </h3>
-          <p className={classes.emptyStateText}>
-            {t(
-              "shopping_cart.empty_message",
-              "Looks like you haven't added anything yet."
-            )}
-          </p>
+          <Heart size={64} className={classes.emptyStateIcon} />
+          <h3 className={classes.emptyStateTitle}>{t("drawer.empty")}</h3>
+          <p className={classes.emptyStateText}>{t("drawer.empty_message")}</p>
         </motion.div>
       );
     }
@@ -135,12 +122,12 @@ const FavoritesDrawer = () => {
         <AnimatePresence>
           {products.map((item) => (
             <motion.div
-              key={item.variation_id}
+              key={item.id}
               layout
               variants={listItemVariants}
               exit={listItemVariants.exit}
             >
-              <FavoriteItem data={item} />
+              <FavoriteItem data={item} onRemove={handleRemoveItem} />
             </motion.div>
           ))}
         </AnimatePresence>

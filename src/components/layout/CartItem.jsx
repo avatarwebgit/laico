@@ -1,103 +1,41 @@
 import { IconButton, Tooltip } from "@mui/material";
 import { motion } from "framer-motion";
 import { Info, Minus, Plus, Trash2 } from "lucide-react";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getProductDetailsWithId, sendShoppingCart } from "../../services/api";
 import classes from "./CartItem.module.css";
 
 const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
   const [quantity, setQuantity] = useState(productData.selected_quantity || 1);
-  const [variation, setVariation] = useState(null);
-  const [isMoreThanQuantity, setIsMoreThanQuantity] = useState(false);
-
-  const abortControllerRef = useRef(new AbortController());
-
   const { t } = useTranslation();
   const lng = "fa";
   const euro = 1000;
-  const token = useSelector((state) => state.user?.token);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getVariationDetails = async () => {
-      if (productData) {
-        setQuantity(productData.selected_quantity);
-        const serverRes = await getProductDetailsWithId(
-          productData.variation_id
-        );
-        if (serverRes.response.ok) {
-          setVariation(serverRes.result);
-        }
-      }
-    };
-    getVariationDetails();
-
-    return () => {
-      abortControllerRef.current.abort();
-    };
-  }, [productData]);
-
-  const handleUpdateCart = useCallback(
-    async (newQuantity) => {
-      try {
-        abortControllerRef.current.abort();
-        abortControllerRef.current = new AbortController();
-
-        const serverRes = await sendShoppingCart(
-          token,
-          productData.id,
-          productData.variation_id,
-          +newQuantity,
-          abortControllerRef.current.signal
-        );
-
-        if (serverRes.response.ok && serverRes.result.total_price) {
-        }
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          console.error("Failed to update cart:", err);
-        }
-      }
-    },
-    [token, productData, dispatch, t]
-  );
+    setQuantity(productData.selected_quantity);
+  }, [productData.selected_quantity]);
 
   const handleQuantityChange = (newQuantity) => {
-    if (!variation) return;
-
-    const availableQuantity = variation.product?.variation?.quantity;
-    const isByOrder =
-      variation.product?.variation?.is_not_available !== 0 ||
-      availableQuantity === 0;
-
     if (newQuantity < 1) {
       newQuantity = 1;
     }
 
-    let finalQuantity = newQuantity;
-
-    if (!isByOrder && newQuantity > availableQuantity) {
-      setQuantity(availableQuantity);
-      handleUpdateCart(availableQuantity);
-      setIsMoreThanQuantity(true);
-      finalQuantity = availableQuantity;
-    } else {
-      setQuantity(newQuantity);
-      handleUpdateCart(newQuantity);
-      setIsMoreThanQuantity(false);
-    }
+    setQuantity(newQuantity);
 
     if (onQuantityUpdate) {
-      onQuantityUpdate(productData.id, finalQuantity);
+      onQuantityUpdate(
+        productData.id,
+        newQuantity,
+        productData.variation_id,
+        productData.product_id
+      );
     }
   };
 
-  const handleRemoveItem = async () => {
-    // In a real app, you would also call an API to remove the item from the backend.
+  const handleRemoveItem = () => {
     if (onRemoveItem) {
       onRemoveItem(productData.id);
     }
@@ -109,9 +47,6 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
 
   const productName = productData.name || `${t("Product")} ${productData.id}`;
   const productLink = `/${lng}/products/${productData.alias}/${productData.variation_id}`;
-  const isByOrderProduct =
-    variation?.product?.variation?.quantity === 0 &&
-    variation?.product?.variation?.is_not_available === 0;
 
   return (
     <div
@@ -152,11 +87,7 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
           ).toLocaleString()}{" "}
           {t("m_unit")}
         </p>
-        <div
-          className={`${classes.quantityChanger} ${
-            isMoreThanQuantity ? classes.error : ""
-          }`}
-        >
+        <div className={`${classes.quantityChanger}`}>
           <motion.button
             whileTap={{ scale: 0.9 }}
             className={classes.quantityButton}
@@ -187,22 +118,6 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
           </IconButton>
         </Tooltip>
       </motion.div>
-
-      {isByOrderProduct && (
-        <Tooltip
-          title={t("byorder")}
-          className={classes.tooltip}
-          arrow
-          placement={lng === "fa" ? "right" : "left"}
-        >
-          <Info size={16} className={classes.infoIcon} />
-        </Tooltip>
-      )}
-      {isMoreThanQuantity && (
-        <div className={classes.outOfStockMessage}>
-          {t("availableQuantity")}: {variation.product.variation.quantity}
-        </div>
-      )}
     </div>
   );
 };

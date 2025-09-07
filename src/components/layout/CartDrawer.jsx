@@ -1,15 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, ShoppingCart, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { drawerActions } from "../../store/drawer/drawerSlice";
+import { closeCartDrawer } from "../../redux/drawer/drawerActions";
+import * as cartActions from "../../redux/cart/cartActions";
 
 import CartItem from "./CartItem";
 import classes from "./CartDrawer.module.css";
 import { formatNumber } from "../../utils/helperFucntions";
+import Spinner from "../common/Spinner";
 
 const listContainerVariants = {
   hidden: { opacity: 0 },
@@ -28,78 +30,18 @@ const listItemVariants = {
   exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
 };
 
-const dummyProducts = [
-  {
-    id: 1,
-    variation_id: 101,
-    name: "Classic Black T-Shirt",
-    alias: "classic-black-t-shirt",
-    primary_image:
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "Black",
-    size: "M",
-    sale_price: 25,
-    selected_quantity: 1,
-  },
-  {
-    id: 2,
-    variation_id: 202,
-    name: "Comfortable Blue Jeans",
-    alias: "comfortable-blue-jeans",
-    primary_image:
-      "https://images.unsplash.com/photo-1602293589930-45a9de87944e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "Blue Denim",
-    size: "32/32",
-    sale_price: 70,
-    selected_quantity: 1,
-  },
-  {
-    id: 3,
-    variation_id: 303,
-    name: "White Canvas Sneakers",
-    alias: "white-canvas-sneakers",
-    primary_image:
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "White",
-    size: "10",
-    sale_price: 55,
-    selected_quantity: 2,
-  },
-  {
-    id: 4,
-    variation_id: 303,
-    name: "White Canvas Sneakers",
-    alias: "white-canvas-sneakers",
-    primary_image:
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "White",
-    size: "10",
-    sale_price: 55,
-    selected_quantity: 2,
-  },
-  {
-    id: 5,
-    variation_id: 303,
-    name: "White Canvas Sneakers",
-    alias: "white-canvas-sneakers",
-    primary_image:
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    color: "White",
-    size: "10",
-    sale_price: 55,
-    selected_quantity: 2,
-  },
-];
-
 const CartDrawer = () => {
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
 
-  const [products, setProducts] = useState(dummyProducts);
   const drawerState = useSelector((state) => state.drawer.cartDrawer);
+  const {
+    products,
+    loading: isLoadingData,
+    euro,
+    totalPrice,
+  } = useSelector((state) => state.cart);
   const token = useSelector((state) => state.user.token);
-
   const lng = "fa";
 
   const drawerVariants = {
@@ -112,38 +54,38 @@ const CartDrawer = () => {
       transition: { type: "spring", stiffness: 350, damping: 40 },
     }),
   };
-  const [isLoadingData, setIsLoadingData] = useState(false);
 
-  const handleQuantityUpdate = (itemId, newQuantity) => {
-    setProducts((currentProducts) =>
-      currentProducts.map((p) =>
-        p.id === itemId ? { ...p, selected_quantity: newQuantity } : p
-      )
+  useEffect(() => {
+    if (drawerState && token && products.length === 0) {
+      dispatch(cartActions.fetchCartRequest());
+    }
+  }, [drawerState, dispatch, token, products.length]);
+
+  const handleQuantityUpdate = (
+    itemId,
+    newQuantity,
+    variationId,
+    productId
+  ) => {
+    dispatch(
+      cartActions.updateCartItemRequest({
+        product_id: productId,
+        variation_id: variationId,
+        quantity: newQuantity,
+      })
     );
   };
 
-  const handleRemoveItem = (itemId) => {
-    setProducts((currentProducts) =>
-      currentProducts.filter((p) => p.id !== itemId)
-    );
+  const handleRemoveItem = (cartId) => {
+    dispatch(cartActions.removeFromCartRequest(cartId));
   };
 
-  const euro = 1000;
-
-  const { totalPrice, grandTotal } = useMemo(() => {
-    const total = products.reduce(
-      (acc, item) => acc + item.sale_price * item.selected_quantity,
-      0
-    );
-    const calculatedPrice = Math.round(total * euro);
-    return {
-      totalPrice: calculatedPrice,
-      grandTotal: calculatedPrice, // Assuming no discounts/taxes for now
-    };
-  }, [products]);
+  const grandTotal = useMemo(() => {
+    return totalPrice; // Assuming no discounts/taxes for now
+  }, [totalPrice]);
 
   const toggleDrawer = () => {
-    dispatch(drawerActions.cartClose());
+    dispatch(closeCartDrawer());
   };
 
   useEffect(() => {
@@ -162,9 +104,7 @@ const CartDrawer = () => {
     if (isLoadingData) {
       return (
         <div className={classes.loadingState}>
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className={classes.skeletonItem} />
-          ))}
+          <Spinner />
         </div>
       );
     }
@@ -194,7 +134,7 @@ const CartDrawer = () => {
         <AnimatePresence>
           {products.map((item) => (
             <motion.div
-              key={item.variation_id}
+              key={item.id}
               layout
               variants={listItemVariants}
               exit={listItemVariants.exit}
@@ -256,13 +196,13 @@ const CartDrawer = () => {
                 <div className={classes.summary}>
                   <div className={classes.summaryRow}>
                     <span>{t("subtotal")}</span>
-                    <span>{formatNumber(totalPrice)}</span>
+                    <span>{formatNumber(totalPrice * euro)}</span>
                   </div>
                   <div
                     className={`${classes.summaryRow} ${classes.grandTotal}`}
                   >
                     <span>{t("shopping_cart.total", "Total")}</span>
-                    <span>{formatNumber(grandTotal)}</span>
+                    <span>{formatNumber(grandTotal * euro)}</span>
                   </div>
                 </div>
                 {token ? (
@@ -286,23 +226,6 @@ const CartDrawer = () => {
                 )}
               </footer>
             )}
-
-            {/* {!token && (
-       <footer className={`${classes.footer} ${classes.loginFooter}`}>
-        <motion.button
-         className={classes.checkoutButton}
-         onClick={() => {
-          // This should trigger a login modal
-          toggleDrawer();
-          // dispatch(accesModalActions.login());
-         }}
-         whileHover={{ scale: 1.03 }}
-         whileTap={{ scale: 0.98 }}>
-         <Lock size={16} />
-         {t('drawer.login_to_continue')}
-        </motion.button>
-       </footer>
-      )} */}
           </motion.div>
         </div>
       )}

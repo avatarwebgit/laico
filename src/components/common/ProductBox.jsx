@@ -28,7 +28,7 @@ const mockProduct = {
   isOutOfStock: false,
 };
 
-const ProductBox = ({ product = mockProduct }) => {
+const ProductBox = ({ product = mockProduct, onAddToCart }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const {
@@ -168,8 +168,8 @@ const ProductBox = ({ product = mockProduct }) => {
               <div className={classes.pricing}>
                 {discount > 0 && originalPrice && (
                   <div className={classes.profitBadge}>
-                    سود شما: {(originalPrice - finalPrice).toLocaleString("fa-IR")}{" "}
-                    تومان
+                    سود شما:{" "}
+                    {(originalPrice - finalPrice).toLocaleString("fa-IR")} تومان
                   </div>
                 )}
               </div>
@@ -186,7 +186,10 @@ const ProductBox = ({ product = mockProduct }) => {
           animate={isHovered ? "shopButton" : "visible"}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         >
-          <button className={classes["shop-button"]}>
+          <button
+            className={classes["shop-button"]}
+            onClick={onAddToCart ? () => onAddToCart(product) : undefined}
+          >
             <Basket className={classes.basketIcon} />
             <span>افزودن به سبد</span>
           </button>

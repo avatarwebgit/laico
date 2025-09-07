@@ -18,6 +18,7 @@ import { ReactComponent as Avatar } from "../../../assets/svgs/user.svg";
 
 import classes from "./Header.module.css";
 import "../../../styles/common.css";
+import { openCartDrawer, openFavoritesDrawer } from "../../../redux/drawer/drawerActions";
 
 const megaMenuChildren = [
   {
@@ -599,7 +600,7 @@ const Header = () => {
               >
                 <IconButton
                   disableRipple={true}
-                  onClick={() => dispatch(drawerActions.cartOpen())}
+                  onClick={() => dispatch(openCartDrawer())}
                 >
                   <Basket className={`${classes["icon-normal"]}`} />
                 </IconButton>
@@ -610,7 +611,7 @@ const Header = () => {
               >
                 <IconButton
                   disableRipple={true}
-                  onClick={() => dispatch(drawerActions.favoritesOpen())}
+                  onClick={() => dispatch(openFavoritesDrawer())}
                 >
                   <Heart className={`${classes["icon-normal"]}`} />
                 </IconButton>

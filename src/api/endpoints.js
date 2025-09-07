@@ -19,8 +19,8 @@ export default {
   },
 
   CART: {
-    USER_CART: (userId) => `${API_BASE}/users/${userId}/cart`,
-    CART_ITEM: (userId, itemId) => `${API_BASE}/users/${userId}/cart/${itemId}`,
+    BASE: () => `${API_BASE}/cart`,
+    ITEM: (cartId) => `${API_BASE}/cart/${cartId}`,
   },
 
   USER: {
