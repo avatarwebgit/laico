@@ -1,175 +1,207 @@
 /* User should replace with their own background image. */
 .container {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Positions the form on the left for RTL */
-    padding: 0 6rem;
-    background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9e?q=80&w=2070&auto=format&fit=crop');
-    background-size: cover;
-    background-position: center;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Positions the form on the left for RTL */
+  padding: 0 6rem;
+  background-image: url("https://images.unsplash.com/photo-1555529669-e69e7aa0ba9e?q=80&w=2070&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
 }
 
 .formContainer {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    max-height: 95vh;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px) saturate(180%);
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    color: var(--text-white);
-    overflow-y: auto;
-    overflow-x: hidden;
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  max-height: 95vh;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  color: var(--text-white);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Custom Scrollbar */
 .formContainer::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 .formContainer::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 .formContainer::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
 }
 .formContainer::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .formWrapper {
-    padding: 2rem;
+  padding: 2rem;
 }
 
 .logo {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .logoLink {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-white);
-    text-decoration: none;
-    letter-spacing: 2px;
+  display: block;
+  height: 150px;
+  width: 150px;
+  margin: 0 auto;
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.logoLink img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .header {
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-    color: var(--text-white);
+  font-size: var(--title-font);
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-white);
 }
 
 .subtitle {
-    font-size: 1rem;
-    color: var(--text-light);
-    margin-top: 0.5rem;
+  font-size: var(--caption-font);
+  color: var(--text-light);
+  margin-top: 0.5rem;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.inputGroup {
-    position: relative;
-    margin-bottom: 1.5rem;
+.phoneInputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  overflow: hidden;
 }
 
-.icon {
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    z-index: 2;
-    transition: color 0.3s ease;
+.phoneInputContainer:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-.input {
-    width: 100%;
-    padding: 1rem 3.5rem 1rem 1rem; /* Padding for icon */
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-md);
-    color: var(--text-white);
-    font-size: 1rem;
-    transition: var(--transition);
+.countryCode {
+  display: flex;
+  align-items: center;
+  width: 35%;
+  color: #fff;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  align-self: stretch;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.input:focus {
-    outline: none;
-    border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+.countryCode div {
+  font-size: var(--caption-font);
+  margin: 0 10px;
 }
 
-.input:focus ~ .icon {
-    color: var(--primary);
+.flagIcon {
+  width: 24px;
+  height: auto;
+  margin-left: 8px;
 }
 
+.phoneInput {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-white);
+  font-size: var(--caption-font);
+  direction: ltr;
+  text-align: left;
+}
 
-.input::placeholder {
-    color: var(--text-light);
+.phoneInput:focus {
+  outline: none;
+}
+
+.phoneInput::placeholder {
+  color: var(--text-muted);
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fca5a5; /* red-300 */
+  font-size: var(--normal-font);
+  margin-bottom: 1.5rem;
+  margin-top: -0.5rem;
 }
 
 .link {
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: var(--normal-font);
+  font-weight: 500;
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .submitButton {
-    width: 100%;
-    padding: 1rem;
-    background: var(--primary);
-    color: var(--text-white);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: var(--transition);
-    margin-bottom: 1.5rem;
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--title-font);
+  font-weight: 500;
+  transition: var(--transition);
+  margin-bottom: 1.5rem;
 }
 
 .submitButton:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-light);
+  text-align: center;
+  font-size: var(--normal-font);
+  color: var(--text-light);
 }
 
 @media (max-width: 768px) {
-    .container {
-        justify-content: center;
-        padding: 1rem;
-    }
-    .formContainer {
-        width: 100%;
-        max-height: 90vh;
-        background: rgba(0, 0, 0, 0.6);
-    }
-    .formWrapper {
-        padding: 1.5rem;
-    }
+  .container {
+    justify-content: center;
+    padding: 1rem;
+  }
+  .formContainer {
+    width: 100%;
+    max-height: 90vh;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .formWrapper {
+    padding: 1.5rem;
+  }
 }

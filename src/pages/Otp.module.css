@@ -28,7 +28,6 @@
     overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
 .formContainer::-webkit-scrollbar {
     width: 6px;
 }
@@ -54,8 +53,8 @@
 
 .logoLink {
  display: block;
- height: 100px;
- width: 100px;
+ height: 150px;
+ width: 150px;
  margin: 0 auto;
  font-weight: 700;
  color: var(--text-white);

@@ -1,20 +1,33 @@
-import api from './index';
-import endpoints from './endpoints';
+import api from "./index";
+import endpoints from "./endpoints";
 
 export default {
- getProfile: userId => api.get(endpoints.USER.PROFILE(userId)),
+  getProfile: () => api.get(endpoints.USER.PROFILE()),
+  updateProfile: (profileData) =>
+    api.put(endpoints.USER.PROFILE(), profileData),
 
- updateProfile: (userId, profileData) =>
-  api.put(endpoints.USER.PROFILE(userId), profileData),
+  getAddresses: () => api.get(endpoints.USER.ADDRESSES()),
+  addAddress: (addressData) =>
+    api.post(endpoints.USER.ADDRESSES(), addressData),
+  updateAddress: (addressId, addressData) =>
+    api.put(endpoints.USER.ADDRESS(addressId), addressData),
+  deleteAddress: (addressId) => api.delete(endpoints.USER.ADDRESS(addressId)),
 
- getAddresses: userId => api.get(endpoints.USER.ADDRESSES(userId)),
+  getOrders: () => api.get(endpoints.USER.ORDERS()),
+  getOrderDetails: (orderId) => api.get(endpoints.USER.ORDER_DETAILS(orderId)),
 
- addAddress: (userId, addressData) =>
-  api.post(endpoints.USER.ADDRESSES(userId), addressData),
+  getFavorites: () => api.get(endpoints.USER.FAVORITES()),
+  addFavorite: (productId) =>
+    api.post(endpoints.USER.ADD_FAVORITE(), { productId }),
+  removeFavorite: (productId) =>
+    api.delete(endpoints.USER.REMOVE_FAVORITE(productId)),
 
- updateAddress: (userId, addressId, addressData) =>
-  api.put(endpoints.USER.ADDRESS(userId, addressId), addressData),
+  getTickets: () => api.get(endpoints.USER.TICKETS()),
+  createTicket: (ticketData) => api.post(endpoints.USER.TICKETS(), ticketData),
+  getTicketDetails: (ticketId) => api.get(endpoints.USER.TICKET(ticketId)),
+  replyToTicket: (ticketId, replyData) =>
+    api.post(endpoints.USER.TICKET_REPLIES(ticketId), replyData),
 
- deleteAddress: (userId, addressId) =>
-  api.delete(endpoints.USER.ADDRESS(userId, addressId)),
+  getWallet: () => api.get(endpoints.USER.WALLET()),
+  getTransactions: () => api.get(endpoints.USER.TRANSACTIONS()),
 };

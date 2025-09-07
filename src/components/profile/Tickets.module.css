@@ -212,6 +212,18 @@ tbody tr:hover {
  color: var(--status-closed-text);
 }
 
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  min-height: 200px;
+}
+
+.errorText {
+  color: var(--danger-color);
+}
+
 /* Responsive */
 @media (min-width: 768px) {
  .header {

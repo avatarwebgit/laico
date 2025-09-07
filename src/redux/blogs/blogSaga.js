@@ -19,7 +19,8 @@ function* fetchBlogsSaga() {
 
 function* fetchSingleBlogSaga(action) {
   try {
-    const blog = yield call(api.getByAlias, action.payload);
+    const alias = action.payload;
+    const blog = yield call(api.getById, alias);
     yield put(fetchSingleBlogSuccess(blog));
   } catch (error) {
     yield put(fetchSingleBlogFailure(error.message));

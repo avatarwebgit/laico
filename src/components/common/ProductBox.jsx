@@ -18,8 +18,10 @@ const mockProduct = {
   variationId: "378",
   name: "محصول نمونه زیبا",
   imageUrl: img,
-  price: 12000000,
+  hasDiscount: false,
+  finalPrice: 12000000,
   originalPrice: 15000000,
+  discountPercent: 0,
   isLiked: false,
   rating: 4.5,
   totalViews: 1800,
@@ -34,7 +36,7 @@ const ProductBox = ({ product = mockProduct }) => {
     variationId,
     name,
     imageUrl,
-    price,
+    finalPrice,
     originalPrice,
     isLiked,
     rating,
@@ -43,8 +45,8 @@ const ProductBox = ({ product = mockProduct }) => {
   } = product;
 
   const discount =
-    originalPrice && price < originalPrice
-      ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    originalPrice && finalPrice < originalPrice
+      ? Math.round(((originalPrice - finalPrice) / originalPrice) * 100)
       : 0;
 
   const buttonVariants = {
@@ -151,7 +153,7 @@ const ProductBox = ({ product = mockProduct }) => {
           <div className={classes.outOfStockText}>ناموجود</div>
         ) : (
           <div className={classes.priceSection}>
-            <p className={classes["previous-price"]}>
+            <p className={classes["previous-finalPrice"]}>
               {discount > 0 && originalPrice && (
                 <del className={classes.originalPrice}>
                   {originalPrice.toLocaleString("fa-IR")} <span>تومان</span>
@@ -159,14 +161,14 @@ const ProductBox = ({ product = mockProduct }) => {
               )}
             </p>
             <p className={classes.finalPrice}>
-              {price.toLocaleString("fa-IR")}
+              {finalPrice.toLocaleString("fa-IR")}
               <span>تومان</span>
             </p>
             <div className={classes.priceWrapper}>
               <div className={classes.pricing}>
                 {discount > 0 && originalPrice && (
                   <div className={classes.profitBadge}>
-                    سود شما: {(originalPrice - price).toLocaleString("fa-IR")}{" "}
+                    سود شما: {(originalPrice - finalPrice).toLocaleString("fa-IR")}{" "}
                     تومان
                   </div>
                 )}

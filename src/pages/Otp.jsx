@@ -1,161 +1,195 @@
-import { motion } from 'framer-motion';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { BackgroundContext } from "../context/BackgroundContent";
+import * as authActions from "../redux/auth/authActions";
 
-import img from '../assets/images/photo_2025-04-13_11-44-04.jpg';
-import logo from '../assets/images/Logo.png';
+import logo from "../assets/images/Logo.png";
+import img from "../assets/images/photo_2025-04-13_11-44-04.jpg";
 
-import { BackgroundContext } from '../context/BackgroundContent';
-import styles from './Otp.module.css';
+import styles from "./Otp.module.css";
 
 const containerVariants = {
- hidden: { opacity: 0 },
- visible: {
-  opacity: 1,
-  transition: { staggerChildren: 0.1, delayChildren: 0.2 },
- },
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
 };
 
 const itemVariants = {
- hidden: { y: 20, opacity: 0 },
- visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } },
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
 };
 
 const Otp = () => {
- const navigate = useNavigate();
- const [otp, setOtp] = useState(new Array(6).fill(''));
- const [timer, setTimer] = useState(60);
- const [canResend, setCanResend] = useState(false);
- const inputRefs = useRef([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
- const { setBackgroundImage } = useContext(BackgroundContext);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { cellphone, from } = location.state || {};
 
- useEffect(() => {
-  if (timer > 0) {
-   const countdown = setTimeout(() => setTimer(timer - 1), 1000);
-   return () => clearTimeout(countdown);
-  } else {
-   setCanResend(true);
-  }
- }, [timer]);
+  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [timer, setTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+  const inputRefs = useRef([]);
 
- const handleResend = () => {
-  if (canResend) {
-   setTimer(60);
-   setCanResend(false);
-   // Add logic to resend OTP
-   console.log('Resending OTP...');
-  }
- };
+  const { setBackgroundImage } = useContext(BackgroundContext);
 
- const handleChange = (element, index) => {
-  if (isNaN(element.value)) return false;
+  useEffect(() => {
+    if (!cellphone) {
+      navigate("/login-with-mobile");
+    }
+    if (isAuthenticated) {
+      const redirectUrl = localStorage.getItem("redirectAfterLogin");
+      localStorage.removeItem("redirectAfterLogin");
+      navigate(redirectUrl || from || "/");
+    }
+  }, [isAuthenticated, navigate, from, cellphone]);
 
-  setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+  useEffect(() => {
+    if (timer > 0) {
+      const countdown = setTimeout(() => setTimer(timer - 1), 1000);
+      return () => clearTimeout(countdown);
+    } else {
+      setCanResend(true);
+    }
+  }, [timer]);
 
-  if (element.nextSibling) {
-   element.nextSibling.focus();
-  }
- };
+  const handleResend = () => {
+    if (canResend) {
+      setTimer(60);
+      setCanResend(false);
+      dispatch(authActions.sendOtpRequest(cellphone));
+    }
+  };
 
- const handleKeyDown = (e, index) => {
-  if (e.key === 'Backspace' && !otp[index] && e.target.previousSibling) {
-   e.target.previousSibling.focus();
-  }
- };
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return false;
 
- const handleSubmit = e => {
-  e.preventDefault();
-  // Handle OTP verification
-  console.log('Verifying OTP:', otp.join(''));
-  navigate('/profile/dashboard');
- };
+    setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
 
- useEffect(() => {
-  setBackgroundImage(img);
-  inputRefs.current.at(0).focus();
-  return () => setBackgroundImage(null);
- }, [setBackgroundImage]);
+    if (element.value && element.nextSibling) {
+      element.nextSibling.focus();
+    }
+  };
 
- return (
-  <div className={styles.container}>
-   <motion.div
-    className={styles.formContainer}
-    initial={{ opacity: 0, x: 100 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -100 }}
-    transition={{ duration: 0.5, ease: 'easeInOut' }}>
-    <motion.div
-     className={styles.formWrapper}
-     variants={containerVariants}
-     initial='hidden'
-     animate='visible'>
-     <motion.div variants={itemVariants} className={styles.header}>
-      <div className={styles.logo}>
-       <Link to='/' className={styles.logoLink}>
-        <img src={logo} alt='' />
-       </Link>
-      </div>
-      <h1 className={styles.title}>کد تایید را وارد کنید</h1>
-      <p className={styles.subtitle}>کد تایید به شماره موبایل شما ارسال شد.</p>
-     </motion.div>
-     <motion.form
-      onSubmit={handleSubmit}
-      className={styles.form}
-      variants={containerVariants}>
-      <motion.div variants={itemVariants} className={styles.otpInputContainer}>
-       {otp.map((data, index) => {
-        return (
-         <input
-          className={styles.otpInput}
-          type='text'
-          name='otp'
-          maxLength='1'
-          key={index}
-          value={data}
-          onChange={e => handleChange(e.target, index)}
-          onFocus={e => e.target.select()}
-          onKeyDown={e => handleKeyDown(e, index)}
-          ref={el => (inputRefs.current[index] = el)}
-         />
-        );
-       })}
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && e.target.previousSibling) {
+      e.target.previousSibling.focus();
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fullOtp = otp.join("");
+    if (fullOtp.length === 6) {
+      dispatch(authActions.verifyOtpRequest(cellphone, fullOtp));
+    }
+  };
+
+  useEffect(() => {
+    setBackgroundImage(img);
+    if (inputRefs.current.length > 0) {
+      inputRefs.current[0].focus();
+    }
+    return () => setBackgroundImage(null);
+  }, [setBackgroundImage]);
+
+  return (
+    <div className={styles.container}>
+      <motion.div
+        className={styles.formContainer}
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        <motion.div
+          className={styles.formWrapper}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={itemVariants} className={styles.header}>
+            <div className={styles.logo}>
+              <Link to="/" className={styles.logoLink}>
+                <img src={logo} alt="" />
+              </Link>
+            </div>
+            <h1 className={styles.title}>کد تایید را وارد کنید</h1>
+            <p className={styles.subtitle}>
+              کد تایید به شماره موبایل شما ارسال شد.
+            </p>
+          </motion.div>
+          <motion.form
+            onSubmit={handleSubmit}
+            className={styles.form}
+            variants={containerVariants}
+          >
+            <motion.div
+              variants={itemVariants}
+              className={styles.otpInputContainer}
+            >
+              {otp.map((data, index) => {
+                return (
+                  <input
+                    className={styles.otpInput}
+                    type="text"
+                    name="otp"
+                    maxLength="1"
+                    key={index}
+                    value={data}
+                    onChange={(e) => handleChange(e.target, index)}
+                    onFocus={(e) => e.target.select()}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    ref={(el) => (inputRefs.current[index] = el)}
+                  />
+                );
+              })}
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className={styles.resendContainer}
+            >
+              {canResend ? (
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  className={styles.linkButton}
+                >
+                  ارسال مجدد کد
+                </button>
+              ) : (
+                <p>ارسال مجدد تا {timer} ثانیه دیگر</p>
+              )}
+            </motion.div>
+
+            <motion.button
+              type="submit"
+              className={styles.submitButton}
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0px 8px 20px rgba(59, 130, 246, 0.4)",
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              تایید و ادامه
+            </motion.button>
+          </motion.form>
+          <motion.div variants={itemVariants} className={styles.footer}>
+            <Link to="/login" className={styles.link}>
+              بازگشت به صفحه ورود
+            </Link>
+          </motion.div>
+        </motion.div>
       </motion.div>
-
-      <motion.div variants={itemVariants} className={styles.resendContainer}>
-       {canResend ? (
-        <button
-         type='button'
-         onClick={handleResend}
-         className={styles.linkButton}>
-         ارسال مجدد کد
-        </button>
-       ) : (
-        <p>ارسال مجدد تا {timer} ثانیه دیگر</p>
-       )}
-      </motion.div>
-
-      <motion.button
-       type='submit'
-       className={styles.submitButton}
-       variants={itemVariants}
-       whileHover={{
-        scale: 1.03,
-        boxShadow: '0px 8px 20px rgba(59, 130, 246, 0.4)',
-       }}
-       whileTap={{ scale: 0.98 }}>
-       تایید و ادامه
-      </motion.button>
-     </motion.form>
-     <motion.div variants={itemVariants} className={styles.footer}>
-      <Link to='/login' className={styles.link}>
-       بازگشت به صفحه ورود
-      </Link>
-     </motion.div>
-    </motion.div>
-   </motion.div>
-  </div>
- );
+    </div>
+  );
 };
 
 export default Otp;

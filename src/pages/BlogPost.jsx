@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Calendar, User, Eye, Star } from "lucide-react";
 
-import { fetchSingleBlogRequest } from "../redux/blogs/blogActions";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import Content from "../components/common/Content";
 import Loader from "../components/common/Loader";
 
 import classes from "./BlogPost.module.css";
+import { fetchSingleBlogRequest } from "../redux/blogs/blogActions";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -19,6 +19,11 @@ const BlogPost = () => {
     loading,
     error,
   } = useSelector((state) => state.blogs);
+
+  useEffect(() => {
+    // dispatch(fetchSingleBlogRequest(id));
+  }, [dispatch, id]);
+
   const lng = "fa";
 
   const [newComment, setNewComment] = useState("");
@@ -30,12 +35,6 @@ const BlogPost = () => {
     damping: 30,
     restDelta: 0.001,
   });
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchSingleBlogRequest(id));
-    }
-  }, [id, dispatch]);
 
   useEffect(() => {
     if (blogData) {

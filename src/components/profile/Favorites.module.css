@@ -199,3 +199,16 @@
  margin-left: auto;
  margin-right: auto;
 }
+
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  min-height: 200px;
+  grid-column: 1 / -1;
+}
+
+.errorText {
+  color: var(--danger-color);
+}

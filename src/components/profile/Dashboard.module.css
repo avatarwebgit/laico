@@ -148,6 +148,43 @@
  background-color: var(--main-color-2);
 }
 
+.formError {
+ font-size: 12px;
+ color: var(--danger-color, #ef4444);
+ margin-top: 0.25rem;
+ text-align: right;
+}
+
+.inputError,
+.inputError:focus {
+ border-color: var(--status-cancelled-text, #e92525) !important;
+ box-shadow: 0 0 0 1px var(--status-cancelled-text, #e92525) !important;
+}
+
+.statusContainer {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.75rem;
+ border-radius: var(--radius-md);
+ margin: 0 1.5rem 1.5rem;
+ font-size: var(--normal-font);
+ font-weight: 500;
+ border: 1px solid transparent;
+}
+
+.statusContainer.error {
+ background-color: var(--status-cancelled-bg, rgba(248, 113, 113, 0.1));
+ color: var(--status-cancelled-text, #e92525);
+ border-color: var(--status-cancelled-text, #e92525);
+}
+
+.statusContainer.success {
+ background-color: var(--status-delivered-bg, rgba(74, 222, 128, 0.1));
+ color: var(--status-delivered-text, #0cd255);
+ border-color: var(--status-delivered-text, #0cd255);
+}
+
 @media (max-width: 640px) {
  .formGrid {
   grid-template-columns: 1fr;

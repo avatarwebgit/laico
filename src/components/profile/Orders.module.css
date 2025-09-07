@@ -57,7 +57,6 @@
  letter-spacing: 0.05em;
  color: var(--text-muted);
  border-bottom: 1px solid #c2c2c2;
-
 }
 
 .tableCell {
@@ -157,6 +156,19 @@ tbody tr:hover {
  font-weight: 600;
  color: var(--text-light);
 }
+
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  min-height: 200px;
+}
+
+.errorText {
+  color: var(--danger-color);
+}
+
 
 /* Responsive Breakpoint */
 @media (min-width: 768px) {

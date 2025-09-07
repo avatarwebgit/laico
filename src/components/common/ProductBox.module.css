@@ -174,7 +174,7 @@
   margin-top: auto;
   display: grid;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
 }
 
@@ -344,7 +344,7 @@
     grid-template-rows: 1fr 1fr 1fr;
   }
 
-  .previous-price{
+  .previous-price {
     grid-area: 1/1/1/2;
   }
 

@@ -1,70 +1,82 @@
-import * as actionTypes from './authActionTypes';
+import * as actionTypes from "./authActionTypes";
 
 const initialState = {
- user: null,
- token: null,
- loading: false,
- error: null,
- isAuthenticated: false,
+  user: null,
+  token: localStorage.getItem("authToken")
+    ? JSON.parse(localStorage.getItem("authToken"))
+    : null,
+  loading: false,
+  error: null,
+  isAuthenticated: !!localStorage.getItem("authToken"),
 };
 
 const authReducer = (state = initialState, action) => {
- switch (action.type) {
-  case actionTypes.LOGIN_REQUEST:
-  case actionTypes.REGISTER_REQUEST:
-  case actionTypes.LOGOUT_REQUEST:
-   return {
-    ...state,
-    loading: true,
-    error: null,
-   };
+  switch (action.type) {
+    case actionTypes.SEND_OTP_REQUEST:
+    case actionTypes.VERIFY_OTP_REQUEST:
+    case actionTypes.LOGIN_REQUEST:
+    case actionTypes.REGISTER_REQUEST:
+    case actionTypes.LOGOUT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
 
-  case actionTypes.LOGIN_SUCCESS:
-  case actionTypes.REGISTER_SUCCESS:
-   return {
-    ...state,
-    user: action.payload.user,
-    token: action.payload.token,
-    isAuthenticated: true,
-    loading: false,
-   };
+    case actionTypes.LOGIN_SUCCESS:
+    case actionTypes.REGISTER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        isAuthenticated: true,
+        loading: false,
+      };
 
-  case actionTypes.LOGOUT_SUCCESS:
-   return {
-    ...state,
-    user: null,
-    token: null,
-    isAuthenticated: false,
-    loading: false,
-   };
+    case actionTypes.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+      };
 
-  case actionTypes.LOGIN_FAILURE:
-  case actionTypes.REGISTER_FAILURE:
-  case actionTypes.LOGOUT_FAILURE:
-   return {
-    ...state,
-    loading: false,
-    error: action.payload,
-   };
+    case actionTypes.SEND_OTP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
 
-  case actionTypes.SET_TOKEN:
-   return {
-    ...state,
-    token: action.payload,
-    isAuthenticated: !!action.payload,
-   };
+    case actionTypes.SEND_OTP_FAILURE:
+    case actionTypes.LOGIN_FAILURE:
+    case actionTypes.REGISTER_FAILURE:
+    case actionTypes.LOGOUT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
-  case actionTypes.REMOVE_TOKEN:
-   return {
-    ...state,
-    user: null,
-    token: null,
-    isAuthenticated: false,
-   };
+    case actionTypes.SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+        isAuthenticated: !!action.payload,
+      };
 
-  default:
-   return state;
- }
+    case actionTypes.REMOVE_TOKEN:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default authReducer;
