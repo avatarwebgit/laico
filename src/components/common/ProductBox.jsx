@@ -2,7 +2,9 @@ import { IconButton } from "@mui/material";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import * as cartActions from "../../redux/cart/cartActions";
 
 import img from "../../assets/images/photo_2025-04-26_14-50-50.jpg";
 import { ReactComponent as Basket } from "../../assets/svgs/add_basket.svg";
@@ -28,10 +30,10 @@ const mockProduct = {
   isOutOfStock: false,
 };
 
-const ProductBox = ({ product = mockProduct, onAddToCart }) => {
+const ProductBox = ({ product = mockProduct }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const dispatch = useDispatch();
 
-  console.log(product)
   const {
     id,
     variationId,
@@ -53,6 +55,16 @@ const ProductBox = ({ product = mockProduct, onAddToCart }) => {
   const buttonVariants = {
     containerHover: { x: 0 },
     shopButton: { y: -75 },
+  };
+
+  const handleAddToCart = () => {
+    dispatch(
+      cartActions.addToCartRequest({
+        product_id: product.id,
+        // variation_id: product.variationId,
+        quantity: 1,
+      })
+    );
   };
 
   const renderStars = () => {
@@ -162,7 +174,7 @@ const ProductBox = ({ product = mockProduct, onAddToCart }) => {
               )}
             </p>
             <p className={classes.finalPrice}>
-              {finalPrice&&finalPrice.toLocaleString("fa-IR")}
+              {finalPrice && finalPrice.toLocaleString("fa-IR")}
               <span>تومان</span>
             </p>
             <div className={classes.priceWrapper}>
@@ -187,10 +199,7 @@ const ProductBox = ({ product = mockProduct, onAddToCart }) => {
           animate={isHovered ? "shopButton" : "visible"}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         >
-          <button
-            className={classes["shop-button"]}
-            onClick={onAddToCart ? () => onAddToCart(product) : undefined}
-          >
+          <button className={classes["shop-button"]} onClick={handleAddToCart}>
             <Basket className={classes.basketIcon} />
             <span>افزودن به سبد</span>
           </button>

@@ -7,16 +7,17 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import classes from "./CartItem.module.css";
+import placeholder from "../../assets/images/Logo.png";
 
 const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
-  const [quantity, setQuantity] = useState(productData.selected_quantity || 1);
+  const [quantity, setQuantity] = useState(productData.quantity || 1);
   const { t } = useTranslation();
   const lng = "fa";
   const euro = 1000;
 
   useEffect(() => {
-    setQuantity(productData.selected_quantity);
-  }, [productData.selected_quantity]);
+    setQuantity(productData.quantity);
+  }, [productData.quantity]);
 
   const handleQuantityChange = (newQuantity) => {
     if (newQuantity < 1) {
@@ -29,7 +30,7 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
       onQuantityUpdate(
         productData.id,
         newQuantity,
-        productData.variation_id,
+        productData.product_variant_id,
         productData.product_id
       );
     }
@@ -45,8 +46,10 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
     return null;
   }
 
-  const productName = productData.name || `${t("Product")} ${productData.id}`;
-  const productLink = `/${lng}/products/${productData.alias}/${productData.variation_id}`;
+  const productName =
+    productData.product?.name || `${t("Product")} ${productData.id}`;
+  const productLink = `/${lng}/products/${productData.product?.slug}/${productData.product_variant_id}`;
+  const imageUrl = productData.product?.image || placeholder;
 
   return (
     <div
@@ -55,11 +58,7 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
     >
       <div className={classes.imageWrapper}>
         <Link to={productLink} target="_blank">
-          <img
-            src={productData.primary_image}
-            alt={productName}
-            loading="lazy"
-          />
+          <img src={imageUrl} alt={productName} loading="lazy" />
         </Link>
       </div>
 
@@ -71,20 +70,15 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
         >
           <h3 className={classes.productName}>{productName}</h3>
         </Link>
-        <p className={classes.productAttributes}>
-          {t("color")}: {productData.color} | {t("size")}: {productData.size}
-        </p>
         <p className={classes.itemPrice}>
-          {Math.round(productData.sale_price * euro).toLocaleString()}{" "}
+          {Math.round(productData.pricing?.final_price * euro).toLocaleString()}{" "}
           {t("m_unit")}
         </p>
       </div>
 
       <div className={classes.actionsWrapper}>
         <p className={classes.totalPrice}>
-          {Math.round(
-            quantity * productData.sale_price * euro
-          ).toLocaleString()}{" "}
+          {Math.round(productData.pricing?.total_price * euro).toLocaleString()}{" "}
           {t("m_unit")}
         </p>
         <div className={`${classes.quantityChanger}`}>

@@ -29,7 +29,6 @@ const mainBreakpoints = {
   1023: {
     slidesPerView: 5,
   },
-
 };
 
 const Home = () => {
@@ -37,19 +36,14 @@ const Home = () => {
   const { latestProducts, popularProducts, specialOffersProducts } =
     useSelector((state) => state.products);
 
-  const handleAddToCart = (product) => {
-    dispatch(cartActions.addToCart(product));
-    dispatch(openCartDrawer());
-  };
-
   const latestProductsItems = latestProducts.map((p) => (
-    <ProductBox key={p.id} product={p} onAddToCart={handleAddToCart} />
+    <ProductBox key={p.id} product={p}  />
   ));
   const popularProductsItems = popularProducts.map((p) => (
-    <ProductBox key={p.id} product={p} onAddToCart={handleAddToCart} />
+    <ProductBox key={p.id} product={p}  />
   ));
   const specialOffersItems = specialOffersProducts.map((p) => (
-    <ProductBox key={p.id} product={p} onAddToCart={handleAddToCart} />
+    <ProductBox key={p.id} product={p}  />
   ));
 
   useEffect(() => {

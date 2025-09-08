@@ -2,8 +2,8 @@ import * as actionTypes from "./cartActionTypes";
 
 const initialState = {
   products: [],
+  summary: null,
   totalPrice: 0,
-  totalPriceAfterDiscount: 0,
   finalCart: [],
   finalPayment: 0,
   euro: 1,
@@ -13,19 +13,8 @@ const initialState = {
   error: null,
 };
 
-const calculateTotalPrice = (items) => {
-  return items.reduce((total, product) => {
-    const price =
-      typeof product.sale_price === "number" ? product.sale_price : 0;
-    const quantity =
-      typeof product.selected_quantity === "number"
-        ? product.selected_quantity
-        : 0;
-    return total + quantity * price;
-  }, 0);
-};
-
 const cartReducer = (state = initialState, action) => {
+  console.log(state)
   switch (action.type) {
     case actionTypes.FETCH_CART_REQUEST:
     case actionTypes.ADD_TO_CART_REQUEST:
@@ -38,10 +27,13 @@ const cartReducer = (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_CART_SUCCESS:
+    case actionTypes.UPDATE_CART_ITEM_SUCCESS:
+    case actionTypes.REMOVE_FROM_CART_SUCCESS:
       return {
         ...state,
-        products: action.payload,
-        totalPrice: calculateTotalPrice(action.payload),
+        products: action.payload.items || [],
+        summary: action.payload.summary || null,
+        totalPrice: action.payload.summary?.subtotal || 0,
         loading: false,
       };
 
@@ -51,30 +43,6 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         products: newProducts,
-        totalPrice: calculateTotalPrice(newProducts),
-      };
-    }
-
-    case actionTypes.REMOVE_FROM_CART_SUCCESS: {
-      const newProducts = state.products.filter(
-        (item) => item.id !== action.payload
-      );
-      return {
-        ...state,
-        products: newProducts,
-        totalPrice: calculateTotalPrice(newProducts),
-        loading: false,
-      };
-    }
-
-    case actionTypes.UPDATE_CART_ITEM_SUCCESS: {
-      // The API should return the whole cart, so we just set it
-      const newProducts = action.payload;
-      return {
-        ...state,
-        products: newProducts,
-        totalPrice: calculateTotalPrice(newProducts),
-        loading: false,
       };
     }
 
@@ -93,23 +61,21 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         products: [],
         totalPrice: 0,
+        summary: null,
       };
 
     case actionTypes.SET_CART:
       return {
         ...state,
         products: action.payload,
-        totalPrice: calculateTotalPrice(action.payload),
       };
 
     case actionTypes.SET_FINAL_CART:
-      const finalItems = state.products.filter(
-        (el) => el.selected_quantity !== 0
-      );
+      const finalItems = state.products.filter((el) => el.quantity !== 0);
       return {
         ...state,
         finalCart: finalItems,
-        finalPayment: state.totalPrice,
+        finalPayment: state.summary ? state.summary.subtotal : 0,
       };
 
     case actionTypes.SET_EURO_RATE:

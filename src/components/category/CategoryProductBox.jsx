@@ -1,8 +1,7 @@
 import { Tooltip } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Star } from "lucide-react";
+import { Star, Eye } from "lucide-react";
 import React, { useCallback } from "react";
-import { ReactComponent as Eye } from "../../assets/svgs/eye.svg";
 import ImagePixelated from "../common/ImagePixelated";
 import classes from "./CategoryProductBox.module.css";
 

@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { closeCartDrawer } from "../../redux/drawer/drawerActions";
 import * as cartActions from "../../redux/cart/cartActions";
+import { closeCartDrawer } from "../../redux/drawer/drawerActions";
 
-import CartItem from "./CartItem";
-import classes from "./CartDrawer.module.css";
-import { formatNumber } from "../../utils/helperFucntions";
 import Spinner from "../common/Spinner";
+import { formatNumber } from "../../utils/helperFucntions";
+import classes from "./CartDrawer.module.css";
+import CartItem from "./CartItem";
 
 const listContainerVariants = {
   hidden: { opacity: 0 },
@@ -35,13 +35,14 @@ const CartDrawer = () => {
   const { t } = useTranslation();
 
   const drawerState = useSelector((state) => state.drawer.cartDrawer);
+  const token = useSelector((state) => state.auth.token);
   const {
     products,
+    summary,
     loading: isLoadingData,
     euro,
-    totalPrice,
   } = useSelector((state) => state.cart);
-  const token = useSelector((state) => state.user.token);
+
   const lng = "fa";
 
   const drawerVariants = {
@@ -56,21 +57,15 @@ const CartDrawer = () => {
   };
 
   useEffect(() => {
-    if (drawerState && token && products.length === 0) {
+    if (drawerState && token) {
       dispatch(cartActions.fetchCartRequest());
     }
-  }, [drawerState, dispatch, token, products.length]);
+  }, [drawerState, dispatch, token]);
 
-  const handleQuantityUpdate = (
-    itemId,
-    newQuantity,
-    variationId,
-    productId
-  ) => {
+  const handleQuantityUpdate = (itemId, newQuantity) => {
     dispatch(
       cartActions.updateCartItemRequest({
-        product_id: productId,
-        variation_id: variationId,
+        cartId: itemId,
         quantity: newQuantity,
       })
     );
@@ -81,8 +76,8 @@ const CartDrawer = () => {
   };
 
   const grandTotal = useMemo(() => {
-    return totalPrice; // Assuming no discounts/taxes for now
-  }, [totalPrice]);
+    return summary?.subtotal || 0;
+  }, [summary]);
 
   const toggleDrawer = () => {
     dispatch(closeCartDrawer());
@@ -195,8 +190,8 @@ const CartDrawer = () => {
               <footer className={classes.footer}>
                 <div className={classes.summary}>
                   <div className={classes.summaryRow}>
-                    <span>{t("subtotal")}</span>
-                    <span>{formatNumber(totalPrice * euro)}</span>
+                    <span>{t("drawer.subtotal")}</span>
+                    <span>{formatNumber((summary?.subtotal || 0) * euro)}</span>
                   </div>
                   <div
                     className={`${classes.summaryRow} ${classes.grandTotal}`}

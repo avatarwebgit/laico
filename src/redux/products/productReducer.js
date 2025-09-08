@@ -86,7 +86,6 @@ const initialState = {
 };
 
 const productReducer = (state = initialState, action) => {
-  console.log(state, action);
   switch (action.type) {
     case actionTypes.FETCH_PRODUCTS_REQUEST:
     case actionTypes.FETCH_HOME_PRODUCTS_REQUEST:
