@@ -1,50 +1,25 @@
-:root {
-  --base-bg: #0f172a;
-  --footer-bg: #131c31; /* Slightly different from base for depth */
-  --border: #334155;
-  --text-light: #e2e8f0;
-  --text-muted: #94a3b8;
-  --text-white: #ffffff;
-  --primary: #3b82f6;
-  --secondary: #8b5cf6;
-}
-
 .footer {
-  background-color: var(--footer-bg);
-  color: var(--text-muted);
-  padding: 4rem 2rem 2rem;
-  border-top: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-  margin-top: auto; /* Pushes footer to bottom in flex column layout */
+  background-color: var(--footer-bg, #131c31);
+  color: var(--text-muted, #94a3b8);
+  padding: 5rem 2rem 2rem;
+  border-top: 4px solid var(--primary, #3b82f6);
+  margin-top: auto;
+  overflow: hidden; /* For animations */
 }
-
-/* Add a subtle decorative element */
-.footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
-    opacity: 0.5;
-}
-
 
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
   gap: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -52,75 +27,81 @@
 
 @media (min-width: 1024px) {
   .grid {
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 2.5rem;
   }
 }
 
-.brandSection {
-  text-align: center;
+.columnTitle {
+  font-size: var(--title-font);
+  font-weight: 600;
+  color: var(--text-light, #e2e8f0);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
 }
-@media (min-width: 1024px) {
-    .brandSection {
-        text-align: right;
-    }
+
+.columnTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 3px;
+    background-color: var(--primary, #3b82f6);
+    border-radius: 2px;
+}
+
+.brandColumn {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.logoLink {
+    display: block;
+    margin-bottom: 1rem;
 }
 
 .logo {
+    height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.aboutText {
+    font-size: var(--caption-font);
+    line-height: 1.8;
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.socialIcons a {
+  color: var(--text-muted, #94a3b8);
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  color: var(--text-white);
-  margin-bottom: 1rem;
+  transition: all 0.2s ease;
 }
 
-@media (min-width: 1024px) {
-    .logo {
-        justify-content: flex-start;
-    }
-}
-
-.brandName {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.tagline {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-@media (min-width: 1024px) {
-    .tagline {
-        margin: 0;
-    }
+.socialIcons a:hover {
+  color: var(--text-white, #ffffff);
+  background-color: var(--primary);
 }
 
 
-.linksSection {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-    .linksSection {
-        text-align: right;
-    }
-}
-
-.linksTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-light);
-  margin-bottom: 1.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.linksSection ul {
+.linkList {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -129,53 +110,109 @@
   gap: 0.75rem;
 }
 
-.linksSection a {
-  color: var(--text-muted);
+.linkList a {
+  color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: all 0.2s ease;
   display: inline-block;
 }
 
-.linksSection a:hover {
-  color: var(--primary);
-  transform: translateX(-3px);
+.linkList a:hover {
+  color: var(--primary, #3b82f6);
+  transform: translateX(-4px);
 }
 
-.socialsSection {
-    text-align: center;
-}
-@media (min-width: 1024px) {
-    .socialsSection {
-        text-align: right;
-    }
+.newsletterText {
+    font-size: var(--caption-font);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
 }
 
-.socialIcons {
+.newsletterForm {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border, #334155);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.newsletterForm:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary), transparent 70%);
+}
+
+.newsletterForm input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    color: var(--text-white);
+    font-size: var(--normal-font);
+}
+
+.newsletterForm input::placeholder {
+    color: var(--text-muted);
+}
+
+.newsletterForm input:focus {
+    outline: none;
+}
+
+.newsletterForm button {
+    background-color: var(--primary);
+    color: var(--text-white);
+    border: none;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.newsletterForm button:hover {
+    filter: brightness(1.15);
+}
+
+
+.divider {
+  height: 1px;
+  background-image: linear-gradient(to left, transparent, var(--border, #334155), transparent);
+  border: 0;
+  margin: 2.5rem 0;
+}
+
+
+.bottomBar {
   display: flex;
-  justify-content: center;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: 1.5rem;
+  padding-top: 1.5rem;
 }
 
-@media (min-width: 1024px) {
-    .socialIcons {
-        justify-content: flex-start;
-    }
-}
-
-
-.socialIcons a {
-  color: var(--text-muted);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.socialIcons a:hover {
-  color: var(--secondary);
+@media (min-width: 768px) {
+  .bottomBar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .copyright {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-  text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--caption-font);
+}
+
+.paymentMethods {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.symbolPlaceholder {
+  width: 50px;
+  height: 50px;
+  background-color: var(--base-bg, #f8f9fa);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

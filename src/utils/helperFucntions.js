@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CheckCircle, XCircle, Info } from "lucide-react"; // any icon lib
 
 export const toPersianNumber = (num) => {
   const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
@@ -7,7 +8,6 @@ export const toPersianNumber = (num) => {
 };
 
 export const scrollToTarget = (targetRef, headerHeight = 80) => {
-  // Default headerHeight is 5rem (80px)
   if (targetRef.current) {
     const elementPosition =
       targetRef.current.getBoundingClientRect().top + window.scrollY;
@@ -37,10 +37,36 @@ export function formatNumber(amount, currency = "toman") {
   );
 }
 
-export const notify = (message) =>
-  toast(message, {
+export const notify = (message, type = "info") => {
+  const baseOptions = {
     style: { fontSize: "12px" },
-  });
+    icon: null, 
+  };
+
+  if (type === "success") {
+    return toast.success(message, {
+      ...baseOptions,
+      icon: <CheckCircle size={18} color="green" />,
+    });
+  }
+
+  if (type === "error") {
+    return toast.error(message, {
+      ...baseOptions,
+      icon: <XCircle size={18} color="red" />,
+    });
+  }
+
+  if (type === "info") {
+    return toast.info(message, {
+      ...baseOptions,
+      icon: <Info size={18} color="blue" />,
+    });
+  }
+
+  // fallback
+  return toast(message, baseOptions);
+};
 
 export const useNavigation = () => {
   const navigate = useNavigate();

@@ -13,6 +13,7 @@ import {
 import styles from "./Dashboard.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Flag from "react-world-flags";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("نام الزامی است"),
@@ -67,7 +68,11 @@ const Dashboard = () => {
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <div className={styles.cardHeader}>
-          <h2 className={styles.cardTitle}>جزئیات شخصی</h2>
+          <div className={styles.titleContainer}>
+            <h2 className={styles.cardTitle}>جزئیات شخصی</h2>
+            <h3 className={styles.cardTitle}>{userData.firstName} خوش آمدید</h3>
+          </div>
+
           {!isEditing && (
             <motion.button
               className={`${styles.button} ${styles.secondaryButton}`}
@@ -161,8 +166,12 @@ const Dashboard = () => {
                 <label htmlFor="phone" className={styles.label}>
                   شماره تلفن
                 </label>
-                <div className={styles.inputWrapper}>
-                  <Smartphone size={18} className={styles.inputIcon} />
+                <div className={`${styles.inputWrapper}`}>
+                  <div className={`${styles.countryCode} ${styles.inputIcon}`}>
+                    <Smartphone size={18} />
+                    <Flag code="IR" className={styles.flagIcon} />
+                    <div dir="ltr">+۹۸</div>
+                  </div>
                   <input
                     type="tel"
                     id="phone"
@@ -173,7 +182,7 @@ const Dashboard = () => {
                       formik.touched.phone && formik.errors.phone
                         ? styles.inputError
                         : ""
-                    }`}
+                    } ${styles.mobile}`}
                   />
                 </div>
                 {formik.touched.phone && formik.errors.phone ? (

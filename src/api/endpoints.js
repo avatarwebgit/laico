@@ -13,7 +13,7 @@ export default {
 
   PRODUCTS: {
     BASE: () => `${API_BASE}/products`,
-    BY_ID: (id) => `${API_BASE}/products/${id}`,
+    BY_ID: (id) => `${API_BASE}/admin/products/${id}`,
     SEARCH: () => `${API_BASE}/products/search`,
     CATEGORIES: () => `${API_BASE}/products/categories`,
   },

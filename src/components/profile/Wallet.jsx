@@ -17,6 +17,9 @@ import {
   fetchWalletRequest,
 } from "../../redux/user/userActions";
 import Spinner from "../common/Spinner";
+
+import cashFlow from '../../assets/cashflow.gif'
+
 import styles from "./Wallet.module.css";
 
 const validationSchema = Yup.object({
@@ -364,7 +367,7 @@ const Wallet = () => {
             </span>
           </div>
         )}
-        <motion.button
+        {/* <motion.button
           onClick={() => setIsModalOpen(true)}
           className={styles.addFundsButton}
           whileHover={{ scale: 1.05 }}
@@ -372,8 +375,8 @@ const Wallet = () => {
         >
           <PlusCircle size={20} />
           <span>افزایش موجودی</span>
-        </motion.button>
-      </motion.div>
+        </motion.button>*/}
+      </motion.div> 
 
       <div className={styles.historySection}>
         <h2 className={styles.historyTitle}>تاریخچه تراکنش‌ها</h2>

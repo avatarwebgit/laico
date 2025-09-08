@@ -45,43 +45,6 @@ const cartReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case actionTypes.ADD_TO_CART: {
-      const productToAdd = action.payload;
-      const existingProduct = state.products.find(
-        (p) => p.variation_id === productToAdd.variationId
-      );
-
-      let newProducts;
-
-      if (existingProduct) {
-        newProducts = state.products.map((p) =>
-          p.variation_id === productToAdd.variationId
-            ? { ...p, selected_quantity: p.selected_quantity + 1 }
-            : p
-        );
-      } else {
-        const newCartItem = {
-          id: productToAdd.variationId, // Cart item ID
-          product_id: productToAdd.id,
-          variation_id: productToAdd.variationId,
-          name: productToAdd.name,
-          alias: productToAdd.name.replace(/\s+/g, "-").toLowerCase(),
-          primary_image: productToAdd.imageUrl,
-          sale_price: productToAdd.finalPrice,
-          selected_quantity: 1,
-          color: "N/A",
-          size: "N/A",
-        };
-        newProducts = [...state.products, newCartItem];
-      }
-
-      return {
-        ...state,
-        products: newProducts,
-        totalPrice: calculateTotalPrice(newProducts),
-      };
-    }
-
     case actionTypes.ADD_TO_CART_SUCCESS: {
       const newProducts = [...state.products, action.payload];
       return {

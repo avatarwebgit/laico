@@ -23,10 +23,23 @@ function* fetchHomeProductsSaga() {
 
 function* fetchProductDetailsSaga(action) {
   try {
-    const product = yield call(api.getById, action.payload);
-    yield put(actions.fetchProductDetailsSuccess(product));
+    const response = yield call(api.getById, action.payload);
+    console.log(action, response);
+    if (response.status) {
+      yield put(actions.fetchProductDetailsSuccess(response.data));
+    } else {
+      yield put(
+        actions.fetchProductDetailsFailure(
+          response.message || "Failed to fetch product details"
+        )
+      );
+    }
   } catch (error) {
-    yield put(actions.fetchProductDetailsFailure(error.message));
+    const errorMessage =
+      typeof error === "string"
+        ? error
+        : error.message || "An unknown error occurred";
+    yield put(actions.fetchProductDetailsFailure(errorMessage));
   }
 }
 

@@ -47,10 +47,10 @@ function* addAddressSaga(action) {
     }
     const response = yield call(api.addAddress, action.payload);
     yield put(actions.addAddressSuccess(action.payload));
-    notify("آدرس با موفقیت اضافه شد");
+    notify("آدرس با موفقیت اضافه شد", "success");
   } catch (error) {
     yield put(actions.addAddressFailure("خطا در اضافه کردن آدرس"));
-    notify("خطا در اضافه کردن آدرس");
+    notify("خطا در اضافه کردن آدرس", "error");
   }
 }
 
@@ -65,10 +65,10 @@ function* updateAddressSaga(action) {
     const response = yield call(api.updateAddress, addressId, addressData);
     console.log(response);
     yield put(actions.updateAddressSuccess(response.data));
-    notify("آدرس با موفقیت بروزرسانی شد");
+    notify("آدرس با موفقیت بروزرسانی شد", "success");
   } catch (error) {
     yield put(actions.updateAddressFailure("خطا در بروزرسانی آدرس"));
-    notify("خطا در بروزرسانی آدرس");
+    notify("خطا در بروزرسانی آدرس", "error");
   }
 }
 
@@ -82,10 +82,10 @@ function* deleteAddressSaga(action) {
     const addressId = action.payload;
     yield call(api.deleteAddress, addressId);
     yield put(actions.deleteAddressSuccess(addressId));
-    notify("آدرس با موفقیت حذف شد");
+    notify("آدرس با موفقیت حذف شد", "success");
   } catch (error) {
     yield put(actions.deleteAddressFailure("خطا در حذف آدرس"));
-    notify("خطا در حذف آدرس");
+    notify("خطا در حذف آدرس", "error");
   }
 }
 

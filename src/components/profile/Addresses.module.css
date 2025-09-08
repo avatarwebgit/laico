@@ -142,13 +142,18 @@
 }
 
 .cardAddress {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   font-size: var(--normal-font);
   line-height: 1.6;
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
 }
 
 .cardPostal {
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
   font-size: var(--normal-font);
 }
 
@@ -305,6 +310,7 @@
   padding-top: 1.5rem;
   margin-top: 0.5rem;
   border-top: 1px solid #ededed;
+  font-size: var(--normal-font);
 }
 
 .formButton {

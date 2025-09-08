@@ -56,8 +56,8 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.LOGOUT_FAILURE:
       return {
         ...state,
-        loading: false,
         error: action.payload,
+        loading: false,
       };
 
     case actionTypes.SET_TOKEN:

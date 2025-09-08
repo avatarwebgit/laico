@@ -1,4 +1,3 @@
-// src/reducers/productReducer.js
 import * as actionTypes from "./productActionTypes";
 
 const mockProducts = [
@@ -79,18 +78,15 @@ const mockProducts = [
 const initialState = {
   items: [],
   productDetails: null,
-  popularProducts: [...mockProducts].sort(
-    (a, b) => b.totalViews - a.totalViews
-  ),
-  latestProducts: [...mockProducts].reverse(),
-  specialOffersProducts: [...mockProducts].filter(
-    (p) => p.originalPrice > p.finalPrice
-  ),
+  popularProducts: [],
+  latestProducts: [],
+  specialOffersProducts: [],
   loading: false,
   error: null,
 };
 
 const productReducer = (state = initialState, action) => {
+  console.log(state, action);
   switch (action.type) {
     case actionTypes.FETCH_PRODUCTS_REQUEST:
     case actionTypes.FETCH_HOME_PRODUCTS_REQUEST:

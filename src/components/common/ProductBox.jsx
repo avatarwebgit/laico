@@ -31,6 +31,7 @@ const mockProduct = {
 const ProductBox = ({ product = mockProduct, onAddToCart }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  console.log(product)
   const {
     id,
     variationId,
@@ -99,7 +100,7 @@ const ProductBox = ({ product = mockProduct, onAddToCart }) => {
       )}
 
       <div className={classes["image-wrapper"]}>
-        <Link to={`/product/${id}/${variationId}`}>
+        <Link to={`/product/${product.id}`}>
           <img src={imageUrl} alt={name} />
         </Link>
         <div className={classes["button-wrapper"]}>
@@ -161,7 +162,7 @@ const ProductBox = ({ product = mockProduct, onAddToCart }) => {
               )}
             </p>
             <p className={classes.finalPrice}>
-              {finalPrice.toLocaleString("fa-IR")}
+              {finalPrice&&finalPrice.toLocaleString("fa-IR")}
               <span>تومان</span>
             </p>
             <div className={classes.priceWrapper}>

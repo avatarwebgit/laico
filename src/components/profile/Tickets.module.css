@@ -73,6 +73,7 @@
  width: 100%;
  border-collapse: collapse;
  text-align: right;
+ overflow: hidden;
 }
 
 .tableHeader {

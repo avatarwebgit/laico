@@ -9,7 +9,7 @@ import { Expand, GalleryHorizontal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   A11y,
   FreeMode,
@@ -19,18 +19,20 @@ import {
   Thumbs,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
+
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
+
 import { ReactComponent as Shop } from "../assets/svgs/add_basket-white.svg";
 import { ReactComponent as HeartRed } from "../assets/svgs/heart-red.svg";
 import { ReactComponent as Heart } from "../assets/svgs/heart.svg";
 import Arrowbutton from "../components/common/ArrowButton";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import Content from "../components/common/Content";
+import Loader from "../components/common/Loader";
 import ProductBox from "../components/common/ProductBox";
 import Slider from "../components/common/Slider";
 import ColorSection from "../components/product/ColorSection";
@@ -38,17 +40,17 @@ import ProductGalleryModal from "../components/product/ProductGalleryModal";
 import ProductQA from "../components/product/ProductQA";
 import ProductReviews from "../components/product/ProductReviews";
 import ProductTabs from "../components/product/ProductTabs";
+
+import { fetchProductDetailsRequest } from "../redux/products/productActions";
 import {
-  addToFavorite,
-  getProductDetails,
-  getProductDetailsWithId,
-  removeFromFavorite,
-  sendShoppingCart,
-} from "../services/api";
-import { cartActions } from "../store/cart/cartSlice";
-import { drawerActions } from "../store/drawer/drawerSlice";
-import { favoriteActions } from "../store/favorites/favoriteSlice";
+  addFavoriteRequest,
+  removeFavoriteRequest,
+} from "../redux/user/userActions";
+import { updateCartItemRequest } from "../redux/cart/cartActions";
+
 import { formatNumber, notify } from "../utils/helperFucntions";
+import img from "./../assets/images/photo_2025-04-13_11-44-04.jpg";
+
 import classes from "./Product.module.css";
 
 const colors = [
@@ -64,219 +66,93 @@ const colors = [
   { id: "10", name: "salmon", color: "#FA8072" },
 ];
 
-const Product = ({ windowSize }) => {
-  const { id, variation } = useParams();
+const Product = () => {
+  const { slug, variation } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const [detailsData, setDetailsData] = useState(null);
+  const {
+    productDetails,
+    loading: productDetailsLoading,
+    error: productDetailsError,
+  } = useSelector((state) => state.products);
+
+  const { favorites } = useSelector((state) => state.user);
+  const token = useSelector((state) => state.auth.token);
+  const euro = useSelector((state) => state.cart.euro) || 1;
+
   const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [shape, setShape] = useState("");
-  const [cuttingStyle, setCuttingStyle] = useState("");
-  const [brand, setBrand] = useState("");
-  const [details, setDetails] = useState("");
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
-  const [height, setHeight] = useState(0);
-  const [isByOrder, setIsByOrder] = useState(false);
-  const [variationDetail, setVariationDetail] = useState(null);
-  const [productImages, setProductImages] = useState(null);
-  const [productData, setProductData] = useState(null);
-  const [allImages, setAllImages] = useState([]);
-  const [mainImage, setMainImage] = useState("");
-  const [isMoreThanQuantity, setIsMoreThanQuantity] = useState(false);
-
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [mainSwiper, setMainSwiper] = useState(null);
-
   const [selectedColor, setSelectedColor] = useState("");
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
-
-  const { t } = useTranslation();
-  const lng = "fa";
-  const token = useSelector((state) => state.user.token);
-  const favorites = useSelector((state) => state.favorites.products);
-  const favoritesCount = useSelector((state) => state.favorites.count);
-  const euro = useSelector((state) => state.cart.euro);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const nexElRef = useRef();
   const prevElRef = useRef();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const getDetails = async () => {
-      const serverRes = await getProductDetails(id, token);
-      const variationRes = await getProductDetailsWithId(variation, token);
-      if (variationRes.response.ok) {
-        setVariationDetail(variationRes.result);
-        if (variationRes.result.product.variation.quantity === 0) {
-          setIsByOrder(true);
-        }
-        setHeight(variationRes.result.product.variation.height);
-        setSize(variationRes?.result?.product?.size);
-      }
-      if (serverRes.response.ok) {
-        setMainImage(serverRes.result.product.primary_image);
-        setProductImages(serverRes.result.product.images);
-        setDetailsData(serverRes.result);
-        setProductData(serverRes);
-
-        if (lng === "fa") {
-          setShape(
-            serverRes.result.product_attributes.find(
-              (attr) => attr.attribute.name === "Shape"
-            )?.value.name_fa
-          );
-          setColor(
-            serverRes.result.product_attributes.find(
-              (attr) => attr.attribute.name === "Color"
-            )?.value.name_fa
-          );
-          setBrand(
-            serverRes.result.product_attributes.find(
-              (attr) => attr.attribute.name === "Brand/Mine"
-            )?.value.name_fa
-          );
-          setCuttingStyle(
-            serverRes.result.product_attributes.find(
-              (attr) => attr.attribute.name === "Cutting Style"
-            )?.value.name_fa
-          );
-
-          setDetails(
-            serverRes.result.product_attributes.find(
-              (attr) => attr.attribute.name === "Details"
-            )?.value.name_fa
-          );
-        }
-      }
-    };
-    getDetails();
-  }, [id, lng]);
-
-  useEffect(() => {
-    if (mainImage && productImages) {
-      setAllImages([mainImage, ...productImages]);
+    if (slug) {
+      dispatch(fetchProductDetailsRequest(slug));
     }
-  }, [mainImage, productImages]);
+  }, [dispatch, slug]);
 
-  useEffect(() => {
-    if (detailsData) {
-      if (detailsData.product.is_wishlist) {
-        setIsFavorite(true);
-      } else {
-        setIsFavorite(false);
-      }
-    }
-  }, [detailsData]);
+  const isFavorite = favorites.some((fav) => fav.variation_id === +variation);
+  const allImages =
+    productDetails?.images && productDetails.primary_image
+      ? [productDetails.primary_image, ...productDetails.images]
+      : productDetails?.primary_image
+      ? [productDetails.primary_image]
+      : [];
 
-  const handleIncrement = () => {
-    if (quantity < detailsData.product.quantity) setQuantity(quantity + 1);
-  };
+  const discountAmount = productDetails?.discount?.value
+    ? parseFloat(productDetails.discount.value)
+    : 0;
+  const originalPrice = parseFloat(productDetails?.original_price);
+  const salePrice = originalPrice - discountAmount;
 
-  const handleDecrement = () => {
-    if (quantity === 1) return;
-    setQuantity(quantity - 1);
-  };
+  const specs = productDetails
+    ? [
+        { name_fa: "کد محصول", value_fa: productDetails.sku },
+        {
+          name_fa: "کد حسابداری",
+          value_fa: productDetails.product_accounting_code,
+        },
+        { name_fa: "موجودی", value_fa: productDetails.stock },
+        { name_fa: "برند", value_fa: productDetails.brand?.name },
+        {
+          name_fa: "دسته‌بندی",
+          value_fa: productDetails.categories?.map((c) => c.name).join(", "),
+        },
+      ].filter((item) => item.value_fa)
+    : [];
 
-  const handleAddToFavorites = async () => {
-    const serverRes = await addToFavorite(token, id, +variation);
-    if (serverRes.response.ok) {
-      notify(t("product.added"));
-      dispatch(favoriteActions.setCount(favoritesCount + 1));
-      setIsFavorite(true);
-    } else {
-      notify(t("product.err"));
-    }
-  };
-
-  const handleRemoveToFavorites = async () => {
-    const serverRes = await removeFromFavorite(token, +variation);
-    if (serverRes.response.ok) {
-      notify(t("product.removed"));
-      dispatch(favoriteActions.setCount(favoritesCount - 1));
-      setIsFavorite(false);
-    } else {
-      notify(t("product.err"));
-    }
-  };
-
-  useEffect(() => {
-    if (favorites) {
-      setIsFavorite(favorites?.some((el) => el.variation_id === +variation));
-    }
-  }, [favorites]);
-
-  const handleSendShoppingCart = async (el) => {
-    const serverRes = await sendShoppingCart(
-      token,
-      el.id,
-      +variation,
-      +quantity
-    );
-    try {
-      notify(t("orders.ok"));
-      if (serverRes.response.ok) {
-        dispatch(
-          cartActions.add({
-            ...el,
-            selected_quantity: quantity,
-            euro_price: euro,
-            variation_id: variation,
-            variation: { quantity: el.quantity },
-          })
-        );
-      }
-      dispatch(drawerActions.open());
-    } catch (err) {
-      //  console.log(err);
-    }
-  };
-
-  const handleNavigateToLogin = () => {
-    navigate("/login");
-  };
-
-  const handleOpenGallery = () => {
-    if (mainSwiper) {
-      setInitialSlide(mainSwiper.realIndex);
-    }
-    setIsGalleryOpen(true);
-  };
-
-  const tabsData = detailsData
+  const tabsData = productDetails
     ? [
         {
           title: "نقد و بررسی",
           content: (
-            <div className={classes.tabContent}>
-              <h3>{detailsData.product.name_fa}</h3>
-              <p>
-                {detailsData.product.description_fa ||
-                  "توضیحات کاملی برای این محصول ارائه نشده است."}
-              </p>
-            </div>
+            <div
+              className={classes.tabContent}
+              dangerouslySetInnerHTML={{
+                __html: `${productDetails.description || ""}<br/><br/>${
+                  productDetails.detailed_description || ""
+                }`,
+              }}
+            />
           ),
         },
         {
           title: "مشخصات فنی",
           content: (
             <div className={`${classes.tabContent} ${classes.specsTable}`}>
-              {detailsData.product_attributes.length > 0 ? (
-                detailsData.product_attributes.map((attr) => (
-                  <div key={attr.attribute.id} className={classes.specRow}>
-                    <span className={classes.specKey}>
-                      {attr.attribute.name_fa}
-                    </span>
-                    <span className={classes.specValue}>
-                      {attr.value.name_fa}
-                    </span>
+              {specs.length > 0 ? (
+                specs.map((attr) => (
+                  <div key={attr.name_fa} className={classes.specRow}>
+                    <span className={classes.specKey}>{attr.name_fa}</span>
+                    <span className={classes.specValue}>{attr.value_fa}</span>
                   </div>
                 ))
               ) : (
@@ -296,21 +172,73 @@ const Product = ({ windowSize }) => {
       ]
     : [];
 
+  const handleIncrement = () => {
+    if (productDetails && quantity < productDetails.stock) {
+      setQuantity((q) => q + 1);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((q) => q - 1);
+    }
+  };
+
+  const handleToggleFavorite = () => {};
+
+  const handleAddToCart = () => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    dispatch(
+      updateCartItemRequest({
+        product_id: productDetails.id,
+        quantity: quantity,
+      })
+    );
+  };
+
+  const handleOpenGallery = () => {
+    if (mainSwiper) {
+      setInitialSlide(mainSwiper.realIndex);
+    }
+    setIsGalleryOpen(true);
+  };
+
+  if (productDetailsLoading && !productDetails) {
+    return <Loader />;
+  }
+
+  if (productDetailsError) {
+    return (
+      <Content>
+        <p>خطا در بارگذاری محصول: {productDetailsError}</p>
+      </Content>
+    );
+  }
+
   return (
     <div className={classes.main}>
       <Content className={classes.main_card}>
-        {detailsData && (
+        {productDetails && (
           <Breadcrumbs
             linkDataProp={[
               { pathname: t("home"), url: " " },
               { pathname: t("categories"), url: "category" },
-              { pathname: detailsData.product?.name_fa, url: null },
+              { pathname: productDetails.name, url: null },
             ]}
           />
         )}
         <div className={classes.content}>
           <div className={classes["desktop-gallery-wrapper"]}>
-            {detailsData ? (
+            {productDetailsLoading || !productDetails ? (
+              <Skeleton
+                className={`${classes.idle_image}`}
+                variant="rectangular"
+                animation="wave"
+              />
+            ) : (
               <div className={classes["swiper-container"]}>
                 <div className={classes["navigation-wrapper"]}>
                   <Arrowbutton
@@ -353,6 +281,7 @@ const Product = ({ windowSize }) => {
                         : null,
                   }}
                   loop={true}
+                  className={classes.swiper}
                 >
                   {allImages.map((src, idx) => (
                     <SwiperSlide key={`main-${idx}`}>
@@ -374,7 +303,6 @@ const Product = ({ windowSize }) => {
                     className={classes.galleryButton}
                     onClick={handleOpenGallery}
                   >
-                    {/* <Expand size={20} /> */}
                     <GalleryHorizontal />
                   </button>
                 </Tooltip>
@@ -405,54 +333,17 @@ const Product = ({ windowSize }) => {
                   ))}
                 </Swiper>
               </div>
-            ) : (
-              <Skeleton
-                className={`${classes.idle_image}`}
-                variant="rectangular"
-                animation="wave"
-              />
             )}
           </div>
 
-          <div
-            className={classes.info}
-            style={{ direction: lng === "fa" ? "rtl" : "ltr" }}
-          >
-            {detailsData ? (
-              <div style={{ display: "flex", width: "100%" }}>
-                <Typography
-                  className={classes.product_title}
-                  color="inherit"
-                  variant="h3"
-                >
-                  <div>
-                    <span>
-                      <strong style={{ fontSize: "20px" }}>{shape}</strong>
-                    </span>
-                    <span>{cuttingStyle} </span>
-                  </div>
-                  <div>
-                    <span>
-                      <strong style={{ fontSize: "20px" }}>{brand}</strong>
-                    </span>
-                    <span>{details}</span>
-                  </div>
-                  <div>
-                    <span>
-                      <strong style={{ fontSize: "20px" }}>{color}</strong>
-                    </span>
-                    <span>{size}</span>
-                  </div>
-                </Typography>
-              </div>
-            ) : (
-              <Skeleton
-                variant="text"
-                sx={{ width: "10rem" }}
-                animation="wave"
-                className={classes.product_title}
-              />
-            )}
+          <div className={classes.info}>
+            <Typography
+              className={classes.product_title}
+              color="inherit"
+              variant="h3"
+            >
+              {productDetails?.name}
+            </Typography>
 
             <ColorSection
               colors={colors}
@@ -460,240 +351,89 @@ const Product = ({ windowSize }) => {
               selectedColor={selectedColor}
             />
 
-            {detailsData ? (
-              <Typography
-                className={classes.product_serial}
-                color="inherit"
-                href={`/${lng}/shopbyshape`}
-                variant="h3"
-              >
-                {t("product.total_height")}&nbsp;:&nbsp;
-                {height}
-              </Typography>
-            ) : (
-              <Skeleton
-                variant="text"
-                sx={{ width: "10rem" }}
-                animation="wave"
-                className={classes.product_serial}
-              />
-            )}
-            {detailsData ? (
-              <Typography
-                className={classes.product_serial}
-                color="inherit"
-                href={`/${lng}/shopbyshape`}
-                variant="h3"
-              >
-                {t("serial_number")}&nbsp;:&nbsp;
-                {variationDetail.product.variation.code}
-                {detailsData && detailsData.product.product_code}
-              </Typography>
-            ) : (
-              <Skeleton
-                variant="text"
-                sx={{ width: "10rem" }}
-                animation="wave"
-                className={classes.product_serial}
-              />
-            )}
+            <Typography
+              className={classes.product_serial}
+              color="inherit"
+              variant="h3"
+            >
+              {t("serial_number")}: {productDetails?.sku} /{" "}
+              {productDetails?.product_accounting_code}
+            </Typography>
 
-            {detailsData && (
-              <div className={classes.price_wrapper}>
-                <>
-                  <Typography
-                    className={classes.product_price}
-                    color="inherit"
-                    href={`/${lng}/shopbyshape`}
-                    variant="h3"
-                  >
-                    {t("price")}&nbsp;:
-                  </Typography>
-                  {+detailsData.product?.percent_sale_price !== 0 && (
-                    <span
-                      className={classes.prev_price}
-                      style={{
-                        textDecoration: "line-through",
-                      }}
+            <div className={classes.price_wrapper}>
+              <Typography
+                className={classes.product_price}
+                color="inherit"
+                variant="h3"
+              >
+                {t("price")}:
+              </Typography>
+              {discountAmount > 0 && (
+                <span className={classes.prev_price}>
+                  <del>{formatNumber(originalPrice * euro)}</del>
+                </span>
+              )}
+              <p className={classes.current_price}>
+                {formatNumber(salePrice * euro)}
+              </p>
+            </div>
+
+            <div className={classes.quantity_wrapper}>
+              <div className={classes.flex}>
+                <div className={classes.quantity_total_wrapper}>
+                  <div className={classes.input_wrapper}>
+                    <button
+                      className={classes["quantity-action-button"]}
+                      onClick={handleDecrement}
                     >
-                      <p className={classes.off_text}>
-                        {detailsData.product.percent_sale_price}%
-                      </p>
-                    </span>
-                  )}
-                  &nbsp;
-                  <p className={classes.current_price}>
-                    {detailsData &&
-                      formatNumber(variationDetail?.product.sale_price * euro)}
-                    تومان
-                  </p>
-                </>
-              </div>
-            )}
-
-            {detailsData && (
-              <>
-                <div className={classes.quantity_wrapper}>
-                  {detailsData ? (
-                    <div className={classes.flex}>
-                      <div className={classes.quantity_total_wrapper}>
-                        {variationDetail && (
-                          <div className={classes.input_wrapper}>
-                            <button
-                              className={classes["quantity-action-button"]}
-                              onClick={handleDecrement}
-                            >
-                              -
-                            </button>
-                            <div className={classes.quantity}>{quantity}</div>
-                            <button
-                              className={classes["quantity-action-button"]}
-                              onClick={handleIncrement}
-                            >
-                              +
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <Skeleton
-                      variant="text"
-                      sx={{ width: "10rem" }}
-                      animation="wave"
-                      className={classes.product_serial}
-                    />
-                  )}
+                      -
+                    </button>
+                    <div className={classes.quantity}>{quantity}</div>
+                    <button
+                      className={classes["quantity-action-button"]}
+                      onClick={handleIncrement}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                {
-                  <p
-                    style={{
-                      opacity: `${isMoreThanQuantity ? 1 : 0}`,
-                      color: "red",
-                      whiteSpace: "nowrap",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {t("availableQuantity")}:
-                    {+variationDetail.product.variation.quantity}
-                  </p>
-                }
-                {!token && (
-                  <IconButton
-                    className={classes.wish_list}
-                    onClick={handleNavigateToLogin}
-                  >
-                    <Heart width={15} height={15} />
-                    <p>{t("add_to_favorite")}</p>
-                  </IconButton>
-                )}
+              </div>
+            </div>
 
-                {token && (
-                  <>
-                    {isFavorite ? (
-                      <>
-                        <IconButton
-                          className={classes.wish_list}
-                          onClick={handleRemoveToFavorites}
-                        >
-                          <HeartRed width={15} height={15} />
-                          <p>{t("product.remove")}</p>
-                        </IconButton>
-                      </>
-                    ) : (
-                      <IconButton
-                        className={classes.wish_list}
-                        onClick={handleAddToFavorites}
-                      >
-                        <Heart width={15} height={15} />
-                        <p>{t("add_to_favorite")}</p>
-                      </IconButton>
-                    )}
-                  </>
-                )}
-              </>
-            )}
+            <IconButton
+              className={classes.wish_list}
+              onClick={handleToggleFavorite}
+            >
+              {isFavorite ? (
+                <HeartRed width={15} height={15} />
+              ) : (
+                <Heart width={15} height={15} />
+              )}
+              <p>{t(isFavorite ? "product.remove" : "add_to_favorite")}</p>
+            </IconButton>
 
-            {detailsData && (
-              <>
-                {token ? (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    className={classes.addtocart}
-                    onClick={() => handleSendShoppingCart(detailsData.product)}
-                  >
-                    <Shop
-                      style={{ width: "25px", height: "25px", margin: "0 5px" }}
-                    />
-                    {isByOrder ? t("addtoorder") : t("addtocart")}
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    className={classes.addtocart}
-                    onClick={handleNavigateToLogin}
-                  >
-                    <Shop
-                      style={{ width: "25px", height: "25px", margin: "0 5px" }}
-                    />
-                    {isByOrder ? t("addtoorder") : t("addtocart")}
-                  </Button>
-                )}
-              </>
-            )}
+            <Button
+              variant="contained"
+              size="large"
+              className={classes.addtocart}
+              onClick={handleAddToCart}
+            >
+              <Shop
+                style={{ width: "25px", height: "25px", margin: "0 5px" }}
+              />
+              افزودن به سبد خرید
+            </Button>
 
             <span className={classes.divider} />
-            {detailsData && (
-              <div
-                className={classes.payment_wrapper}
-                style={{
-                  alignItems: lng === "fa" ? "flex-end" : "flex-start",
-                }}
-              >
-                {lng !== "fa" ? (
-                  <div className={classes.payment_ct}>
-                    <p className={classes.payment_title}>
-                      {t("shopping_cart.total")}&nbsp;
-                      {t("payment")}:
-                    </p>
-                    &nbsp;&nbsp;
-                    <p className={classes.payment_value}>
-                      {(+variationDetail.product.sale_price * quantity).toFixed(
-                        2
-                      )}
-                      {t("m_unit")}
-                    </p>
-                  </div>
-                ) : (
-                  <div
-                    className={classes.payment_ct}
-                    style={{
-                      direction: "rtl",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <span className={classes.total_fee_wrapper}>
-                      <span>
-                        <p className={classes.payment_title}>{t("payment")}:</p>
-                        &nbsp;
-                        <p className={classes.payment_value}>
-                          {formatNumber(
-                            +variationDetail.product.sale_price *
-                              quantity *
-                              +euro
-                          )}
-                          {t("m_unit")}
-                        </p>
-                      </span>
-                    </span>
-                  </div>
-                )}
+            <div className={classes.payment_wrapper}>
+              <div className={classes.payment_ct}>
+                <p className={classes.payment_title}>{t("payment")}:</p>
+                &nbsp;
+                <p className={classes.payment_value}>
+                  {formatNumber(salePrice * quantity * euro)}
+                </p>
               </div>
-            )}
+            </div>
           </div>
         </div>
         <div className={classes.tabsSection}>
@@ -715,10 +455,11 @@ const Product = ({ windowSize }) => {
                 product={{
                   id: "1736236632",
                   variationId: "378",
-                  name: "محصول نمونه زیبا",
+                  name: "محصول فوتی ",
                   price: 12000000,
                   originalPrice: 15000000,
                   isLiked: false,
+                  imageUrl: img,
                   rating: 4.5,
                   totalViews: 1800,
                   isOutOfStock: true,

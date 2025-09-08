@@ -20,17 +20,20 @@ function* fetchCartSaga() {
 
 function* updateCartItemSaga(action) {
   try {
-    yield call(api.updateCart, action.payload);
-    const response = yield call(api.getCart); 
+    const { product_id, quantity } = action.payload;
+    const cartData = { product_id, quantity };
+    yield call(api.updateCart, cartData);
+    const response = yield call(api.getCart);
     if (response && response.cart) {
       yield put(actions.updateCartItemSuccess(response.cart));
     } else {
       yield put(actions.updateCartItemSuccess([]));
     }
     yield put(openCartDrawer());
+    notify("سبد خرید با موفقیت بروزرسانی شد", "success");
   } catch (error) {
     yield put(actions.updateCartItemFailure(error.message));
-    notify("Failed to update cart.");
+    notify("خطا در بروزرسانی سبد خرید", "error");
   }
 }
 
@@ -38,10 +41,10 @@ function* removeFromCartSaga(action) {
   try {
     yield call(api.removeFromCart, action.payload);
     yield put(actions.removeFromCartSuccess(action.payload));
-    notify("Item removed from cart.");
+    notify("Item removed from cart.", "success");
   } catch (error) {
     yield put(actions.removeFromCartFailure(error.message));
-    notify("Failed to remove item.");
+    notify("Failed to remove item.", "error");
   }
 }
 

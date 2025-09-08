@@ -86,8 +86,3 @@ export const setPaymentMethod = (methodId) => ({
   type: actionTypes.SET_PAYMENT_METHOD,
   payload: methodId,
 });
-
-export const addToCart = (product) => ({
-  type: actionTypes.ADD_TO_CART,
-  payload: product,
-});

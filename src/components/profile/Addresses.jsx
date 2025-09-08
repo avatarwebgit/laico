@@ -32,7 +32,9 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
     lastName: Yup.string()
       .matches(persianRegex, "فقط از حروف فارسی استفاده کنید")
       .required("نام خانوادگی الزامی است"),
-    address: Yup.string().required("آدرس الزامی است"),
+    address: Yup.string()
+      .max(100, "آدرس نباید بیشتر از 100 کاراکتر باشد")
+      .required("آدرس الزامی است"),
     postalCode: Yup.string()
       .matches(/^\d{10}$/, "کد پستی باید عددی و ۱۰ رقمی باشد")
       .required("کد پستی الزامی است"),
@@ -55,7 +57,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
         city_id: 1,
       };
       onSave({ ...payload, id: address ? address.id : undefined });
-      formik.resetForm()
+      formik.resetForm();
       onClose();
     },
   });
@@ -152,6 +154,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
                 آدرس
               </label>
               <textarea
+                maxLength={100}
                 id={`${formId}-address`}
                 name="address"
                 {...formik.getFieldProps("address")}
@@ -252,8 +255,8 @@ const AddressCard = ({ address, onEdit, onDelete }) => (
   >
     <div className={styles.cardContent}>
       <p className={styles.cardName}>{address.title}</p>
-      <p className={styles.cardAddress}>{address.address}</p>
       <p className={styles.cardPostal}>کد پستی: {address.postal_code}</p>
+      <p className={styles.cardAddress}> آدرس: {address.address}</p>
     </div>
     <div className={styles.cardActions}>
       <button onClick={() => onEdit(address)} className={styles.actionButton}>
@@ -299,14 +302,14 @@ const Addresses = () => {
     }
   };
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = (address) => {
     dispatch(
       openDeleteModal({
         title: "حذف آدرس",
-        message: "آیا از حذف این آدرس اطمینان دارید؟ این عمل قابل بازگشت نیست.",
+        message: ` آیا  از حذف آدرس با کد پستی  ${address.postal_code}  اطمینان دارید؟ این عمل قابل بازگشت نیست.`,
         confirmAction: {
           type: userActionTypes.DELETE_ADDRESS_REQUEST,
-          payload: id,
+          payload: address.id,
         },
       })
     );
@@ -346,7 +349,7 @@ const Addresses = () => {
                 key={addr.id}
                 address={addr}
                 onEdit={handleOpenFormModal}
-                onDelete={handleDeleteClick}
+                onDelete={() => handleDeleteClick(addr)}
               />
             ))
           ) : (

@@ -20,4 +20,3 @@ export const SET_FINAL_CART = "cart/SET_FINAL_CART";
 export const SET_EURO_RATE = "cart/SET_EURO_RATE";
 export const SET_SELECTED_ADDRESS = "cart/SET_SELECTED_ADDRESS";
 export const SET_PAYMENT_METHOD = "cart/SET_PAYMENT_METHOD";
-export const ADD_TO_CART = "cart/ADD_TO_CART";

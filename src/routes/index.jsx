@@ -22,9 +22,9 @@ const NotFound = lazy(() => import("../pages/404"));
 export const publicRoutes = [
   { path: "/", element: <Home />, name: "صفحه اصلی" },
 
-  { path: "/product/:id/:variation", element: <Product />, name: "محصول" },
+  { path: "/product/:slug", element: <Product />, name: "محصول" },
   { path: "/blogs", element: <Blogs />, name: "وبلاگ" },
-  { path: "/blogs/:id", element: <BlogPost />, name: "مقاله" },
+  { path: "/blogs/:slug", element: <BlogPost />, name: "مقاله" },
   { path: "/category", element: <Category />, name: "دسته بندی" },
   { path: "/about-us", element: <About />, name: "درباره ما" },
   { path: "/contact-us", element: <Contact />, name: "تماس با ما" },

@@ -1,192 +1,231 @@
 .dashboard {
- margin: 0 auto;
+  margin: 0 auto;
 }
 
 .header {
- margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .title {
- font-size: var(--title-font);
- font-weight: 700;
- color: var(--main-color-1);
- letter-spacing: -0.5px;
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: var(--main-color-1);
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
- font-size: var(--title-font);
- color: #000;
- margin-top: 0.25rem;
+  font-size: var(--title-font);
+  color: #000;
+  margin-top: 0.25rem;
 }
 
 .card {
- background: #fff;
- box-shadow: 0px 0px 5px 5px #f8f8f8;
- border-radius: var(--radius-lg);
- overflow: hidden;
- box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  box-shadow: 0px 0px 5px 5px #f8f8f8;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
 }
 
 .cardHeader {
- display: flex;
- justify-content: space-between;
- align-items: center;
- padding: 1.25rem 1.5rem;
- border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleContainer h3 {
+  font-size: var(--normal-font);
+  color: var(--text-secondary);
 }
 
 .cardTitle {
- font-size: var(--title-font);
- font-weight: 600;
- color: var(--text-primary);
+  font-size: var(--title-font);
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .cardContent {
- padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .formGrid {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
 .formGroup {
- display: flex;
- flex-direction: column;
- gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .fullWidth {
- grid-column: 1 / -1;
+  grid-column: 1 / -1;
 }
 
 .label {
- font-size: var(--normal-font);
- font-weight: 500;
- color: var(--text-secondary);
+  font-size: var(--normal-font);
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .inputWrapper {
- position: relative;
- display: flex;
- align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .inputIcon {
- position: absolute;
- left: 0.875rem;
- color: var(--text-secondary);
- pointer-events: none;
+  position: absolute;
+  left: 0.875rem;
+  color: var(--text-secondary);
+  pointer-events: none;
 }
 
 .input {
- width: 100%;
- padding: 0.75rem 0.75rem 0.75rem 2.75rem;
- background-color: var(--input-bg);
- border: 1px solid var(--border-color);
- border-radius: 8px;
- color: var(--text-primary);
- transition: border-color 0.2s, box-shadow 0.2s;
- font-size: var(--normal-font);
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.75rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: var(--normal-font);
 }
 
 .input:focus {
- outline: none;
- border-color: var(--primary);
- box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .input:disabled {
- background-color: var(--input-disabled);
- cursor: not-allowed;
- opacity: 0.6;
+  background-color: var(--input-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .actions {
- display: flex;
- justify-content: flex-end;
- gap: 1rem;
- padding: 0 1.5rem 1.5rem;
- border-top: 1px solid var(--border-color);
- padding-top: 1.5rem;
- background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+  background-color: #fff;
 }
 
 .button {
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 0.6rem 1.25rem;
- border: none;
- border-radius: 8px;
- font-weight: 600;
- cursor: pointer;
- transition: all 0.2s ease;
- font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
 .primaryButton {
- background-color: var(--primary);
- color: white;
+  background-color: var(--primary);
+  color: white;
 }
 
 .primaryButton:hover {
- filter: brightness(1.15);
+  filter: brightness(1.15);
 }
 
 .secondaryButton {
- padding: 0.75rem 1.25rem;
- border-radius: var(--radius-lg);
- font-weight: 600;
- font-size: var(--normal-font);
- color: var(--text-white);
- background-color: var(--main-color-2);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: var(--normal-font);
+  color: var(--text-white);
+  background-color: var(--main-color-2);
 }
 
 .secondaryButton:hover {
- background-color: var(--main-color-2);
+  background-color: var(--main-color-2);
 }
 
 .formError {
- font-size: 12px;
- color: var(--danger-color, #ef4444);
- margin-top: 0.25rem;
- text-align: right;
+  font-size: 12px;
+  color: var(--danger-color, #ef4444);
+  margin-top: 0.25rem;
+  text-align: right;
 }
 
 .inputError,
 .inputError:focus {
- border-color: var(--status-cancelled-text, #e92525) !important;
- box-shadow: 0 0 0 1px var(--status-cancelled-text, #e92525) !important;
+  border-color: var(--status-cancelled-text, #e92525) !important;
+  box-shadow: 0 0 0 1px var(--status-cancelled-text, #e92525) !important;
 }
 
 .statusContainer {
- display: flex;
- align-items: center;
- gap: 0.5rem;
- padding: 0.75rem;
- border-radius: var(--radius-md);
- margin: 0 1.5rem 1.5rem;
- font-size: var(--normal-font);
- font-weight: 500;
- border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  margin: 0 1.5rem 1.5rem;
+  font-size: var(--normal-font);
+  font-weight: 500;
+  border: 1px solid transparent;
 }
 
 .statusContainer.error {
- background-color: var(--status-cancelled-bg, rgba(248, 113, 113, 0.1));
- color: var(--status-cancelled-text, #e92525);
- border-color: var(--status-cancelled-text, #e92525);
+  background-color: var(--status-cancelled-bg, rgba(248, 113, 113, 0.1));
+  color: var(--status-cancelled-text, #e92525);
+  border-color: var(--status-cancelled-text, #e92525);
 }
 
 .statusContainer.success {
- background-color: var(--status-delivered-bg, rgba(74, 222, 128, 0.1));
- color: var(--status-delivered-text, #0cd255);
- border-color: var(--status-delivered-text, #0cd255);
+  background-color: var(--status-delivered-bg, rgba(74, 222, 128, 0.1));
+  color: var(--status-delivered-text, #0cd255);
+  border-color: var(--status-delivered-text, #0cd255);
+}
+
+.countryCode {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 35%;
+  height: 100%;
+  color: #000;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  align-self: stretch;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.countryCode div {
+  font-size: var(--caption-font);
+  margin: 0 10px;
+}
+
+.flagIcon {
+  width: 24px;
+  height: auto;
+  margin-left: 8px;
+}
+
+.mobile {
+  padding-left: 6rem;
 }
 
 @media (max-width: 640px) {
- .formGrid {
-  grid-template-columns: 1fr;
- }
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
 }

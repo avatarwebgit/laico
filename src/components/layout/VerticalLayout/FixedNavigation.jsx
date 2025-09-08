@@ -23,7 +23,8 @@ const FixedNavigation = () => {
 
   const { isAuthenticated } = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
-  const { count: favoritesCount } = useSelector((state) => state.favorites);
+  const { favorites } = useSelector((state) => state.user);
+  const favoritesCount = favorites.length;
 
   const handleLogout = () => {
     dispatch(logoutRequest());
