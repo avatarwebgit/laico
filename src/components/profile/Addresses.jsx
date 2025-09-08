@@ -12,14 +12,15 @@ import {
 import React, { useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import { openDeleteModal } from "../../redux/modal/modalActions";
 import {
   addAddressRequest,
   deleteAddressRequest,
   fetchAddressesRequest,
   updateAddressRequest,
 } from "../../redux/user/userActions";
+import * as userActionTypes from "../../redux/user/userActionTypes";
 import { persianRegex } from "../../utils/helperFucntions";
-
 import Spinner from "../common/Spinner";
 import styles from "./Addresses.module.css";
 
@@ -54,6 +55,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
         city_id: 1,
       };
       onSave({ ...payload, id: address ? address.id : undefined });
+      formik.resetForm()
       onClose();
     },
   });
@@ -272,20 +274,20 @@ const Addresses = () => {
   const { addresses, addressesLoading, addressesError } = useSelector(
     (state) => state.user
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
 
   useEffect(() => {
     dispatch(fetchAddressesRequest());
   }, [dispatch]);
 
-  const handleOpenModal = (address = null) => {
+  const handleOpenFormModal = (address = null) => {
     setEditingAddress(address);
-    setIsModalOpen(true);
+    setIsFormModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseFormModal = () => {
+    setIsFormModalOpen(false);
     setEditingAddress(null);
   };
 
@@ -297,9 +299,17 @@ const Addresses = () => {
     }
   };
 
-  const handleDeleteAddress = (id) => {
-      dispatch(deleteAddressRequest(id));
-    
+  const handleDeleteClick = (id) => {
+    dispatch(
+      openDeleteModal({
+        title: "حذف آدرس",
+        message: "آیا از حذف این آدرس اطمینان دارید؟ این عمل قابل بازگشت نیست.",
+        confirmAction: {
+          type: userActionTypes.DELETE_ADDRESS_REQUEST,
+          payload: id,
+        },
+      })
+    );
   };
 
   return (
@@ -312,7 +322,7 @@ const Addresses = () => {
           </p>
         </div>
         <motion.button
-          onClick={() => handleOpenModal()}
+          onClick={() => handleOpenFormModal()}
           whileHover={{ scale: 1.05, boxShadow: `0 0 20px #98ded930` }}
           whileTap={{ scale: 0.95 }}
           className={styles.addButton}
@@ -324,7 +334,7 @@ const Addresses = () => {
 
       <div className={styles.addressGrid}>
         <AnimatePresence>
-          {addressesLoading ? (
+          {addressesLoading && !addresses.length ? (
             <div className={styles.spinner}>
               <Spinner />
             </div>
@@ -335,8 +345,8 @@ const Addresses = () => {
               <AddressCard
                 key={addr.id}
                 address={addr}
-                onEdit={handleOpenModal}
-                onDelete={handleDeleteAddress}
+                onEdit={handleOpenFormModal}
+                onDelete={handleDeleteClick}
               />
             ))
           ) : (
@@ -352,8 +362,8 @@ const Addresses = () => {
       </div>
 
       <AddressFormModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        isOpen={isFormModalOpen}
+        onClose={handleCloseFormModal}
         onSave={handleSaveAddress}
         address={editingAddress}
       />

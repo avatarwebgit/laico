@@ -4,7 +4,7 @@ import styles from "./Spinner.module.css";
 const Spinner = () => {
   return (
     <div className={styles.main}>
-      <span class={styles.loader}></span>
+      <span className={styles.loader}></span>
     </div>
   );
 };

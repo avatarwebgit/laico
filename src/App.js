@@ -13,6 +13,7 @@ import FixedNavigation from "./components/layout/VerticalLayout/FixedNavigation"
 import MobileHeader from "./components/layout/VerticalLayout/Header";
 
 import "./App.css";
+import DeleteModal from "./components/common/DeleteModal";
 import ParallaxBackground from "./components/common/ParallaxBackground";
 import TitleManager from "./utils/TitleManager";
 import Authmiddleware from "./routes/authMiddleware";
@@ -53,7 +54,7 @@ function App() {
           );
         })}
       </Routes>
-
+      <DeleteModal />
       <CartDrawer />
       <FavoritesDrawer />
       <ParallaxBackground />

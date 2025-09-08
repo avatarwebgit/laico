@@ -1,0 +1,106 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  position: relative;
+  margin: 1rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem 2rem;
+  background-color: #fff;
+  color: var(--text-primary);
+  text-align: center;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.iconWrapper {
+  margin: 0 auto 1.5rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--status-cancelled-bg);
+  border: 3px solid var(--status-cancelled-text);
+}
+
+.iconWrapper svg {
+  margin-bottom: 5px;
+}
+
+.icon {
+  color: var(--status-cancelled-text);
+  stroke-width: 1.5;
+}
+
+.title {
+  font-size: var(--title-font);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.message {
+  font-size: var(--caption-font);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.button {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: var(--normal-font);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background-color: #e2e8f0;
+  color: var(--text-secondary);
+  border: 1px solid #e2e8f0;
+}
+
+.cancelButton:hover:not(:disabled) {
+  background-color: #cbd5e1;
+}
+
+.confirmButton {
+  background-color: var(--danger-color);
+  color: var(--text-white);
+  border: 1px solid var(--danger-color);
+}
+
+.confirmButton:hover:not(:disabled) {
+  background-color: #d03d3d;
+  border-color: #d03d3d;
+}
+
+.confirmButton:disabled {
+  background-color: #fca5a5;
+  border-color: #fca5a5;
+}
