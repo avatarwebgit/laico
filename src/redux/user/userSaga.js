@@ -32,7 +32,7 @@ function* fetchAddressesSaga() {
       return;
     }
     const response = yield call(api.getAddresses, token);
-    yield put(actions.fetchAddressesSuccess(response.address || []));
+    yield put(actions.fetchAddressesSuccess(response.data || []));
   } catch (error) {
     yield put(actions.fetchAddressesFailure(error.message));
   }
@@ -46,7 +46,7 @@ function* addAddressSaga(action) {
       return;
     }
     const response = yield call(api.addAddress, action.payload);
-    yield put(actions.addAddressSuccess(response.address));
+    yield put(actions.addAddressSuccess(action.payload));
     notify("Address added successfully.");
   } catch (error) {
     yield put(actions.addAddressFailure(error.message));
@@ -63,7 +63,8 @@ function* updateAddressSaga(action) {
     }
     const { addressId, addressData } = action.payload;
     const response = yield call(api.updateAddress, addressId, addressData);
-    yield put(actions.updateAddressSuccess(response.address));
+    console.log(response)
+    yield put(actions.updateAddressSuccess(response.data));
     notify("Address updated successfully.");
   } catch (error) {
     yield put(actions.updateAddressFailure(error.message));
@@ -187,7 +188,7 @@ export function* userSaga() {
   );
 
   // Address Watchers
-  yield takeEvery(actionTypes.FETCH_ADDRESSES_REQUEST, fetchAddressesSaga);
+  yield takeLatest(actionTypes.FETCH_ADDRESSES_REQUEST, fetchAddressesSaga);
   yield takeLatest(actionTypes.ADD_ADDRESS_REQUEST, addAddressSaga);
   yield takeLatest(actionTypes.UPDATE_ADDRESS_REQUEST, updateAddressSaga);
   yield takeLatest(actionTypes.DELETE_ADDRESS_REQUEST, deleteAddressSaga);

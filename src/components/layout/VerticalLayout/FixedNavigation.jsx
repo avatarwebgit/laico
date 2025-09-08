@@ -1,80 +1,74 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-// import { drawerActions, accesModalActions } from '../store/store';
-
-import { ReactComponent as Heart } from "../../../assets/svgs/heart-white.svg";
-import { ReactComponent as Basket } from "../../../assets/svgs/add_basket-white.svg";
-import { ReactComponent as Login } from "../../../assets/svgs/user.svg";
-
-import classes from "./FixedNavigation.module.css";
-import { Avatar, Badge, IconButton } from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import {
-  CircleUser,
-  HeartIcon,
-  Layers,
+  Heart,
+  LayoutGrid,
   LogIn,
-  ShoppingBag,
+  LogOut,
+  ShoppingCart,
+  User,
 } from "lucide-react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutRequest } from "../../../redux/auth/authActions";
+import {
+  openCartDrawer,
+  openFavoritesDrawer,
+} from "../../../redux/drawer/drawerActions";
+import classes from "./FixedNavigation.module.css";
+
 const FixedNavigation = () => {
-  const [ModalOpen, setModalOpen] = useState(false);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const token = useSelector((state) => state.user.token);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
-  //  const favorits = useSelector(state => state.favorites.products);
+  const { count: favoritesCount } = useSelector((state) => state.favorites);
 
-  const handleOpenCart = () => {
-    //   dispatch(drawerActions.open());
+  const handleLogout = () => {
+    dispatch(logoutRequest());
+    navigate("/");
   };
 
-  const handleOpenLogin = () => {
-    setModalOpen(true);
-    //   dispatch(accesModalActions.login());
-  };
-
-  const handleCloseModal = () => {
-    //   dispatch(accesModalActions.close());
+  const handleNavigate = (path) => {
+    navigate(path);
   };
 
   return (
     <div className={classes.main}>
-      <>
-        {token ? (
-          <IconButton>
-            <CircleUser className={classes.avatar} />
+      {isAuthenticated ? (
+        <>
+          <IconButton onClick={() => handleNavigate("/profile/dashboard")}>
+            <User className={classes.svg} />
           </IconButton>
-        ) : (
-          <IconButton onClick={handleOpenLogin}>
-            <LogIn className={classes.svg} />
+          <IconButton onClick={handleLogout}>
+            <LogOut className={classes.svg} />
           </IconButton>
-        )}
-      </>
+        </>
+      ) : (
+        <IconButton onClick={() => handleNavigate("/login")}>
+          <LogIn className={classes.svg} />
+        </IconButton>
+      )}
 
-      <IconButton>
+      <IconButton onClick={() => dispatch(openFavoritesDrawer())}>
         <Badge
-          //  badgeContent={favorits?.length || 0}
+          badgeContent={favoritesCount || 0}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         >
-          <HeartIcon className={classes.svg} />
+          <Heart className={classes.svg} />
         </Badge>
       </IconButton>
-      <IconButton onClick={handleOpenCart}>
+      <IconButton onClick={() => dispatch(openCartDrawer())}>
         <Badge
           badgeContent={cart?.products.length || 0}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         >
-          <ShoppingBag className={classes.svg} />
+          <ShoppingCart className={classes.svg} />
         </Badge>
       </IconButton>
-      <IconButton onClick={handleOpenCart}>
-        <Badge
-          badgeContent={cart?.products.length || 0}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        >
-          <Layers className={classes.svg} />
-        </Badge>
+      <IconButton onClick={() => handleNavigate("/category")}>
+        <LayoutGrid className={classes.svg} />
       </IconButton>
     </div>
   );

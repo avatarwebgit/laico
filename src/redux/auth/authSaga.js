@@ -7,7 +7,7 @@ function* loginSaga(action) {
   try {
     const response = yield call(api.login, action.payload);
     yield put(actions.loginSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    localStorage.setItem("authToken", JSON.stringify(response.data.token));
   } catch (error) {
     yield put(actions.loginFailure(error.message));
   }
@@ -17,7 +17,7 @@ function* registerSaga(action) {
   try {
     const response = yield call(api.register, action.payload);
     yield put(actions.registerSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    localStorage.setItem("authToken", JSON.stringify(response.data.token));
   } catch (error) {
     yield put(actions.registerFailure(error.message));
   }
@@ -25,7 +25,7 @@ function* registerSaga(action) {
 
 function* logoutSaga() {
   try {
-    yield call(api.logout);
+    // yield call(api.logout);
     yield put(actions.logoutSuccess());
     localStorage.removeItem("authToken");
   } catch (error) {
@@ -35,8 +35,9 @@ function* logoutSaga() {
 
 function* sendOtpSaga(action) {
   try {
-    yield call(api.sendOtp, action.payload.mobile);
-    yield put(actions.sendOtpSuccess());
+    const response = yield call(api.sendOtp, action.payload.cellphone);
+    const remainingTime = response.data.remainingTime;
+    yield put(actions.sendOtpSuccess({ remainingTime }));
   } catch (error) {
     yield put(actions.sendOtpFailure(error.message));
   }
@@ -46,9 +47,8 @@ function* verifyOtpSaga(action) {
   try {
     const { cellphone, otp } = action.payload;
     const response = yield call(api.verifyOtp, cellphone, otp);
-    console.log("OTP Verification Response:", response);
-    yield put(actions.loginSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    yield put(actions.loginSuccess(response.data));
+    localStorage.setItem("authToken", JSON.stringify(response.data.token));
   } catch (error) {
     yield put(actions.loginFailure(error.message || "Invalid OTP"));
   }

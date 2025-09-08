@@ -10,7 +10,7 @@ const routeTitles = {
  '/login': 'ورود به حساب کاربری',
  '/register': 'ثبت نام',
  '/otp': 'تایید کد یکبار مصرف',
- '/login-with-phone': 'ورود با شماره موبایل',
+ '/login-with-mobile': 'ورود با موبایل',
  '/product/:id/:variation': params => `محصول ${params.id}`,
  '/blogs': 'مقالات و بلاگ',
  '/blogs/:id': params => `مقاله ${params.id}`,

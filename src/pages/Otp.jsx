@@ -24,15 +24,17 @@ const itemVariants = {
 };
 
 const Otp = () => {
+  const OPT_LENGTH = 4;
+  const BASE_CODE = "+98";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, otpExpiration } = useSelector((state) => state.auth);
   const { cellphone, from } = location.state || {};
 
-  const [otp, setOtp] = useState(new Array(6).fill(""));
-  const [timer, setTimer] = useState(60);
+  const [otp, setOtp] = useState(new Array(OPT_LENGTH).fill(""));
+  const [timer, setTimer] = useState(0);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef([]);
 
@@ -50,7 +52,15 @@ const Otp = () => {
   }, [isAuthenticated, navigate, from, cellphone]);
 
   useEffect(() => {
+    if (otpExpiration) {
+      const remaining = Math.round((otpExpiration - Date.now()) / 1000);
+      setTimer(Math.max(0, remaining));
+    }
+  }, [otpExpiration]);
+
+  useEffect(() => {
     if (timer > 0) {
+      setCanResend(false);
       const countdown = setTimeout(() => setTimer(timer - 1), 1000);
       return () => clearTimeout(countdown);
     } else {
@@ -60,8 +70,6 @@ const Otp = () => {
 
   const handleResend = () => {
     if (canResend) {
-      setTimer(60);
-      setCanResend(false);
       dispatch(authActions.sendOtpRequest(cellphone));
     }
   };
@@ -85,8 +93,9 @@ const Otp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fullOtp = otp.join("");
-    if (fullOtp.length === 6) {
-      dispatch(authActions.verifyOtpRequest(cellphone, fullOtp));
+    if (fullOtp.length === OPT_LENGTH) {
+      const mobile = BASE_CODE + cellphone;
+      dispatch(authActions.verifyOtpRequest(mobile, fullOtp));
     }
   };
 
@@ -181,11 +190,10 @@ const Otp = () => {
               تایید و ادامه
             </motion.button>
           </motion.form>
-          <motion.div variants={itemVariants} className={styles.footer}>
-            <Link to="/login" className={styles.link}>
-              بازگشت به صفحه ورود
-            </Link>
-          </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className={styles.footer}
+          ></motion.div>
         </motion.div>
       </motion.div>
     </div>

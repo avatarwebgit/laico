@@ -3,22 +3,28 @@ import { Badge, IconButton } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Mail, Phone } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  ShoppingCart,
+  Heart,
+  User,
+  LogIn,
+  LogOut,
+} from "lucide-react";
 
 import Content from "../../common/Content";
 import Search from "../../common/Search";
 import { useNavigation } from "../../../utils/helperFucntions";
-import { drawerActions } from "../../../store/drawer/drawerSlice";
+import {
+  openCartDrawer,
+  openFavoritesDrawer,
+} from "../../../redux/drawer/drawerActions";
+import { logoutRequest } from "../../../redux/auth/authActions";
 
 import logo from "../../../assets/images/Logo.png";
-import { ReactComponent as Basket } from "../../../assets/svgs/add_basket.svg";
-import { ReactComponent as Heart } from "../../../assets/svgs/heart-svg.svg";
-import { ReactComponent as Login } from "../../../assets/svgs/login.svg";
-import { ReactComponent as Avatar } from "../../../assets/svgs/user.svg";
-
 import classes from "./Header.module.css";
 import "../../../styles/common.css";
-import { openCartDrawer, openFavoritesDrawer } from "../../../redux/drawer/drawerActions";
 
 const megaMenuChildren = [
   {
@@ -525,14 +531,18 @@ const DropdownMenu = ({ data }) => {
 
 const Header = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [hoveredItem, setHoveredItem] = useState(null); // e.g. { id: 'shop', instance: 'main' }
-  const token = useSelector((state) => state.user.token);
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const cart = useSelector((state) => state.cart);
+  const { count: favoritesCount } = useSelector((state) => state.favorites);
 
   const dispatch = useDispatch();
   const { navigateTo } = useNavigation();
 
-  const handleGoToLogin = () => {
-    navigateTo("/login", { state: {} });
+  const handleLogout = () => {
+    dispatch(logoutRequest());
+    navigateTo("/");
   };
 
   useEffect(() => {
@@ -595,42 +605,55 @@ const Header = () => {
             </div>
             <div className={classes.left}>
               <Badge
-                badgeContent={5}
+                badgeContent={cart?.products?.length || 0}
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
               >
                 <IconButton
                   disableRipple={true}
                   onClick={() => dispatch(openCartDrawer())}
                 >
-                  <Basket className={`${classes["icon-normal"]}`} />
+                  <ShoppingCart className={`${classes["icon-normal"]}`} />
                 </IconButton>
               </Badge>
-              <Badge
-                badgeContent={5}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              >
+              {isAuthenticated && (
+                <Badge
+                  badgeContent={favoritesCount || 0}
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                  <IconButton
+                    disableRipple={true}
+                    onClick={() => dispatch(openFavoritesDrawer())}
+                  >
+                    <Heart className={`${classes["icon-normal"]}`} />
+                  </IconButton>
+                </Badge>
+              )}
+              {isAuthenticated ? (
+                <>
+                  <IconButton
+                    disableRipple={true}
+                    onClick={() => navigateTo("/profile/dashboard")}
+                  >
+                    <User className={`${classes["icon-normal"]}`} />
+                  </IconButton>
+                  <IconButton disableRipple={true} onClick={handleLogout}>
+                    <LogOut className={`${classes["icon-normal"]}`} />
+                  </IconButton>
+                </>
+              ) : (
                 <IconButton
                   disableRipple={true}
-                  onClick={() => dispatch(openFavoritesDrawer())}
+                  onClick={() => navigateTo("/login")}
                 >
-                  <Heart className={`${classes["icon-normal"]}`} />
+                  <LogIn className={`${classes["icon-normal"]}`} />
                 </IconButton>
-              </Badge>
-              <IconButton
-                disableRipple={true}
-                onClick={() => navigateTo("/profile/dashboard")}
-              >
-                <Avatar className={`${classes["icon-normal"]}`} />
-              </IconButton>
-              <IconButton disableRipple={true} onClick={handleGoToLogin}>
-                <Login className={`${classes["icon-normal"]}`} />
-              </IconButton>
+              )}
             </div>
           </div>
         </Content>
         <div className={classes["middle-wrapper"]}>
           <a href="/">
-            <img src={logo} alt="" width={95} height={80} />
+            <img src={logo} alt="" width={80} height={80} />
           </a>
         </div>
         <Content contentClassname={classes["bottom-wrapper"]}>

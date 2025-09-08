@@ -55,3 +55,5 @@ export const useNavigation = () => {
 export const title = (string) => {
   document.title = `${string}`;
 };
+
+export const persianRegex = /^[\u0600-\u06FF\s]+$/;

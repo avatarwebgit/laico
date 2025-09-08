@@ -5,9 +5,9 @@ export const loginRequest = (credentials) => ({
   payload: credentials,
 });
 
-export const loginSuccess = (user) => ({
+export const loginSuccess = (token) => ({
   type: actionTypes.LOGIN_SUCCESS,
-  payload: user,
+  payload: token,
 });
 
 export const loginFailure = (error) => ({
@@ -52,13 +52,14 @@ export const removeToken = () => ({
   type: actionTypes.REMOVE_TOKEN,
 });
 
-export const sendOtpRequest = (mobile) => ({
+export const sendOtpRequest = (cellphone) => ({
   type: actionTypes.SEND_OTP_REQUEST,
-  payload: { mobile },
+  payload: { cellphone },
 });
 
-export const sendOtpSuccess = () => ({
+export const sendOtpSuccess = (data) => ({
   type: actionTypes.SEND_OTP_SUCCESS,
+  payload: data,
 });
 
 export const sendOtpFailure = (error) => ({
@@ -66,7 +67,7 @@ export const sendOtpFailure = (error) => ({
   payload: error,
 });
 
-export const verifyOtpRequest = (mobile, otp) => ({
+export const verifyOtpRequest = (cellphone, otp) => ({
   type: actionTypes.VERIFY_OTP_REQUEST,
-  payload: { mobile, otp },
+  payload: { cellphone, otp },
 });

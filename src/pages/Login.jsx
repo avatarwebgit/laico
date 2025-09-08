@@ -15,7 +15,6 @@ const Login = () => {
 
  const handleSubmit = e => {
   e.preventDefault();
-  // Handle login logic here
   navigate('/profile/dashboard');
  };
 

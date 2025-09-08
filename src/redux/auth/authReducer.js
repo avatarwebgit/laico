@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   error: null,
   isAuthenticated: !!localStorage.getItem("authToken"),
+  otpExpiration: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -27,7 +28,6 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.REGISTER_SUCCESS:
       return {
         ...state,
-        user: action.payload.user,
         token: action.payload.token,
         isAuthenticated: true,
         loading: false,
@@ -47,6 +47,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
+        otpExpiration: Date.now() + action.payload.remainingTime * 1000,
       };
 
     case actionTypes.SEND_OTP_FAILURE:

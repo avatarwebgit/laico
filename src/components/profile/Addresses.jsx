@@ -18,16 +18,23 @@ import {
   fetchAddressesRequest,
   updateAddressRequest,
 } from "../../redux/user/userActions";
+import { persianRegex } from "../../utils/helperFucntions";
 
 import Spinner from "../common/Spinner";
 import styles from "./Addresses.module.css";
 
 const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
   const validationSchema = Yup.object({
-    firstName: Yup.string().required("نام الزامی است"),
-    lastName: Yup.string().required("نام خانوادگی الزامی است"),
+    firstName: Yup.string()
+      .matches(persianRegex, "فقط از حروف فارسی استفاده کنید")
+      .required("نام الزامی است"),
+    lastName: Yup.string()
+      .matches(persianRegex, "فقط از حروف فارسی استفاده کنید")
+      .required("نام خانوادگی الزامی است"),
     address: Yup.string().required("آدرس الزامی است"),
-    postalCode: Yup.string().required("کد پستی الزامی است"),
+    postalCode: Yup.string()
+      .matches(/^\d{10}$/, "کد پستی باید عددی و ۱۰ رقمی باشد")
+      .required("کد پستی الزامی است"),
   });
 
   const formik = useFormik({
@@ -44,7 +51,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
         title: `${values.firstName} ${values.lastName}`,
         address: values.address,
         postal_code: values.postalCode,
-        city_id: 1, // This was hardcoded in the original component
+        city_id: 1,
       };
       onSave({ ...payload, id: address ? address.id : undefined });
       onClose();
@@ -166,6 +173,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, address }) => {
               </label>
               <input
                 type="text"
+                maxLength={10}
                 id={`${formId}-postalCode`}
                 name="postalCode"
                 {...formik.getFieldProps("postalCode")}
@@ -268,10 +276,8 @@ const Addresses = () => {
   const [editingAddress, setEditingAddress] = useState(null);
 
   useEffect(() => {
-    if (dispatch && addresses.length === 0) {
-      dispatch(fetchAddressesRequest());
-    }
-  }, [dispatch, addresses]);
+    dispatch(fetchAddressesRequest());
+  }, [dispatch]);
 
   const handleOpenModal = (address = null) => {
     setEditingAddress(address);
@@ -292,9 +298,8 @@ const Addresses = () => {
   };
 
   const handleDeleteAddress = (id) => {
-    if (window.confirm("آیا از حذف این آدرس اطمینان دارید؟")) {
       dispatch(deleteAddressRequest(id));
-    }
+    
   };
 
   return (
