@@ -1,9 +1,8 @@
 import { IconButton, Tooltip } from "@mui/material";
 import { motion } from "framer-motion";
-import { Info, Minus, Plus, Trash2 } from "lucide-react";
-import { memo, useCallback, useEffect, useState } from "react";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import classes from "./CartItem.module.css";
@@ -13,7 +12,6 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
   const [quantity, setQuantity] = useState(productData.quantity || 1);
   const { t } = useTranslation();
   const lng = "fa";
-  const euro = 1000;
 
   useEffect(() => {
     setQuantity(productData.quantity);
@@ -42,9 +40,15 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
     }
   };
 
-  if (!productData) {
+  if (!productData || !productData.pricing) {
     return null;
   }
+
+  const { pricing } = productData;
+  const originalPrice = parseFloat(pricing.original_price);
+  const finalPrice = pricing.final_price;
+  const hasDiscount = pricing.has_discount;
+  const discountPercent = pricing.discount_percent;
 
   const productName =
     productData.product?.name || `${t("Product")} ${productData.id}`;
@@ -70,16 +74,34 @@ const CartItem = ({ data: productData, onQuantityUpdate, onRemoveItem }) => {
         >
           <h3 className={classes.productName}>{productName}</h3>
         </Link>
-        <p className={classes.itemPrice}>
-          {Math.round(productData.pricing?.final_price * euro).toLocaleString()}{" "}
-          {t("m_unit")}
-        </p>
+        <div className={classes.priceContainer}>
+          <div className={classes.priceWrapper}>
+            <p className={classes.itemPrice}>
+              {finalPrice.toLocaleString("fa-IR")}
+              <span className={classes.currency}>تومان</span>
+            </p>
+            {hasDiscount && (
+              <p className={classes.originalPrice}>
+                <del>{originalPrice.toLocaleString("fa-IR")}</del>
+              </p>
+            )}
+          </div>
+          {hasDiscount && (
+            <div className={classes.discountBadge}>{discountPercent}%</div>
+          )}
+        </div>
+        {hasDiscount && (
+          <div className={classes.profitBadge}>
+            سود شما: {(originalPrice - finalPrice).toLocaleString("fa-IR")}{" "}
+            تومان
+          </div>
+        )}
       </div>
 
       <div className={classes.actionsWrapper}>
         <p className={classes.totalPrice}>
-          {Math.round(productData.pricing?.total_price * euro).toLocaleString()}{" "}
-          {t("m_unit")}
+          {(finalPrice * quantity).toLocaleString("fa-IR")}
+          <span className={classes.currency}>تومان</span>
         </p>
         <div className={`${classes.quantityChanger}`}>
           <motion.button

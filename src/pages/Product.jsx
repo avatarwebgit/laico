@@ -29,6 +29,7 @@ import "swiper/css/thumbs";
 import { ReactComponent as Shop } from "../assets/svgs/add_basket-white.svg";
 import { ReactComponent as HeartRed } from "../assets/svgs/heart-red.svg";
 import { ReactComponent as Heart } from "../assets/svgs/heart.svg";
+import { ReactComponent as CompareIcon } from "../assets/svgs/chart.svg";
 import Arrowbutton from "../components/common/ArrowButton";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import Content from "../components/common/Content";
@@ -47,6 +48,7 @@ import {
   removeFavoriteRequest,
 } from "../redux/user/userActions";
 import { updateCartItemRequest } from "../redux/cart/cartActions";
+import { addToCompare } from "../redux/compare/compareActions";
 
 import { formatNumber, notify } from "../utils/helperFucntions";
 import img from "./../assets/images/photo_2025-04-13_11-44-04.jpg";
@@ -204,6 +206,12 @@ const Product = () => {
       setInitialSlide(mainSwiper.realIndex);
     }
     setIsGalleryOpen(true);
+  };
+
+  const handleAddToCompare = () => {
+    if (productDetails) {
+      dispatch(addToCompare(productDetails));
+    }
   };
 
   if (productDetailsLoading && !productDetails) {
@@ -399,18 +407,26 @@ const Product = () => {
                 </div>
               </div>
             </div>
-
-            <IconButton
-              className={classes.wish_list}
-              onClick={handleToggleFavorite}
-            >
-              {isFavorite ? (
-                <HeartRed width={15} height={15} />
-              ) : (
-                <Heart width={15} height={15} />
-              )}
-              <p>{t(isFavorite ? "product.remove" : "add_to_favorite")}</p>
-            </IconButton>
+            <div className={classes.actions_wrapper}>
+              <IconButton
+                className={classes.wish_list}
+                onClick={handleToggleFavorite}
+              >
+                {isFavorite ? (
+                  <HeartRed width={15} height={15} />
+                ) : (
+                  <Heart width={15} height={15} />
+                )}
+                <p>{t(isFavorite ? "product.remove" : "add_to_favorite")}</p>
+              </IconButton>
+              <IconButton
+                className={classes.compare_button}
+                onClick={handleAddToCompare}
+              >
+                <CompareIcon />
+                <p>مقایسه</p>
+              </IconButton>
+            </div>
 
             <Button
               variant="contained"

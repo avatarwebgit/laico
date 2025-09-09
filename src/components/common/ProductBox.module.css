@@ -321,15 +321,35 @@
   .main:hover .image-wrapper img {
     transform: none;
   }
-  .main:hover .image-wrapper::after {
-    opacity: 0;
+  .main .image-wrapper::after {
+    opacity: 1;
   }
   .main:hover .productTitle {
     color: var(--font-color-1);
   }
 
   .button-wrapper {
-    display: none;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    z-index: 4;
+    gap: 4px;
+  }
+  .icon-button {
+    margin: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .icon-button svg {
+    width: 1rem;
+    height: 1rem;
   }
 
   .metaWrapper {

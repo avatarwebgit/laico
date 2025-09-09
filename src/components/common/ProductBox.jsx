@@ -12,6 +12,8 @@ import { ReactComponent as Chart } from "../../assets/svgs/chart.svg";
 import { ReactComponent as Eye } from "../../assets/svgs/eye.svg";
 import { ReactComponent as Heart } from "../../assets/svgs/heart.svg";
 import { ReactComponent as RedHeart } from "../../assets/svgs/red-heart.svg";
+import { addToCompare } from "../../redux/compare/compareActions";
+import { useIsVertical } from "../../hooks/useIsVertical";
 
 import classes from "./ProductBox.module.css";
 
@@ -33,6 +35,7 @@ const mockProduct = {
 const ProductBox = ({ product = mockProduct }) => {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
+  const isMobile = useIsVertical();
 
   const {
     id,
@@ -65,6 +68,10 @@ const ProductBox = ({ product = mockProduct }) => {
         quantity: 1,
       })
     );
+  };
+
+  const handleAddToCompare = () => {
+    dispatch(addToCompare(product));
   };
 
   const renderStars = () => {
@@ -112,14 +119,14 @@ const ProductBox = ({ product = mockProduct }) => {
       )}
 
       <div className={classes["image-wrapper"]}>
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${product.id}/${product.variationId}`}>
           <img src={imageUrl} alt={name} />
         </Link>
         <div className={classes["button-wrapper"]}>
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered ? "containerHover" : "visible"}
+            animate={isHovered || isMobile ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0 }}
           >
             <IconButton className={classes["icon-button"]} disableRipple>
@@ -130,7 +137,7 @@ const ProductBox = ({ product = mockProduct }) => {
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered ? "containerHover" : "visible"}
+            animate={isHovered || isMobile ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0.1 }}
           >
             <IconButton className={classes["icon-button"]} disableRipple>
@@ -141,10 +148,14 @@ const ProductBox = ({ product = mockProduct }) => {
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered ? "containerHover" : "visible"}
+            animate={isHovered || isMobile ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0.2 }}
           >
-            <IconButton className={classes["icon-button"]} disableRipple>
+            <IconButton
+              className={classes["icon-button"]}
+              disableRipple
+              onClick={handleAddToCompare}
+            >
               <Chart />
             </IconButton>
           </motion.div>

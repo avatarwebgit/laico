@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useIsVertical = () => {
- const [isVertical, setIsVertical] = useState(false);
+  const [isVertical, setIsVertical] = useState(false);
 
- useEffect(() => {
-  // Ensure window is available (for SSR)
-  if (typeof window === 'undefined') return;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  const handleResize = () => {
-   setIsVertical(window.innerWidth < window.innerHeight);
-  };
+    const handleResize = () => {
+      setIsVertical(window.innerWidth <= 768);
+    };
 
-  // Set initial value
-  handleResize();
+    handleResize();
 
-  // Add event listener
-  window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-  // Cleanup
-  return () => window.removeEventListener('resize', handleResize);
- }, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
- return isVertical;
+  return isVertical;
 };

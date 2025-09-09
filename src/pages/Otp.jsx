@@ -192,6 +192,13 @@ const Otp = () => {
           </motion.form>
           <motion.div
             variants={itemVariants}
+            className={styles.linkContainer}
+          >
+            <p>شماره موبایل را اشتباه وارد کردید؟</p>
+            <Link to={"/login-with-mobile"}>تصحیح کنید</Link>
+          </motion.div>
+          <motion.div
+            variants={itemVariants}
             className={styles.footer}
           ></motion.div>
         </motion.div>

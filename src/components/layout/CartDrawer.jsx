@@ -57,7 +57,8 @@ const CartDrawer = () => {
   };
 
   useEffect(() => {
-    if (drawerState && token) {
+    const cartToken = localStorage.getItem("cartToken");
+    if (drawerState && (token || cartToken)) {
       dispatch(cartActions.fetchCartRequest());
     }
   }, [drawerState, dispatch, token]);
@@ -215,8 +216,8 @@ const CartDrawer = () => {
                     className={classes.checkoutButton}
                     onClick={toggleDrawer}
                   >
-                    <CreditCard size={18} />
-                    {t("drawer.checkout")}
+                    <Lock size={18} />
+                    {t("drawer.login_to_continue")}
                   </Link>
                 )}
               </footer>

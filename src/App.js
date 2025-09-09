@@ -11,13 +11,14 @@ import Footer from "./components/layout/HorizontalLayout/Footer";
 import Header from "./components/layout/HorizontalLayout/Header";
 import FixedNavigation from "./components/layout/VerticalLayout/FixedNavigation";
 import MobileHeader from "./components/layout/VerticalLayout/Header";
+import CompareBar from "./components/layout/CompareBar";
 
-import "./App.css";
-import DeleteModal from "./components/common/DeleteModal";
-import ParallaxBackground from "./components/common/ParallaxBackground";
-import TitleManager from "./utils/TitleManager";
-import Authmiddleware from "./routes/authMiddleware";
 import { ToastContainer } from "react-toastify";
+import "./App.css";
+import InfoModal from "./components/common/InfoModal";
+import ParallaxBackground from "./components/common/ParallaxBackground";
+import Authmiddleware from "./routes/authMiddleware";
+import TitleManager from "./utils/TitleManager";
 function App() {
   const isVertical = useIsVertical();
   const location = useLocation();
@@ -54,12 +55,13 @@ function App() {
           );
         })}
       </Routes>
-      <DeleteModal />
+      <InfoModal />
       <CartDrawer />
       <FavoritesDrawer />
+      <CompareBar />
       <ParallaxBackground />
       <TitleManager />
-      <ToastContainer />
+      <ToastContainer position="top-left" />
 
       {shouldHideLayout && <Footer />}
     </Suspense>

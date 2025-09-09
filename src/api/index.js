@@ -13,11 +13,17 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.getItem("authToken");
-    if (authToken) {
-      const token = JSON.parse(authToken);
+    const authTokenString = localStorage.getItem("authToken");
+
+    if (authTokenString) {
+      const token = JSON.parse(authTokenString);
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+      }
+    } else {
+      const cartToken = localStorage.getItem("cartToken");
+      if (cartToken && config.url.includes("/cart")) {
+        config.headers["cart_token"] = cartToken;
       }
     }
     return config;
@@ -34,6 +40,7 @@ api.interceptors.response.use(
         localStorage.setItem("redirectAfterLogin", currentPath);
       }
       localStorage.removeItem("authToken");
+      localStorage.removeItem("cartToken");
       window.location.href = "/login";
     }
     return Promise.reject(error.response?.data || error.message);

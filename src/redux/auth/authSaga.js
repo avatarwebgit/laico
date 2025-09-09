@@ -1,6 +1,7 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import * as actionTypes from "./authActionTypes";
 import * as actions from "./authActions";
+import * as cartActionTypes from "../cart/cartActionTypes";
 import api from "../../api/auth";
 import { notify } from "../../utils/helperFucntions";
 
@@ -8,7 +9,8 @@ function* loginSaga(action) {
   try {
     const response = yield call(api.login, action.payload);
     yield put(actions.loginSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.data.token));
+    localStorage.setItem("authToken", JSON.stringify(response.token));
+    localStorage.removeItem("cartToken");
     notify("ورود با موفقیت انجام شد", "success");
   } catch (error) {
     yield put(actions.loginFailure(error.message));
@@ -20,7 +22,8 @@ function* registerSaga(action) {
   try {
     const response = yield call(api.register, action.payload);
     yield put(actions.registerSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.data.token));
+    localStorage.setItem("authToken", JSON.stringify(response.token));
+    localStorage.removeItem("cartToken");
     notify("ثبت نام با موفقیت انجام شد", "success");
   } catch (error) {
     yield put(actions.registerFailure(error.message));
@@ -33,6 +36,8 @@ function* logoutSaga() {
     // yield call(api.logout);
     yield put(actions.logoutSuccess());
     localStorage.removeItem("authToken");
+    localStorage.removeItem("cartToken");
+    yield put({ type: cartActionTypes.CLEAR_CART });
     notify("خروج با موفقیت انجام شد", "success");
   } catch (error) {
     yield put(actions.logoutFailure(error.message));
@@ -57,7 +62,9 @@ function* verifyOtpSaga(action) {
     const { cellphone, otp } = action.payload;
     const response = yield call(api.verifyOtp, cellphone, otp);
     yield put(actions.loginSuccess(response.data));
+
     localStorage.setItem("authToken", JSON.stringify(response.data.token));
+    localStorage.removeItem("cartToken");
     notify("ورود با موفقیت انجام شد", "success");
   } catch (error) {
     yield put(actions.loginFailure(error.message || "Invalid OTP"));

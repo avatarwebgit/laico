@@ -8,6 +8,7 @@ import { authSaga } from "./auth/authSaga";
 import { drawerSaga } from "./drawer/drawerSaga";
 import { blogSaga } from "./blogs/blogSaga";
 import { modalSaga } from "./modal/modalSaga";
+import { compareSaga } from "./compare/compareSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     drawerSaga(),
     blogSaga(),
     modalSaga(),
+    compareSaga(),
   ]);
 }

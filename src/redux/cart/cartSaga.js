@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import api from "../../api/cart";
 import { notify } from "../../utils/helperFucntions";
 import { openCartDrawer } from "../drawer/drawerActions";
@@ -23,49 +23,72 @@ function* addToCartSaga(action) {
     if (variation_id) {
       cartData.variation_id = variation_id;
     }
-    yield call(api.updateCart, cartData);
-    const response = yield call(api.getCart);
+
+    const isAuthenticated = yield select((state) => state.auth.isAuthenticated);
+
+    notify("در حال افزودن به سبد خرید...", "info");
+
+    const response = yield call(api.addToCart, cartData);
+
+    if (!isAuthenticated && response.data && response.data.cart_token) {
+      const existingCartToken = localStorage.getItem("cartToken");
+      if (!existingCartToken) {
+        localStorage.setItem("cartToken", response.data.cart_token);
+      }
+    }
+
+    const updatedCart = yield call(api.getCart);
     yield put(
-      actions.fetchCartSuccess(response.data || { items: [], summary: null })
+      actions.fetchCartSuccess(updatedCart.data || { items: [], summary: null })
     );
     yield put(openCartDrawer());
     notify("محصول به سبد خرید اضافه شد", "success");
   } catch (error) {
-    yield put(actions.addToCartFailure(error.message));
-    notify("خطا در افزودن به سبد خرید", "error");
+    const errorMessage = error.message || "خطا در افزودن به سبد خرید";
+    yield put(actions.addToCartFailure(errorMessage));
+    notify(errorMessage, "error");
   }
 }
 
 function* updateCartItemSaga(action) {
   try {
     const { cartId, quantity } = action.payload;
-    yield call(api.updateCartItem, cartId, { quantity });
+    const promise = api.updateCartItem(cartId, { quantity });
+    yield call(() =>
+      notify.promise(promise, {
+        pending: "در حال بروزرسانی سبد خرید...",
+        success: "سبد خرید با موفقیت بروزرسانی شد",
+        error: "خطا در بروزرسانی سبد خرید",
+      })
+    );
+
     const response = yield call(api.getCart);
     yield put(
-      actions.updateCartItemSuccess(
-        response.data || { items: [], summary: null }
-      )
+      actions.updateCartItemSuccess(response || { items: [], summary: null })
     );
-    notify("سبد خرید با موفقیت بروزرسانی شد", "success");
   } catch (error) {
     yield put(actions.updateCartItemFailure(error.message));
-    notify("خطا در بروزرسانی سبد خرید", "error");
   }
 }
 
 function* removeFromCartSaga(action) {
   try {
-    yield call(api.removeFromCart, action.payload);
+    const promise = api.removeFromCart(action.payload);
+    yield call(() =>
+      notify.promise(promise, {
+        pending: "در حال حذف از سبد خرید...",
+        success: "محصول از سبد خرید حذف شد",
+        error: "خطا در حذف محصول",
+      })
+    );
     const response = yield call(api.getCart);
     yield put(
       actions.removeFromCartSuccess(
         response.data || { items: [], summary: null }
       )
     );
-    notify("محصول از سبد خرید حذف شد.", "success");
   } catch (error) {
     yield put(actions.removeFromCartFailure(error.message));
-    notify("خطا در حذف محصول.", "error");
   }
 }
 

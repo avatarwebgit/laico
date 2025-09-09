@@ -18,17 +18,18 @@ const Contact = lazy(() => import("../pages/Contact"));
 const About = lazy(() => import("../pages/About"));
 const FAQ = lazy(() => import("../pages/FAQ"));
 const NotFound = lazy(() => import("../pages/404"));
+const Compare = lazy(() => import("../pages/Compare"));
 
 export const publicRoutes = [
   { path: "/", element: <Home />, name: "صفحه اصلی" },
-
-  { path: "/product/:slug", element: <Product />, name: "محصول" },
+  { path: "/product/:slug/:variation", element: <Product />, name: "محصول" },
   { path: "/blogs", element: <Blogs />, name: "وبلاگ" },
-  { path: "/blogs/:slug", element: <BlogPost />, name: "مقاله" },
+  { path: "/blogs/:id", element: <BlogPost />, name: "مقاله" },
   { path: "/category", element: <Category />, name: "دسته بندی" },
   { path: "/about-us", element: <About />, name: "درباره ما" },
   { path: "/contact-us", element: <Contact />, name: "تماس با ما" },
   { path: "/FAQ", element: <FAQ />, name: "سوالات متداول" },
+  { path: "/compare", element: <Compare />, name: "محصول مقایسه" },
   { path: "/*", element: <NotFound />, name: "صفحه پیدا نشد" },
 ];
 

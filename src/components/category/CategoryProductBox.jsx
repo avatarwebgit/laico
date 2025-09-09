@@ -1,11 +1,15 @@
-import { Tooltip } from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Star, Eye } from "lucide-react";
 import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import ImagePixelated from "../common/ImagePixelated";
 import classes from "./CategoryProductBox.module.css";
+import { ReactComponent as CompareIcon } from "../../assets/svgs/chart.svg";
+import { addToCompare } from "../../redux/compare/compareActions";
 
 const CategoryProductBox = ({ product }) => {
+  const dispatch = useDispatch();
   const {
     imageUrl,
     name,
@@ -23,6 +27,12 @@ const CategoryProductBox = ({ product }) => {
     originalPrice && price < originalPrice
       ? Math.round(((originalPrice - price) / originalPrice) * 100)
       : 0;
+
+  const handleAddToCompare = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(addToCompare(product));
+  };
 
   const renderStars = () => {
     if (typeof rating !== "number" || rating < 0) return null;
@@ -101,6 +111,16 @@ const CategoryProductBox = ({ product }) => {
     >
       <div className={classes["img-wrapper"]}>
         <ImagePixelated src={imageUrl} alt={name} />
+        <div className={classes.overlayActions}>
+          <Tooltip title="مقایسه">
+            <IconButton
+              className={classes.actionButton}
+              onClick={handleAddToCompare}
+            >
+              <CompareIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
       <div className={classes["content-wrapper"]}>
         <div className={classes.metaWrapper}>

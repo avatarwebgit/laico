@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CheckCircle, XCircle, Info } from "lucide-react"; // any icon lib
+import { CheckCircle, XCircle, Info, Loader } from "lucide-react"; // any icon lib
 
 export const toPersianNumber = (num) => {
   const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
@@ -37,10 +37,10 @@ export function formatNumber(amount, currency = "toman") {
   );
 }
 
-export const notify = (message, type = "info") => {
+const notifyFn = (message, type = "info") => {
   const baseOptions = {
     style: { fontSize: "12px" },
-    icon: null, 
+    icon: null,
   };
 
   if (type === "success") {
@@ -67,6 +67,43 @@ export const notify = (message, type = "info") => {
   // fallback
   return toast(message, baseOptions);
 };
+
+notifyFn.promise = (promise, { pending, success, error }) => {
+  const baseOptions = {
+    style: { fontSize: "12px" },
+  };
+
+  return toast.promise(
+    promise,
+    {
+      pending: {
+        render() {
+          return pending;
+        },
+        icon: <Loader size={18} color="blue" className="spin" />,
+      },
+      success: {
+        render({ data }) {
+          return typeof success === "function" ? success(data) : success;
+        },
+        icon: <CheckCircle size={18} color="green" />,
+      },
+      error: {
+        render({ data }) {
+          const errorMessage =
+            data?.message || (typeof data === "string" ? data : error);
+          return typeof error === "function"
+            ? error(errorMessage)
+            : errorMessage;
+        },
+        icon: <XCircle size={18} color="red" />,
+      },
+    },
+    baseOptions
+  );
+};
+
+export const notify = notifyFn;
 
 export const useNavigation = () => {
   const navigate = useNavigate();

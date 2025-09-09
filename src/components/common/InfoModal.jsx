@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, TriangleAlert } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { TriangleAlert } from "lucide-react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./DeleteModal.module.css";
-import Spinner from "./Spinner";
 import {
   closeDeleteModal,
   confirmDeleteAction,
 } from "../../redux/modal/modalActions";
+import styles from "./InfoModal.module.css";
+import Spinner from "./Spinner";
 
-const DeleteModal = () => {
+const InfoModal = () => {
   const dispatch = useDispatch();
   const { isOpen, title, message, isLoading } = useSelector(
     (state) => state.modal
@@ -100,4 +100,4 @@ const DeleteModal = () => {
   );
 };
 
-export default DeleteModal;
+export default InfoModal;

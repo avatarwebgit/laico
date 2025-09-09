@@ -21,6 +21,7 @@ export default {
   CART: {
     BASE: () => `${API_BASE}/cart`,
     ITEM: (cartId) => `${API_BASE}/cart/${cartId}`,
+    APPLY_COUPON: () => `${API_BASE}/cart/coupon`,
   },
 
   USER: {

@@ -1,0 +1,125 @@
+.container {
+    padding: 2rem 0;
+    min-height: 80vh;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--main-color-1);
+    margin-bottom: 2.5rem;
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-md);
+}
+
+.compareTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.compareTable th, .compareTable td {
+    padding: 1rem 1.25rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.compareTable thead th {
+    background-color: var(--base-bg);
+    vertical-align: top;
+    padding-top: 1.5rem;
+}
+
+.compareTable thead th:first-child {
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--base-bg);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.compareTable tbody td:first-child {
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--base-bg);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.compareTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.compareTable tbody tr:nth-child(even) {
+    background-color: var(--base-bg);
+}
+
+.productHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.productHeader img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+}
+
+.productHeader h3 {
+    font-size: var(--normal-font);
+    font-weight: 600;
+    min-height: 40px;
+}
+
+.productHeader button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.productHeader button:hover {
+    background-color: var(--status-cancelled-bg);
+    color: var(--status-cancelled-text);
+    border-color: var(--status-cancelled-text);
+}
+
+.emptyState {
+    text-align: center;
+    padding: 5rem 1rem;
+}
+
+.emptyState h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.backButton {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+}

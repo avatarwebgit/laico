@@ -118,7 +118,6 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin-top: 0.5rem !important;
 }
 
 .wish_list p {
@@ -326,6 +325,30 @@
 
 .swiper {
   min-height: 550px;
+}
+
+.actions_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem !important;
+}
+
+.compare_button {
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.compare_button p {
+  font-size: 0.5rem !important;
+  margin: 0 5px;
+}
+
+.compare_button svg {
+  width: 15px;
+  height: 15px;
 }
 
 @media (max-width: 768px) {

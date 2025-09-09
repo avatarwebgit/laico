@@ -16,3 +16,13 @@ h6 {
 .dn {
   visibility: hidden;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}

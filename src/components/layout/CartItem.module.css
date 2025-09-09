@@ -1,3 +1,4 @@
+
 .main {
  width: 100%;
  display: flex;
@@ -55,14 +56,12 @@
  margin: 0;
 }
 
-.productAttributes,
-.itemPrice {
- font-size: var(--normal-font);
- color: var(--text-color-secondary);
-}
-
 .itemPrice {
  font-weight: 500;
+ display: flex;
+ align-items: baseline;
+ font-size: var(--normal-font);
+ color: var(--text-color-primary);
 }
 
 .actionsWrapper {
@@ -122,6 +121,9 @@
  font-size: var(--normal-font);
  color: var(--text-color-primary);
  white-space: nowrap;
+ font-weight: 600;
+ display: flex;
+ align-items: baseline;
 }
 
 .deleteAction {
@@ -162,6 +164,50 @@
  inset-inline-end: 1rem;
 }
 
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.priceWrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.originalPrice {
+  font-size: 0.8rem;
+  color: var(--text-color-secondary);
+}
+
+.discountBadge {
+  background-color: var(--danger-color);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.profitBadge {
+  background-color: #e0f2f1;
+  color: #00796b;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+.currency {
+    font-size: 0.7rem;
+    margin-right: 4px;
+}
+
 @media (max-width: 420px) {
  .main {
   padding: 0.75rem;
@@ -177,7 +223,6 @@
  .productName {
   font-size: var(--normal-font);
  }
- .productAttributes,
  .itemPrice,
  .totalPrice {
   font-size: var(--normal-font);

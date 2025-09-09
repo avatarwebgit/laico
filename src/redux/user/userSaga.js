@@ -46,7 +46,7 @@ function* addAddressSaga(action) {
       return;
     }
     const response = yield call(api.addAddress, action.payload);
-    yield put(actions.addAddressSuccess(action.payload));
+    yield put(actions.addAddressSuccess(response.data));
     notify("آدرس با موفقیت اضافه شد", "success");
   } catch (error) {
     yield put(actions.addAddressFailure("خطا در اضافه کردن آدرس"));

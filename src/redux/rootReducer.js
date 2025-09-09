@@ -9,6 +9,7 @@ import userReducer from "./user/userReducer";
 import drawerReducer from "./drawer/drawerReducer";
 import blogReducer from "./blogs/blogReducer";
 import modalReducer from "./modal/modalReducer";
+import compareReducer from "./compare/compareReducer";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   drawer: drawerReducer,
   blogs: blogReducer,
   modal: modalReducer,
+  compare: compareReducer,
 });
 
 export default rootReducer;
