@@ -2,79 +2,146 @@
   position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
   width: 90%;
+  max-width: 900px;
   background: rgba(30, 41, 59, 0.9);
   backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-  z-index: 1001; 
+  z-index: 1001;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
   color: #fff;
+  padding: 0;
+  transform: translate(-50%, 0);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border-top: 1px solid #fff;
+}
+
+.compareBar.collapsed {
+  transform: translate(-50%, calc(100% - 60px));
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  height: 60px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.collapseButton {
+  position: absolute;
+  top: 0%;
+  left: 15px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.collapseButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.chevron {
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chevron.collapsed {
+  transform: rotate(180deg);
+}
+
+.itemsContainerWrapper {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.4s ease-in-out, padding 0.4s ease-in-out;
+}
+
+.itemsContainerWrapper.collapsed {
+  grid-template-rows: 0fr;
+  padding-bottom: 0;
 }
 
 .itemsContainer {
-  display: flex;
+  min-height: 0; /* Necessary for grid animation */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.75rem;
-  flex-grow: 1;
+  width: 100%;
+  padding: 0 1rem 1rem;
 }
 
 .item {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background-color: rgba(255, 255, 255, 0.1);
   padding: 0.5rem;
   border-radius: 8px;
-  width: 150px;
+  min-height: 110px;
+  text-align: center;
 }
 
 .placeholder {
   border: 2px dashed rgba(255, 255, 255, 0.2);
   background: transparent;
-  align-items: center;
-  justify-content: center;
   font-size: 2rem;
   color: rgba(255, 255, 255, 0.3);
 }
 
 .itemImage {
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   border-radius: 6px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .itemName {
-  font-size: var(--normal-font);
+  font-size: 12px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-grow: 1;
 }
 
 .removeItemButton {
   position: absolute;
-  top: -8px;
-  left: -8px;
+  top: 0;
+  left: 0;
   background-color: #ef4444;
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 5px;
   width: 20px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .actionsContainer {
@@ -94,6 +161,7 @@
   font-weight: 600;
   transition: all 0.2s ease;
   white-space: nowrap;
+  font-size: var(--normal-font);
 }
 
 .compareButton {
@@ -118,30 +186,106 @@
 
 @media (max-width: 768px) {
   .compareBar {
-    width: 100%;
-    max-width: none;
+    width: 120px;
+    height: auto;
+    max-height: 70vh;
+    top: 50%;
     left: 0;
-    transform: none;
-    border-radius: 0;
-    bottom: 3rem; 
+    bottom: auto;
+    border-radius: 0 16px 16px 0;
+    flex-direction: column;
+    padding: 0.5rem;
+    transform: translateY(-50%) translateX(0);
+    border-left: 1px solid #fff;
+  }
+
+  .compareBar.collapsed {
+    transform: translateY(-50%) translateX(-100%);
+  }
+
+  .header {
+    padding: 0;
+    height: auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .collapseButton {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 70px;
+    padding: 0;
+    background: rgba(30, 41, 59, 0.9);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 8px 8px 0;
+    display: unset;
+  }
+
+  .chevron {
+    transform: rotate(90deg);
+  }
+
+  .chevron.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .actionsContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .actionButton {
+    width: 100%;
+    justify-content: center;
     padding: 0.75rem;
   }
-  .itemsContainer {
-    overflow-x: auto;
+
+  .actionButton span,
+  .clearText {
+    /* display: none; */
+  }
+
+  .itemsContainerWrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 0.5rem;
+  }
+
+  .itemsContainerWrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .itemsContainerWrapper {
+    -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .itemsContainer::-webkit-scrollbar {
-    display: none;
+
+  .itemsContainer {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 0.5rem;
   }
-  .itemName, .clearButton span {
-    display: none;
-  }
+
   .item {
-    width: auto;
-    padding: 0.5rem;
+    min-height: auto;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .placeholder {
-    width: 56px;
-    height: 56px;
+
+  .itemImage {
+    width: 48px;
+    height: 48px;
+  }
+
+  .itemName {
+    display: block;
+    font-size: 10px;
+    white-space: normal;
+    word-break: break-word;
   }
 }

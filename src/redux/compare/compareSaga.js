@@ -13,8 +13,8 @@ function* handleAddToCompare(action) {
     return;
   }
 
-  if (items.length >= 4) {
-    yield call(notify, "لیست مقایسه پر است. حداکثر ۴ محصول.", "error");
+  if (items.length >= 6) {
+    yield call(notify, "لیست مقایسه پر است. حداکثر ۶ محصول.", "error");
     return;
   }
 

@@ -56,6 +56,12 @@ const FixedNavigation = () => {
         <Badge
           badgeContent={favoritesCount || 0}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          sx={{
+            "& .MuiBadge-badge": {
+              backgroundColor: "rgba(255, 255, 255, 9)",
+              color: "black",
+            },
+          }}
         >
           <Heart className={classes.svg} />
         </Badge>
@@ -64,6 +70,12 @@ const FixedNavigation = () => {
         <Badge
           badgeContent={cart?.products.length || 0}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          sx={{
+            "& .MuiBadge-badge": {
+              backgroundColor: "rgba(255, 255, 255, 9)",
+              color: "black",
+            },
+          }}
         >
           <ShoppingCart className={classes.svg} />
         </Badge>

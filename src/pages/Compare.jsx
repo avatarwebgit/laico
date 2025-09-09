@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { motion } from "framer-motion";
-import { Trash2 } from "lucide-react";
+import { Trash2, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Content from "../components/common/Content";
 import { removeFromCompare } from "../redux/compare/compareActions";
@@ -18,38 +17,46 @@ const Compare = () => {
     { key: "category", name: "دسته بندی" },
     { key: "sales", name: "تعداد فروش" },
     { key: "deliveryTime", name: "زمان تحویل (روز)" },
-    { key: "isFeatured", name: "ویژه" },
+    { key: "isFeatured", name: "محصول ویژه" },
     { key: "isOutOfStock", name: "وضعیت موجودی" },
+    { key: "totalViews", name: "تعداد بازدید" },
   ];
 
   const formatValue = (item, key) => {
-    const value = item[key];
+    const value = item[key] || (item.product ? item.product[key] : undefined);
+
+    if (value === undefined || value === null) return "-";
+
     switch (key) {
       case "price":
         const price = item.finalPrice || item.price;
-        return `${price.toLocaleString("fa-IR")} تومان`;
-      case "originalPrice":
-        return `${value.toLocaleString("fa-IR")} تومان`;
+        return price ? `${price.toLocaleString("fa-IR")} تومان` : "-";
       case "isFeatured":
+        return value ? "بله" : "خیر";
       case "isOutOfStock":
-        return value ? "خیر" : "بله";
+        return value ? "ناموجود" : "موجود";
       case "rating":
       case "sales":
       case "deliveryTime":
-      case "views":
-        return value ? value.toLocaleString("fa-IR") : "-";
+      case "totalViews":
+        return value.toLocaleString("fa-IR");
       default:
-        return value || "-";
+        return value;
     }
   };
 
   if (items.length === 0) {
     return (
-      <Content>
+      <Content sectionClassname={styles.container}>
         <div className={styles.emptyState}>
           <h2>هیچ محصولی برای مقایسه انتخاب نشده است.</h2>
+          <p>
+            برای شروع، محصولات مورد نظر خود را از صفحات فروشگاه به لیست مقایسه
+            اضافه کنید.
+          </p>
           <Link to="/category" className={styles.backButton}>
-            بازگشت به فروشگاه
+            <ShoppingCart size={18} />
+            <span>بازگشت به فروشگاه</span>
           </Link>
         </div>
       </Content>
@@ -57,44 +64,57 @@ const Compare = () => {
   }
 
   return (
-    <Content sectionClassname={styles.container}>
-      <h1 className={styles.title}>مقایسه محصولات</h1>
-      <div className={styles.tableContainer}>
-        <table className={styles.compareTable}>
-          <thead>
-            <tr>
-              <th>ویژگی</th>
-              {items.map((item) => (
-                <th key={item.id}>
-                  <div className={styles.productHeader}>
-                    <img
-                      src={item.imageUrl || item.primary_image}
-                      alt={item.name}
-                    />
-                    <h3>{item.name}</h3>
-                    <button
-                      onClick={() => dispatch(removeFromCompare(item.id))}
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
+    <div className={styles.pageWrapper}>
+      <Content sectionClassname={styles.container}>
+        <h1 className={styles.title}>مقایسه محصولات</h1>
+        <div className={styles.tableWrapper}>
+          <table className={styles.compareTable}>
+            <thead>
+              <tr>
+                <th className={`${styles.stickyColumn} ${styles.headerCell}`}>
+                  ویژگی
                 </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {attributes.map((attr) => (
-              <tr key={attr.key}>
-                <td>{attr.name}</td>
                 {items.map((item) => (
-                  <td key={item.id}>{formatValue(item, attr.key)}</td>
+                  <th key={item.id} className={styles.headerCell}>
+                    <div className={styles.productHeader}>
+                      <img
+                        src={item.imageUrl || item.primary_image}
+                        alt={item.name}
+                      />
+                      <h3>{item.name}</h3>
+                      <button
+                        className={styles.removeButton}
+                        onClick={() => dispatch(removeFromCompare(item.id))}
+                        aria-label={`حذف ${item.name}`}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Content>
+            </thead>
+            <tbody>
+              {attributes.map((attr) => (
+                <tr key={attr.key}>
+                  <th
+                    scope="row"
+                    className={`${styles.attributeCell} ${styles.stickyColumn}`}
+                  >
+                    {attr.name}
+                  </th>
+                  {items.map((item) => (
+                    <td key={`${item.id}-${attr.key}`}>
+                      {formatValue(item, attr.key)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Content>
+    </div>
   );
 };
 

@@ -1,11 +1,11 @@
 import { Tooltip, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Star, Eye } from "lucide-react";
+import { Star, Eye, Layers2 } from "lucide-react"; // Changed icon
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import ImagePixelated from "../common/ImagePixelated";
 import classes from "./CategoryProductBox.module.css";
-import { ReactComponent as CompareIcon } from "../../assets/svgs/chart.svg";
+// import { ReactComponent as CompareIcon } from "../../assets/svgs/chart.svg"; // Removed
 import { addToCompare } from "../../redux/compare/compareActions";
 
 const CategoryProductBox = ({ product }) => {
@@ -117,7 +117,7 @@ const CategoryProductBox = ({ product }) => {
               className={classes.actionButton}
               onClick={handleAddToCompare}
             >
-              <CompareIcon />
+              <Layers2 />
             </IconButton>
           </Tooltip>
         </div>

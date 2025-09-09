@@ -13,7 +13,6 @@ import { ReactComponent as Eye } from "../../assets/svgs/eye.svg";
 import { ReactComponent as Heart } from "../../assets/svgs/heart.svg";
 import { ReactComponent as RedHeart } from "../../assets/svgs/red-heart.svg";
 import { addToCompare } from "../../redux/compare/compareActions";
-import { useIsVertical } from "../../hooks/useIsVertical";
 
 import classes from "./ProductBox.module.css";
 
@@ -35,7 +34,6 @@ const mockProduct = {
 const ProductBox = ({ product = mockProduct }) => {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
-  const isMobile = useIsVertical();
 
   const {
     id,
@@ -126,7 +124,7 @@ const ProductBox = ({ product = mockProduct }) => {
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered || isMobile ? "containerHover" : "visible"}
+            animate={isHovered ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0 }}
           >
             <IconButton className={classes["icon-button"]} disableRipple>
@@ -137,7 +135,7 @@ const ProductBox = ({ product = mockProduct }) => {
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered || isMobile ? "containerHover" : "visible"}
+            animate={isHovered ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0.1 }}
           >
             <IconButton className={classes["icon-button"]} disableRipple>
@@ -148,7 +146,7 @@ const ProductBox = ({ product = mockProduct }) => {
           <motion.div
             initial={{ x: -100 }}
             variants={buttonVariants}
-            animate={isHovered || isMobile ? "containerHover" : "visible"}
+            animate={isHovered ? "containerHover" : "visible"}
             transition={{ type: "tween", duration: 0.25, delay: 0.2 }}
           >
             <IconButton

@@ -2,7 +2,7 @@ const API_BASE = "/api/v1";
 
 export default {
   AUTH: {
-    LOGIN: () => `${API_BASE}/auth/login`,
+    LOGIN: () => `${API_BASE}/verify-password`,
     REGISTER: () => `${API_BASE}/auth/register`,
     LOGOUT: () => `${API_BASE}/auth/logout`,
     ME: () => `${API_BASE}/auth/me`,

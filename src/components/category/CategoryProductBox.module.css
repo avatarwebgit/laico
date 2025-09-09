@@ -34,7 +34,6 @@
 }
 
 .caption {
-  width: 250px;
   height: 50px;
   display: block;
   overflow: hidden;
@@ -250,4 +249,22 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+}
+
+.overlayActions {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: fit-content !important;
+  height: fit-content !important;
+  border-radius: 50%;
+}
+
+.actionButton {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and(max-width:768px) {
 }

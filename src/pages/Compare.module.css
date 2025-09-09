@@ -1,125 +1,201 @@
+.pageWrapper {
+  background-color: #f8f8f8;
+}
+
 .container {
-    padding: 2rem 0;
-    min-height: 80vh;
+  padding: 2.5rem 1rem;
 }
 
 .title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--main-color-1);
-    margin-bottom: 2.5rem;
+  text-align: center;
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 2.5rem;
 }
 
-.tableContainer {
-    width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    background: var(--card-bg);
-    box-shadow: var(--shadow-md);
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #a0a0a0;
+}
+
+/* Custom Scrollbar */
+.tableWrapper::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.tableWrapper::-webkit-scrollbar-track {
+  background: #cccccc;
+  border-radius: var(--radius-lg);
+}
+.tableWrapper::-webkit-scrollbar-thumb {
+  background: #a0a0a0;
+  border-radius: 8px;
+}
+.tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
 }
 
 .compareTable {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px;
+  width: 100%;
+  min-width: 800px;
+  border-collapse: separate; /* Changed to separate for sticky header */
+  border-spacing: 0;
+  table-layout: fixed;
 }
 
-.compareTable th, .compareTable td {
-    padding: 1rem 1.25rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
+.compareTable th,
+.compareTable td {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #a0a0a0;
+  border-left: 1px solid #a0a0a0;
+  background-color: #8f8f8f;
+  color: white;
+  transition: background-color 0.2s ease;
+  font-size: var(--normal-font);
 }
 
+.compareTable th:first-child,
+.compareTable td:first-child {
+  border-right: 1px solid #a0a0a0;
+}
+
+.compareTable tbody tr:hover th,
+.compareTable tbody tr:hover td {
+  background-color: #7a7a7a; /* Darken on row hover */
+}
+
+.headerCell {
+  vertical-align: top;
+  padding: 1rem;
+  min-width: 220px;
+}
+
+/* --- STICKY STYLES --- */
 .compareTable thead th {
-    background-color: var(--base-bg);
-    vertical-align: top;
-    padding-top: 1.5rem;
+  position: sticky;
+  top: 90px;
+  z-index: 10;
+  background-color: #858585; /* Slightly different bg to stand out */
 }
 
-.compareTable thead th:first-child {
-    text-align: right;
-    font-weight: 600;
-    color: var(--text-secondary);
-    background: var(--base-bg);
-    position: sticky;
-    left: 0;
-    z-index: 1;
+.stickyColumn {
+  position: sticky;
+  right: 0;
+  z-index: 5;
 }
 
-.compareTable tbody td:first-child {
-    text-align: right;
-    font-weight: 600;
-    color: var(--text-primary);
-    background-color: var(--base-bg);
-    position: sticky;
-    left: 0;
-    z-index: 1;
+.compareTable thead th.stickyColumn {
+  z-index: 15; /* Top-right corner must be on top of all */
 }
 
-.compareTable tbody tr:last-child td {
-    border-bottom: none;
+.attributeCell {
+  text-align: right;
+  font-weight: 600;
+  font-size: var(--caption-font);
+  background-color: #858585;
 }
 
-.compareTable tbody tr:nth-child(even) {
-    background-color: var(--base-bg);
-}
-
+/* Product Header in TH */
 .productHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .productHeader img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 2px solid #a0a0a0;
 }
 
 .productHeader h3 {
-    font-size: var(--normal-font);
-    font-weight: 600;
-    min-height: 40px;
+  font-size: var(--caption-font);
+  color: #fff;
+  font-weight: 600;
+  min-height: 40px; /* for 2 lines */
+  margin: 0;
 }
 
-.productHeader button {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.productHeader button:hover {
-    background-color: var(--status-cancelled-bg);
-    color: var(--status-cancelled-text);
-    border-color: var(--status-cancelled-text);
+.removeButton:hover {
+  background-color: #ef4444;
 }
 
+/* Empty State */
 .emptyState {
-    text-align: center;
-    padding: 5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 1.5rem;
 }
 
 .emptyState h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  font-size: var(--title-font);
+  color: var(--text-primary);
+}
+
+.emptyState p {
+  font-size: var(--caption-font);
+  color: var(--text-secondary);
+  max-width: 400px;
 }
 
 .backButton {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--text-white);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  font-size: var(--normal-font);
+}
+
+.backButton:hover {
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .compareTable {
+    table-layout: auto;
+  }
+  .compareTable th,
+  .compareTable td {
+    padding: 0.75rem;
+    min-width: 180px;
+  }
+  .stickyColumn {
+    min-width: 120px;
+  }
+  .productHeader img {
+    width: 80px;
+    height: 80px;
+  }
 }

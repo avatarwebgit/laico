@@ -99,7 +99,7 @@ input[type='radio'] + div::after {
 
 @media only screen and (max-width: 480px) {
  .product-list-wrapper {
-  grid-template-columns: 1fr;
+  grid-template-columns:  1fr 1fr;
  }
  .sort-wrapper,
  .filter-list-wrapper {
@@ -118,7 +118,7 @@ input[type='radio'] + div::after {
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
  .product-list-wrapper {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
  }
  .sort-wrapper,
  .filter-list-wrapper {
@@ -134,7 +134,7 @@ input[type='radio'] + div::after {
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
  .product-list-wrapper {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
  }
 }
 

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { X, Trash2, Layers2, ChevronDown } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import {
   removeFromCompare,
   clearCompare,
@@ -11,24 +10,49 @@ import styles from "./CompareBar.module.css";
 
 const CompareBar = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { items } = useSelector((state) => state.compare);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  if (items.length === 0) {
+  if (location.pathname === "/compare" || items.length === 0) {
     return null;
   }
 
+  const barClasses = `${styles.compareBar} ${
+    isCollapsed ? styles.collapsed : ""
+  }`;
+  const chevronClasses = `${styles.chevron} ${
+    isCollapsed ? styles.collapsed : ""
+  }`;
+  const itemsContainerClasses = `${styles.itemsContainerWrapper} ${
+    isCollapsed ? styles.collapsed : ""
+  }`;
+
   return (
-    <AnimatePresence>
-      <motion.div
-        className={styles.compareBar}
-        initial={{ y: "100%" }}
-        animate={{ y: "0%" }}
-        exit={{ y: "100%" }}
-        style={{ x: "-50%" }}
-      >
+    <div className={barClasses}>
+      <div className={styles.header}>
+        <div className={styles.actionsContainer}>
+          <Link
+            to="/compare"
+            className={`${styles.actionButton} ${styles.compareButton}`}
+          >
+            <Layers2 size={18} />
+            <span>مقایسه ({items.length})</span>
+          </Link>
+          <button
+            className={`${styles.actionButton} ${styles.clearButton}`}
+            onClick={() => dispatch(clearCompare())}
+          >
+            <Trash2 size={18} />
+            <span className={styles.clearText}>پاک کردن همه</span>
+          </button>
+        </div>
+     
+      </div>
+      <div className={itemsContainerClasses}>
         <div className={styles.itemsContainer}>
           {items.map((item) => (
-            <motion.div key={item.id} className={styles.item} layout>
+            <div key={item.id} className={styles.item}>
               <img
                 src={item.imageUrl || item.primary_image}
                 alt={item.name}
@@ -38,12 +62,13 @@ const CompareBar = () => {
               <button
                 className={styles.removeItemButton}
                 onClick={() => dispatch(removeFromCompare(item.id))}
+                aria-label={`حذف ${item.name}`}
               >
                 <X size={16} />
               </button>
-            </motion.div>
+            </div>
           ))}
-          {[...Array(4 - items.length)].map((_, i) => (
+          {[...Array(6 - items.length)].map((_, i) => (
             <div
               key={`placeholder-${i}`}
               className={`${styles.item} ${styles.placeholder}`}
@@ -52,24 +77,16 @@ const CompareBar = () => {
             </div>
           ))}
         </div>
-        <div className={styles.actionsContainer}>
-          <button
-            className={`${styles.actionButton} ${styles.clearButton}`}
-            onClick={() => dispatch(clearCompare())}
-          >
-            <Trash2 size={18} />
-            <span>پاک کردن همه</span>
-          </button>
-          <Link
-            to="/compare"
-            className={`${styles.actionButton} ${styles.compareButton}`}
-          >
-            <span>مقایسه ({items.length})</span>
-            <ArrowRight size={18} />
-          </Link>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>   <button
+          className={styles.collapseButton}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          aria-label={isCollapsed ? "باز کردن" : "بستن"}
+        >
+          <div className={chevronClasses}>
+            <ChevronDown size={24} />
+          </div>
+        </button>
+    </div>
   );
 };
 

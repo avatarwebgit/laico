@@ -5,7 +5,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Expand, GalleryHorizontal } from "lucide-react";
+import { Expand, GalleryHorizontal, Layers2 } from "lucide-react"; // Changed icon
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,7 @@ import "swiper/css/thumbs";
 import { ReactComponent as Shop } from "../assets/svgs/add_basket-white.svg";
 import { ReactComponent as HeartRed } from "../assets/svgs/heart-red.svg";
 import { ReactComponent as Heart } from "../assets/svgs/heart.svg";
-import { ReactComponent as CompareIcon } from "../assets/svgs/chart.svg";
+// import { ReactComponent as CompareIcon } from "../assets/svgs/chart.svg"; // Removed
 import Arrowbutton from "../components/common/ArrowButton";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import Content from "../components/common/Content";
@@ -423,7 +423,7 @@ const Product = () => {
                 className={classes.compare_button}
                 onClick={handleAddToCompare}
               >
-                <CompareIcon />
+                <Layers2 />
                 <p>مقایسه</p>
               </IconButton>
             </div>
