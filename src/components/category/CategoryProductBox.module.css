@@ -1,0 +1,270 @@
+.product-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid var(--color-grey-1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.product-box:not(.outOfStock):hover {
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+}
+
+.title {
+  margin: 8px 0;
+  font-size: var(--normal-font);
+  font-weight: 600;
+  color: var(--font-color-1);
+  transition: color 0.2s ease-in-out;
+  min-height: 38px;
+  width: 200px;
+  height: 50px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.caption {
+  height: 50px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--normal-font);
+  padding: 0 5px;
+}
+
+.product-box:not(.outOfStock):hover .title {
+  color: var(--color-red);
+}
+
+.img-wrapper {
+  min-height: 200px;
+  position: relative;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  height: 70%;
+  padding: 10px;
+}
+
+.img-wrapper img,
+.img-wrapper > div {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.product-box:not(.outOfStock):hover .img-wrapper img,
+.product-box:not(.outOfStock):hover .img-wrapper > div {
+  transform: scale(1.01);
+}
+
+.content-wrapper {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.priceSection {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.priceWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.originalPrice {
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.finalPrice {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+}
+
+.finalPrice span {
+  font-size: 12px;
+  font-weight: 400;
+  margin-right: 4px;
+}
+
+.discountBadge {
+  background-color: var(--color-red);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.profitBadge {
+  background-color: #e0f2f1;
+  color: #00796b;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.ratingWrapper {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ratingValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.starsOuter {
+  position: relative;
+  display: flex;
+}
+
+.starsInner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+}
+
+.starFilled {
+  color: #ffc107;
+  fill: #ffc107;
+}
+
+.starOutline {
+  color: #e0e0e0;
+  fill: #fff;
+}
+
+.metaWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.viewsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #888;
+}
+
+.viewsIcon {
+  width: 16px;
+  height: 16px;
+  color: #888;
+}
+
+.product-box.outOfStock {
+  cursor: not-allowed;
+}
+
+.product-box.outOfStock .img-wrapper img,
+.product-box.outOfStock .img-wrapper > div {
+  filter: grayscale(80%);
+}
+
+.outOfStockText {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #999;
+  margin-top: auto;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.color-wrapper-main {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+}
+
+.color-wrapper {
+  margin: auto;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: fit-content;
+  height: fit-content;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: -5px;
+}
+
+.color-input-wrapper {
+  width: fit-content;
+  height: fit-content;
+}
+
+.custom-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.more-wrapper {
+  width: 17px;
+  height: fit-content;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.overlayActions {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: fit-content !important;
+  height: fit-content !important;
+  border-radius: 50%;
+}
+
+.actionButton {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and(max-width:768px) {
+}

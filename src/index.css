@@ -1,0 +1,179 @@
+@font-face {
+ font-family: iranYekan;
+ src: url('/assets/fonts/iranyekanwebregular.woff');
+}
+
+* {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ font-family: 'iranYekan' !important;
+}
+
+a {
+ color: unset;
+ text-decoration: none;
+}
+
+a:visited {
+ color: unset;
+ text-decoration: none;
+}
+
+html {
+ scrollbar-gutter: stable;
+}
+
+.css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root {
+ right: 35px !important;
+}
+
+.css-1ll44ll-MuiOutlinedInput-notchedOutline {
+ text-align: right !important;
+}
+
+.css-2jtc7m-MuiFormControl-root-MuiTextField-root
+ .MuiInputLabel-root.Mui-focused {
+ margin-right: 10px !important;
+}
+
+.css-2ao5rv-MuiBadge-badge {
+ top: 30px !important;
+ right: 10px !important;
+ font-size: 10px !important;
+ background-color: #fff !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ min-width: 0 !important;
+}
+
+.MuiBreadcrumbs-li {
+ display: flex !important;
+}
+
+.ant-tabs-tab {
+ margin: 0 0 0 32px !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn {
+ text-shadow: 0 0 0.25px currentcolor;
+ position: relative;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-btn:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-remove:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab-btn:active,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab-remove:active {
+ color: #373737 !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-focus
+ .ant-tabs-tab-btn,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab:hover,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn {
+ color: #373737 !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs
+ .ant-tabs-tab.ant-tabs-tab-active
+ .ant-tabs-tab-btn::after {
+ content: '';
+ bottom: 25%;
+ position: absolute;
+ left: 50%;
+ transform: translateX(-50%);
+ width: 100%;
+ height: 8px;
+ background-color: var(--main-color-four);
+ z-index: -1;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-ink-bar {
+ display: none !important;
+}
+
+.css-hvjq6j-MuiFormLabel-root-MuiInputLabel-root {
+ right: 10px !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > div
+ > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > div
+ > .ant-tabs-nav::before {
+ display: none !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-top
+ > div
+ > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs-bottom
+ > div
+ > .ant-tabs-nav {
+ margin: 0 !important;
+}
+
+:where(.css-dev-only-do-not-override-1261szd).ant-tabs .ant-tabs-tab-btn {
+ font-size: 13px;
+}
+
+.css-1eex93v-MuiTooltip-tooltip {
+ font-size: 15px !important;
+}
+
+:where(
+  .css-dev-only-do-not-override-1261szd
+ ).ant-switch.ant-switch-checked.ant-switch-checked {
+ background: var(--color-red) !important;
+}
+.css-in8lwp-MuiSlider-root {
+ color: var(--color-red) !important;
+}
+
+.css-1jq9w0k-JoySlider-track {
+ background-color: var(--color-red) !important;
+}
+
+.css-hayzob-JoySlider-thumb::before {
+ border-color: var(--color-red) !important;
+}
+
+.css-sl4hj6-JoySlider-valueLabel {
+ background-color: #fff !important;
+ margin: 0 auto !important;
+ text-align: center !important;
+}
+
+.css-sl4hj6-JoySlider-valueLabel::before {
+ border-color: #fff !important;
+}
+
+.css-1tf7zj8-MuiButtonBase-root-MuiIconButton-root {
+ margin-right: auto !important;
+ margin-left: unset !important;
+}
+
+.css-9r7748-MuiTypography-root,
+.css-1jahree-MuiTypography-root-MuiLink-root {
+ font-size: var(--normal-font) !important;
+}
+
+.css-1uwp4ue-MuiBreadcrumbs-ol{
+  margin: 15px 0 !important;
+}

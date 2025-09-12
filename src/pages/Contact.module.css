@@ -1,0 +1,238 @@
+.pageWrapper {
+  padding: 2rem 1.5rem;
+  background-color: #f7f8f9;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--main-color-1);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 550px;
+  margin: 0.5rem auto 0;
+  line-height: 1.6;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 992px) {
+  .contentGrid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+/* Contact Form */
+.contactForm {
+  /* No specific styles needed for the container */
+}
+
+.contactForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: #f8fafc;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--main-color-2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--main-color-2), transparent 70%);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formFooter {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.75rem;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--main-color-2);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 5px 15px -5px var(--main-color-2);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+.loaderIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Status Message */
+.statusMessage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  width: 100%;
+}
+
+.statusMessage.success {
+  background-color: var(--status-delivered-bg);
+  color: var(--status-delivered-text);
+}
+
+.statusMessage.error {
+  background-color: var(--status-cancelled-bg);
+  color: var(--status-cancelled-text);
+}
+
+
+/* Contact Info */
+.contactInfo {
+  background-color: color-mix(in srgb, var(--main-color-1), transparent 95%);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  height: fit-content;
+}
+
+.infoTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--main-color-1);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.contactInfo ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contactInfo li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.contactInfo li svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+
+/* Map Container */
+.mapContainer {
+  width: 100%;
+  height: 400px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 5px 20px -5px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+}
+
+.mapContainer iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 3rem;
+  }
+  .formFooter {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .statusMessage {
+    width: auto;
+  }
+}

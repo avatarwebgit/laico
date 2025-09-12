@@ -1,0 +1,180 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(8px);
+}
+
+.modalContent {
+  position: relative;
+  width: 95vw;
+  height: 95vh;
+  max-width: 1400px;
+  max-height: 1000px;
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Styles for when modal is in fullscreen */
+.modalContent:fullscreen {
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.counter {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.actionButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.galleryLayout {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.swiperContainer {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.swiperSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.swiperSlide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Swiper Controls */
+.swiperContainer :global(.swiper-button-next),
+.swiperContainer :global(.swiper-button-prev) {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.157);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  transition: all 0.2s ease;
+}
+
+.swiperContainer :global(.swiper-button-next:hover),
+.swiperContainer :global(.swiper-button-prev:hover) {
+  background-color: rgba(0, 0, 0, 0.229);
+  transform: scale(1.1);
+}
+
+.swiperContainer :global(.swiper-button-next:after),
+.swiperContainer :global(.swiper-button-prev:after) {
+  font-size: 1.2rem;
+}
+
+/* Thumbnail Styles */
+.thumbsContainer {
+  height: 100px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.thumbSlide {
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 100px !important; 
+  height: 100%;
+  opacity: 0.6;
+}
+
+.thumbSlide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbSlide:hover {
+  opacity: 0.8;
+  border-color: rgba(0, 0, 0, 0.117);
+}
+
+.thumbsContainer :global(.swiper-slide-thumb-active) {
+  opacity: 1;
+  border-color: #00000053;
+}
+
+/* Desktop Layout (Vertical Thumbs) */
+@media (min-width: 1024px) {
+  .galleryLayout.desktop {
+    flex-direction: row;
+  }
+
+  .thumbsContainer {
+    width: 120px;
+    height: 100%;
+  }
+
+  .thumbSlide {
+    width: 100% !important;
+    height: 80px !important; /* Fixed height for vertical */
+  }
+}

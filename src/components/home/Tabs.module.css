@@ -1,0 +1,28 @@
+.main {
+ position: relative;
+ margin: 100px 0;
+}
+
+.title {
+ position: absolute;
+ top: 13px;
+ left: 0;
+ font-size: var(--normal-font);
+}
+
+.ant-tabs-tab {
+ font-size: var(--title-font);
+ color: var(--caption-grey);
+}
+
+.ant-tabs-nav::before {
+ display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+ .title {
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+ }
+}

@@ -1,0 +1,243 @@
+.container {
+ /* Full width */
+}
+
+.header {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ justify-content: space-between;
+ margin-bottom: 2rem;
+ text-align: right;
+}
+
+.headerContent {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+}
+
+.title {
+ font-size: var(--title-font);
+ font-weight: 700;
+ color: var(--main-color-1);
+}
+
+.subtitle {
+ margin-top: 0.25rem;
+ color: #000;
+}
+
+.newTicketButton {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.75rem 1.25rem;
+ border-radius: var(--radius-lg);
+ font-weight: 600;
+ font-size: var(--normal-font);
+ color: var(--text-white);
+ background-color: var(--main-color-2);
+ border: none;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+ margin-top: 1rem;
+}
+
+.newTicketButton:hover {
+ filter: brightness(1.2);
+}
+
+.contentWrapper {
+ border-radius: var(--radius-lg);
+ overflow: hidden;
+ background: #fff;
+ backdrop-filter: blur(12px) saturate(150%);
+ -webkit-backdrop-filter: blur(12px) saturate(150%);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ transition: all 0.25s ease-in-out;
+}
+
+.contentWrapper:hover {
+ box-shadow: 0 8px 10px rgba(0, 0, 0, 0.25);
+ border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* --- Desktop Table --- */
+.tableWrapper {
+ display: none;
+ overflow-x: auto;
+}
+
+.table {
+ width: 100%;
+ border-collapse: collapse;
+ text-align: right;
+ overflow: hidden;
+}
+
+.tableHeader {
+ padding: 1rem 1.5rem;
+ font-size: var(--title-font);
+ white-space: nowrap;
+ font-weight: 600;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ border-bottom: 1px solid #c2c2c2;
+}
+
+.tableCell {
+ padding: 1.25rem 1.5rem;
+ font-size: var(--normal-font);
+ color: var(--text-primary);
+ border-top: 1px solid #ededed;
+ white-space: nowrap;
+}
+
+tbody tr {
+ transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+ background-color: rgba(255, 255, 255, 0.03);
+}
+
+.viewButton {
+ background-color: var(--main-color-2);
+ color: white;
+ padding: 0.5rem 1rem;
+ border-radius: var(--radius-lg);
+ border: none;
+ cursor: pointer;
+ font-weight: 500;
+ transition: filter 0.2s;
+}
+
+.viewButton:hover {
+ filter: brightness(1.2);
+}
+
+/* --- Mobile Cards --- */
+.mobileList {
+ display: flex;
+ flex-direction: column;
+}
+
+.card {
+ padding: 1.25rem;
+ border-bottom: 1px solid var(--border);
+ cursor: pointer;
+ transition: background-color 0.2s ease;
+}
+
+.card:last-child {
+ border-bottom: none;
+}
+
+.card:hover {
+ background-color: rgba(255, 255, 255, 0.03);
+}
+
+.cardHeader {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+ margin-bottom: 0.75rem;
+}
+
+.cardTitle {
+ font-weight: 600;
+ color: var(--main-color-1);
+ font-size: var(--title-font);
+}
+
+.cardBody {
+ display: flex;
+ flex-direction: column;
+ gap: 0.5rem;
+ margin-bottom: 1rem;
+}
+
+.cardRow {
+ display: flex;
+ align-items: flex-start;
+ gap: 0.75rem;
+ font-size: 0.875rem;
+ color: var(--text-muted);
+}
+
+.cardIcon {
+ margin-top: 2px;
+ flex-shrink: 0;
+}
+
+.cardDescription {
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ max-width: 200px; /* Adjust as needed */
+}
+
+.cardFooter {
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ gap: 0.25rem;
+ font-size: 0.875rem;
+ font-weight: 500;
+ color: var(--main-color-3);
+}
+
+/* --- Status Badges --- */
+.statusBadge {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.35rem 0.75rem;
+ border-radius: var(--radius-lg);
+ font-weight: 500;
+ font-size: 0.8rem;
+ white-space: nowrap;
+}
+
+.open {
+ background-color: var(--status-open-bg);
+ color: var(--status-open-text);
+}
+.answered {
+ background-color: var(--status-answered-bg);
+ color: var(--status-answered-text);
+}
+.closed {
+ background-color: var(--status-closed-bg);
+ color: var(--status-closed-text);
+}
+
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  min-height: 200px;
+}
+
+.errorText {
+  color: var(--danger-color);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+ .header {
+  flex-direction: row;
+  align-items: center;
+ }
+ .newTicketButton {
+  margin-top: 0;
+ }
+ .tableWrapper {
+  display: block;
+ }
+ .mobileList {
+  display: none;
+ }
+}

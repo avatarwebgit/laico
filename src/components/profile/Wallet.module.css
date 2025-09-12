@@ -1,0 +1,425 @@
+.container {
+}
+
+.header {
+ margin-bottom: 2rem;
+}
+
+.title {
+ font-size: var(--title-font);
+ font-weight: 700;
+ color: var(--main-color-1);
+}
+
+.subtitle {
+ margin-top: 0.25rem;
+ color: #000;
+}
+
+/* Balance Card */
+.balanceCard {
+ padding: 2rem;
+ border-radius: var(--radius-lg);
+ background: linear-gradient(
+  135deg,
+  var(--main-color-1) 0%,
+  var(--main-color-2) 100%
+ );
+ color: var(--text-white);
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ justify-content: space-between;
+ gap: 1.5rem;
+ margin-bottom: 2.5rem;
+ box-shadow: 0 10px 20px -5px rgba(11, 47, 159, 0.4);
+}
+
+@media (min-width: 768px) {
+ .balanceCard {
+  flex-direction: row;
+  align-items: center;
+ }
+}
+
+.balanceInfo {
+ display: flex;
+ flex-direction: column;
+ text-align: right;
+}
+
+.balanceLabel {
+ font-size: var(--normal-font);
+ opacity: 0.8;
+}
+
+.balanceAmount {
+ font-size: 2.25rem;
+ font-weight: 700;
+ line-height: 1.2;
+ margin-top: 0.25rem;
+}
+
+.addFundsButton {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ padding: 0.875rem 1.5rem;
+ border-radius: var(--radius-lg);
+ font-weight: 600;
+ font-size: var(--normal-font);
+ color: var(--main-color-2);
+ background-color: var(--text-white);
+ border: none;
+ cursor: pointer;
+ transition: all 0.2s ease-in-out;
+ width: 100%;
+ justify-content: center;
+}
+
+@media (min-width: 768px) {
+ .addFundsButton {
+  width: auto;
+ }
+}
+
+/* History Section */
+.historySection {
+ background: #fff;
+ border-radius: var(--radius-lg);
+ overflow: hidden;
+ padding: 1.5rem;
+}
+
+.historyTitle {
+ font-size: 1.25rem;
+ font-weight: 600;
+ color: var(--text-primary);
+ margin-bottom: 1.5rem;
+ padding-bottom: 1rem;
+ border-bottom: 1px solid #ededed;
+}
+
+.tableWrapper {
+ display: none;
+ overflow-x: auto;
+}
+
+.table {
+ width: 100%;
+ border-collapse: collapse;
+ text-align: right;
+ overflow: hidden;
+}
+
+.tableHead {
+ background-color: #fff;
+}
+
+.tableHeader {
+ padding: 1rem 1.5rem;
+ font-size: var(--title-font);
+ font-weight: 600;
+ color: var(--text-muted);
+ border-bottom: 1px solid #c2c2c2;
+ white-space: nowrap;
+}
+
+.tableCell {
+ padding: 1.25rem 1.5rem;
+ font-size: var(--caption-font);
+ color: #000;
+ border-top: 1px solid #ededed;
+ white-space: nowrap;
+ vertical-align: middle;
+}
+
+tbody tr:first-child .tableCell {
+ border-top: none;
+}
+
+.typeCell {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ font-weight: 500;
+}
+
+.credit {
+ color: var(--status-delivered-text);
+ font-weight: 600;
+}
+
+.debit {
+ color: var(--red);
+ font-weight: 600;
+}
+
+.creditIcon {
+ color: var(--status-delivered-text);
+}
+.debitIcon {
+ color: var(--red);
+}
+
+.statusBadge {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.35rem 0.75rem;
+ border-radius: 9999px;
+ font-weight: 500;
+ font-size: var(--caption-font);
+}
+
+.successful {
+ background-color: var(--status-delivered-bg);
+ color: var(--status-delivered-text);
+}
+
+.failed {
+ background-color: var(--status-cancelled-bg);
+ color: var(--status-cancelled-text);
+}
+
+/* Mobile styles */
+.mobileList {
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+}
+
+.card {
+ padding: 1.25rem;
+ border-radius: var(--radius-lg);
+ border: 1px solid #ededed;
+ background: #fdfdff;
+}
+
+.cardHeader {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 1rem;
+}
+
+.cardType {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+}
+
+.cardTitle {
+ font-weight: 600;
+ color: var(--text-primary);
+}
+
+.cardBody {
+ display: flex;
+ justify-content: space-between;
+ align-items: baseline;
+}
+.cardAmount {
+ font-size: 1.1rem;
+ font-weight: 700;
+}
+.cardDate {
+ font-size: var(--caption-font);
+ color: var(--text-secondary);
+}
+.cardDescription {
+ margin-top: 0.75rem;
+ font-size: var(--caption-font);
+ color: var(--text-secondary);
+}
+
+@media (min-width: 992px) {
+ .tableWrapper {
+  display: block;
+ }
+ .mobileList {
+  display: none;
+ }
+ .historySection {
+  padding: 0;
+ }
+ .historyTitle {
+  padding: 1.5rem 1.5rem 0;
+  border-bottom: none;
+ }
+}
+
+/* Modal Styles */
+.modalOverlay {
+ position: fixed;
+ inset: 0;
+ z-index: var(--profile-modal-zindex);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background-color: rgba(0, 0, 0, 0.6);
+ backdrop-filter: blur(4px);
+}
+.modalContent {
+ position: relative;
+ margin: 1rem;
+ width: 100%;
+ max-width: 32rem;
+ border-radius: var(--radius-lg);
+ padding: 1.5rem;
+ background-color: #fff;
+ color: var(--text-primary);
+}
+.modalHeader {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding-bottom: 1rem;
+ border-bottom: 1px solid #ededed;
+}
+.modalTitle {
+ font-size: 1.125rem;
+ font-weight: 700;
+}
+.closeButton {
+ padding: 0.25rem;
+ border-radius: 9999px;
+ background: none;
+ border: none;
+ cursor: pointer;
+ color: var(--text-secondary);
+ transition: all 0.2s ease;
+}
+.closeButton:hover {
+ background-color: #f1f5f9;
+ color: var(--text-primary);
+}
+.form {
+ margin-top: 1.5rem;
+ display: flex;
+ flex-direction: column;
+ gap: 1.5rem;
+}
+.formGroup {
+ display: flex;
+ flex-direction: column;
+}
+.formLabel {
+ display: block;
+ font-size: var(--normal-font);
+ font-weight: 500;
+ color: var(--text-secondary);
+ margin-bottom: 0.5rem;
+}
+.formInput {
+ width: 100%;
+ border-radius: var(--radius-lg);
+ padding: 0.75rem;
+ font-size: var(--normal-font);
+ background-color: #f8fafc;
+ border: 1px solid #e2e8f0;
+ color: var(--text-primary);
+ transition: border-color 0.2s, box-shadow 0.2s;
+}
+.formInput:focus {
+ outline: none;
+ border-color: var(--main-color-2);
+ box-shadow: 0 0 0 3px color-mix(in srgb, var(--main-color-2), transparent 70%);
+}
+.quickAmounts {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.75rem;
+}
+.quickAmountButton {
+ flex-grow: 1;
+ padding: 0.5rem;
+ border-radius: var(--radius-lg);
+ border: 1px solid #e2e8f0;
+ background-color: #fff;
+ cursor: pointer;
+ transition: all 0.2s;
+}
+.quickAmountButton:hover {
+ border-color: var(--main-color-2);
+ background-color: color-mix(in srgb, var(--main-color-2), transparent 90%);
+ color: var(--main-color-2);
+}
+.formActions {
+ display: flex;
+ justify-content: flex-end;
+ gap: 1rem;
+ padding-top: 1.5rem;
+ margin-top: 0.5rem;
+ border-top: 1px solid #ededed;
+}
+.formButton {
+ padding: 0.6rem 1.5rem;
+ border-radius: var(--radius-lg);
+ font-weight: 600;
+ border: none;
+ cursor: pointer;
+ transition: all 0.2s;
+}
+.formButton.cancel {
+ background-color: #e2e8f0;
+ color: var(--text-secondary);
+}
+.formButton.cancel:hover {
+ background-color: #cbd5e1;
+}
+.formButton.save {
+ background-color: var(--main-color-2);
+ color: var(--text-white);
+}
+.formButton.save:hover {
+ filter: brightness(1.15);
+}
+
+.formError {
+ font-size: 12px;
+ color: var(--danger-color, #ef4444);
+ margin-top: 0.25rem;
+ text-align: right;
+}
+
+.inputError,
+.inputError:focus {
+ border-color: var(--status-cancelled-text, #e92525) !important;
+ box-shadow: 0 0 0 1px var(--status-cancelled-text, #e92525) !important;
+}
+
+.statusContainer {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ padding: 0.75rem;
+ border-radius: var(--radius-md);
+ margin-top: -0.5rem;
+ font-size: var(--normal-font);
+ font-weight: 500;
+ border: 1px solid transparent;
+}
+
+.statusContainer.error {
+ background-color: var(--status-cancelled-bg, rgba(248, 113, 113, 0.1));
+ color: var(--status-cancelled-text, #e92525);
+ border-color: var(--status-cancelled-text, #e92525);
+}
+
+.statusContainer.success {
+ background-color: var(--status-delivered-bg, rgba(74, 222, 128, 0.1));
+ color: var(--status-delivered-text, #0cd255);
+ border-color: var(--status-delivered-text, #0cd255);
+}
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  min-height: 200px;
+}
+
+.errorText {
+  color: var(--danger-color);
+}

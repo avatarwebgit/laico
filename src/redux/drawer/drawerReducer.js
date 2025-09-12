@@ -1,0 +1,33 @@
+import * as actionTypes from "./drawerActionTypes";
+
+const initialState = {
+  cartDrawer: false,
+  installmentCartDrawerOpen: false,
+  favoritesDrawerOpen: false,
+  redirectAfterLogin: null,
+};
+
+const drawerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.OPEN_CART_DRAWER:
+      return { ...state, cartDrawer: true };
+    case actionTypes.CLOSE_CART_DRAWER:
+      return { ...state, cartDrawer: false };
+    case actionTypes.OPEN_INSTALLMENT_CART_DRAWER:
+      return { ...state, installmentCartDrawerOpen: true };
+    case actionTypes.CLOSE_INSTALLMENT_CART_DRAWER:
+      return { ...state, installmentCartDrawerOpen: false };
+    case actionTypes.OPEN_FAVORITES_DRAWER:
+      return { ...state, favoritesDrawerOpen: true };
+    case actionTypes.CLOSE_FAVORITES_DRAWER:
+      return { ...state, favoritesDrawerOpen: false };
+    case actionTypes.SET_REDIRECT_AFTER_LOGIN:
+      return { ...state, redirectAfterLogin: action.payload };
+    case actionTypes.CLEAR_REDIRECT_AFTER_LOGIN:
+      return { ...state, redirectAfterLogin: null };
+    default:
+      return state;
+  }
+};
+
+export default drawerReducer;

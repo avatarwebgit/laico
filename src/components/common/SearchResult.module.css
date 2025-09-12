@@ -1,0 +1,48 @@
+.main {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ width: 100%;
+ padding: 10px;
+ cursor: pointer;
+ transition: all 0.25s;
+ color: #000000;
+}
+
+.main:visited{
+    color: #000000;
+}
+
+.main:hover {
+ background-color: rgb(197, 197, 197);
+}
+
+.image_wrapper {
+ height: 50px !important;
+ width: 50px !important;
+}
+
+.image_wrapper img {
+ width: 50px;
+ height: 50px;
+ object-fit: contain;
+}
+
+.text_wrapper {
+ display: flex;
+ flex-direction: column;
+}
+
+.name,
+.title,
+.size {
+ font-size: 15px;
+}
+
+.name,
+.size {
+ margin-left: 10px;
+}
+
+.title {
+}

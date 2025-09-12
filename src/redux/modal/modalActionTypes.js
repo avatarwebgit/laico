@@ -1,0 +1,4 @@
+export const OPEN_DELETE_MODAL = 'modal/OPEN_DELETE_MODAL';
+export const CLOSE_DELETE_MODAL = 'modal/CLOSE_DELETE_MODAL';
+export const CONFIRM_DELETE_ACTION = 'modal/CONFIRM_DELETE_ACTION';
+export const SET_MODAL_LOADING = 'modal/SET_MODAL_LOADING';

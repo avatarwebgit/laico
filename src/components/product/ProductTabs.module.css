@@ -1,0 +1,79 @@
+
+
+.tabsContainer {
+ width: 100%;
+ margin: 3rem 0;
+ background-color: #fff;
+ border-radius: var(--radius-lg);
+ border: 1px solid var(--border);
+ box-shadow: 0 4px 15px -2px rgba(11, 47, 159, 0.05);
+ overflow: hidden;
+}
+
+.tabHeaders {
+ display: flex;
+ background-color: #f8f9fa;
+ border-bottom: 1px solid var(--border);
+}
+
+.tabHeader {
+ flex: 1;
+ padding: 1rem 1.5rem;
+ font-size: var(--caption-font);
+ font-weight: 600;
+ color: var(--text-secondary);
+ background: none;
+ border: none;
+ cursor: pointer;
+ position: relative;
+ transition: color 0.3s ease;
+}
+
+.tabHeader:hover {
+ color: var(--main-color-1);
+}
+
+.tabHeader.active {
+ color: var(--main-color-1);
+}
+
+.activeLine {
+ position: absolute;
+ bottom: -1px;
+ left: 0;
+ right: 0;
+ height: 3px;
+ background: var(--main-color-1);
+ border-radius: 3px 3px 0 0;
+}
+
+.tabContentWrapper {
+ padding: 2rem;
+ min-height: 150px;
+ font-size: var(--caption-font);
+}
+
+@media (max-width: 768px) {
+ .tabHeaders {
+  flex-direction: column;
+ }
+ .tabHeader {
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+ }
+ .tabHeaders .tabHeader:last-child {
+  border-bottom: none;
+ }
+ .activeLine {
+  height: 100%;
+  width: 4px;
+  left: auto;
+  right: -1px;
+  top: 0;
+  bottom: 0;
+  border-radius: 0;
+ }
+ .tabContentWrapper {
+  padding: 1.5rem;
+ }
+}

@@ -1,0 +1,62 @@
+@import url(../../../styles/variables.css);
+.footer {
+ display: flex;
+ flex-direction: column;
+}
+
+.footer a {
+ text-decoration: none;
+ color: var(--text-color);
+ transition: all 0.25s ease;
+}
+
+.footer a:hover {
+ color: var(--main-color-one);
+}
+
+.links-section {
+ width: 100%;
+ display: flex;
+ align-items: stretch;
+ justify-content: space-around;
+ padding: 30px;
+}
+
+.links-section,
+.copyright {
+ background-color: var(--color-grey-1);
+}
+
+.links-section div {
+ display: flex;
+ flex-direction: column;
+}
+
+.social-section {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.copyright {
+ margin: 0 auto;
+ text-align: center;
+ width: 100%;
+}
+
+.copyright a,
+.copyright {
+ font-size: 18px;
+}
+
+.links-section ul {
+ list-style: none;
+}
+
+.links-section ul li {
+ font-size: 22px;
+}
+
+.links-section ul li a {
+ font-size: 15px;
+}

@@ -1,0 +1,56 @@
+.profile-main {
+ min-height: 100vh;
+}
+
+.content {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ padding-bottom: 20px;
+}
+
+.bottom-wrapper {
+ display: flex;
+}
+
+.sidebar-wrapper {
+ width: 25%;
+}
+
+.content-wrapper {
+ flex: 1 1 auto;
+}
+
+h2,
+h3 {
+ text-align: unset;
+}
+
+@media only screen and (max-width: 480px) {
+ .sidebar-wrapper {
+  margin: 0;
+  width: 100%;
+ }
+ .bottom-wrapper {
+  flex-direction: column;
+ }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+ .sidebar-wrapper {
+  margin: 0;
+  width: 100%;
+ }
+ .bottom-wrapper {
+  flex-direction: column;
+ }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1200px) {
+}
+
+@media only screen and (min-width: 1201px) {
+}

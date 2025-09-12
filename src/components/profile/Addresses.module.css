@@ -1,0 +1,383 @@
+.container {
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.headerContent {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: var(--main-color-1);
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  color: #000;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: var(--normal-font);
+  color: var(--text-white);
+  background-color: var(--main-color-2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 1rem;
+}
+
+.addButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--main-color-3), transparent 70%);
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .addButton {
+    margin-top: 0;
+  }
+}
+
+/* Address Grid */
+.addressGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .addressGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .addressGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px dashed var(--border);
+  grid-column: 1 / -1;
+}
+
+.emptyStateIcon {
+  margin: 0 auto;
+  color: var(--text-muted);
+}
+
+.emptyState p:first-of-type {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.emptyState p:last-of-type {
+  margin-top: 0.5rem;
+  font-size: var(--normal-font);
+  color: var(--text-muted);
+}
+
+/* Address Card */
+.card {
+  position: relative;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  backdrop-filter: blur(12px) saturate(150%);
+}
+
+.cardContent {
+  flex-grow: 1;
+}
+
+.defaultBadge {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: var(--main-color-3);
+}
+
+.defaultBadge svg {
+  color: black;
+}
+
+.cardName {
+  font-weight: 700;
+  font-size: var(--title-font);
+  color: var(--text-primary);
+}
+
+.cardAddress {
+  margin-top: 0.25rem;
+  font-size: var(--normal-font);
+  line-height: 1.6;
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+}
+
+.cardPostal {
+  margin-top: 0.5rem;
+  font-size: var(--normal-font);
+}
+
+.cardActions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--text-muted);
+}
+
+.actionButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.actionButton.delete {
+  color: var(--red-light);
+}
+
+.actionButton.delete:hover {
+  background-color: color-mix(in srgb, var(--red), transparent 80%);
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--profile-modal-zindex);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  position: relative;
+  margin: 1rem;
+  width: 100%;
+  max-width: 32rem;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background-color: #fff;
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .modalContent {
+    padding: 2rem;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ededed;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.closeButton {
+  padding: 0.25rem;
+  border-radius: 9999px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+}
+
+/* Form */
+.form {
+  margin-top: 1.5rem;
+}
+
+.formFieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .formFieldsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: var(--normal-font);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+  font-size: var(--normal-font);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--main-color-2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--main-color-2), transparent 70%);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #ededed;
+  font-size: var(--normal-font);
+}
+
+.formButton {
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.formButton.cancel {
+  background-color: #e2e8f0;
+  color: var(--text-secondary);
+}
+
+.formButton.cancel:hover {
+  background-color: #cbd5e1;
+}
+
+.formButton.save {
+  background-color: var(--main-color-2);
+  color: var(--text-white);
+}
+
+.formButton.save:hover {
+  filter: brightness(1.15);
+}
+
+.spinner {
+  grid-area: 1/1/4/4;
+}
+
+/* Form Validation */
+.formError {
+  font-size: 12px;
+  color: var(--danger-color, #ef4444);
+  margin-top: 0.25rem;
+  text-align: right;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  margin: 1rem 0;
+  font-size: var(--normal-font);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.statusContainer.error {
+  background-color: var(--status-cancelled-bg, rgba(248, 113, 113, 0.1));
+  color: var(--status-cancelled-text, #e92525);
+  border-color: var(--status-cancelled-text, #e92525);
+}
+
+.statusContainer.success {
+  background-color: var(--status-delivered-bg, rgba(74, 222, 128, 0.1));
+  color: var(--status-delivered-text, #0cd255);
+  border-color: var(--status-delivered-text, #0cd255);
+}
+
+.inputError,
+.inputError:focus {
+  border-color: var(--status-cancelled-text, #e92525) !important;
+  box-shadow: 0 0 0 1px var(--status-cancelled-text, #e92525) !important;
+}

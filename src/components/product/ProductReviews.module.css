@@ -1,0 +1,157 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.summaryRating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.averageRating {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.reviewCount {
+  font-size: .7rem;
+  color: var(--text-secondary);
+}
+
+.writeReviewBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--main-color-1);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.writeReviewBtn:hover {
+  background-color: var(--main-color-2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(11, 47, 159, 0.2);
+}
+
+.starRating {
+  display: flex;
+}
+
+.filledStar {
+  color: #ffc107;
+  fill: #ffc107;
+}
+
+.emptyStar {
+  color: #e0e0e0;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reviewCard {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--main-color-2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.authorName {
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.reviewDate {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.reviewTitle {
+  font-size: .7rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.reviewText {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.reviewActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionButtons button {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionButtons button:hover {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}

@@ -1,0 +1,55 @@
+.hero-banner {
+ padding: 60px;
+ background-color: var(--color-grey-2);
+}
+
+.content {
+ background-color: #fff;
+ display: flex;
+ flex-direction: row-reverse;
+ align-items: center;
+ justify-content: space-between;
+}
+
+.shadow-text {
+ font-size: larger;
+ color: rgba(1, 2, 37, 0.102);
+ margin-bottom: -20px;
+}
+
+.main-image {
+ margin-top: -2%;
+ height: 500px;
+ width: 500px;
+}
+
+.secondary-image {
+ margin-top: -9%;
+ height: 350px;
+ width: 200px;
+}
+
+.main-image img,
+.secondary-image img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+}
+
+.content:not(:first-child) > * {
+ background-color: red;
+}
+
+.title {
+ margin-bottom: 25px;
+}
+.caption,
+.rounded-btn {
+ margin-top: 15px;
+}
+
+@media screen and (max-width: 768px) {
+ .hero-banner {
+  display: none;
+ }
+}

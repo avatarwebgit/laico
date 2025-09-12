@@ -1,0 +1,104 @@
+.section {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.featuredGrid {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.standardGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gridItem {
+  aspect-ratio: 4 / 3;
+}
+
+.card {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  will-change: transform;
+}
+
+.cardImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+    transform: translateZ(0);
+
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--primary) 0%,
+    rgba(11, 47, 159, 0.5) 50%,
+    transparent 100%
+  );
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
+}
+
+.cardContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  transform: translateY(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cardTitle {
+  color: var(--text-white);
+  font-size: var(--titile-font);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    gap: 0.7rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .featuredGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cardContent {
+    padding: var(--titile-font);
+  }
+  .cardTitle {
+    font-size: var(--titile-font);
+  }
+}
+
+@media (min-width: 768px) {
+  .standardGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .featuredGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

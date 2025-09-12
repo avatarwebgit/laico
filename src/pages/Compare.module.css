@@ -1,0 +1,231 @@
+.pageWrapper {
+  background-color: #f8f8f8;
+}
+
+.container {
+  padding: 2.5rem 1rem;
+}
+
+.title {
+  text-align: center;
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 2.5rem;
+}
+
+.compareWrapper {
+  overflow: auto;
+  border: 1px solid #a0a0a0;
+  border-radius: var(--radius-lg);
+  max-height: 80vh;
+  position: relative;
+}
+
+/* Custom Scrollbar */
+.compareWrapper::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.compareWrapper::-webkit-scrollbar-track {
+  background: #cccccc;
+  border-radius: var(--radius-lg);
+}
+.compareWrapper::-webkit-scrollbar-thumb {
+  background: #a0a0a0;
+  border-radius: 8px;
+}
+.compareWrapper::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+.compareGrid {
+  display: grid;
+  min-width: 800px; /* For horizontal scroll on smaller screens */
+}
+
+/* Common cell styles */
+.headerCell,
+.attributeCell,
+.valueCell {
+  padding: 1rem;
+  text-align: center;
+  background-color: #8f8f8f;
+  color: white;
+  border-bottom: 1px solid #a0a0a0;
+  border-left: 1px solid #a0a0a0;
+}
+
+.headerCell:first-child,
+.attributeCell {
+  border-right: 1px solid #a0a0a0;
+}
+
+.valueCell {
+  transition: background-color 0.2s ease;
+}
+
+.compareGrid:hover .valueCell:hover {
+  background-color: #7a7a7a;
+}
+
+.stickyHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #858585;
+}
+
+.stickyColumn {
+  position: sticky;
+  right: 0;
+  z-index: 5;
+}
+
+.stickyHeader.stickyColumn {
+  z-index: 15;
+}
+
+.attributeCell {
+  text-align: right;
+  font-weight: 600;
+  font-size: var(--caption-font);
+  background-color: #858585; /* Same as sticky header for consistency */
+}
+
+/* Product Header */
+.productHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.productHeader img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 2px solid #a0a0a0;
+}
+
+.productHeader h3 {
+  font-size: var(--caption-font);
+  color: #fff;
+  font-weight: 600;
+  min-height: 40px; /* for 2 lines */
+  margin: 0;
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+  background-color: #ef4444;
+}
+
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.emptyState h2 {
+  font-size: var(--title-font);
+  color: var(--text-primary);
+}
+
+.emptyState p {
+  font-size: var(--caption-font);
+  color: var(--text-secondary);
+  max-width: 400px;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--text-white);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  font-size: var(--normal-font);
+}
+
+.backButton:hover {
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .headerCell,
+  .attributeCell,
+  .valueCell {
+    padding: 0.75rem;
+    min-width: 180px;
+  }
+  .stickyColumn {
+    min-width: 120px;
+  }
+  .productHeader img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Price cell styles */
+.priceCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--normal-font);
+}
+
+.originalPrice {
+  font-size: var(--caption-font);
+  color: #d1d5db; /* Lighter grey for dark bg */
+  text-decoration: line-through;
+}
+
+.finalPrice {
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: #fff;
+}
+
+.discountBadge {
+  background-color: var(--color-red);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: var(--caption-font);
+  font-weight: bold;
+}
+
+.profitBadge {
+  background-color: #e0f2f1;
+  color: #00796b;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: var(--caption-font);
+  font-weight: 500;
+}
