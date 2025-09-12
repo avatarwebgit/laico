@@ -1,21 +1,7 @@
-
-import { ChevronDown, HelpCircle, Send } from 'lucide-react';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import styles from './ProductQA.module.css';
-
-const mockQA = [
-  {
-    id: 1,
-    question: 'آیا این محصول در رنگ‌های دیگری هم موجود است؟',
-    answer: 'بله، این محصول در رنگ‌های آبی کهکشانی و نقره‌ای ستاره‌ای نیز موجود است. می‌توانید از بخش انتخاب رنگ، گزینه مورد نظر خود را انتخاب کنید.',
-  },
-  {
-    id: 2,
-    question: 'محتویات جعبه شامل چه مواردی است؟',
-    answer: 'محتویات جعبه شامل خود محصول، کابل شارژ، دفترچه راهنما و کارت گارانتی می‌باشد.',
-  },
-];
+import { ChevronDown, HelpCircle, Send } from "lucide-react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import styles from "./ProductQA.module.css";
 
 const QAItem = ({ qa }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +16,7 @@ const QAItem = ({ qa }) => {
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0, marginTop: 0 }}
-          animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
+          animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
           exit={{ opacity: 0, height: 0, marginTop: 0 }}
           className={styles.answer}
         >
@@ -41,7 +27,22 @@ const QAItem = ({ qa }) => {
   );
 };
 
-const ProductQA = () => {
+const ProductQA = ({ qas = [] }) => {
+  if (!qas || qas.length === 0) {
+    return (
+      <>
+        <div className={styles.askQuestionForm}>
+          <HelpCircle size={24} className={styles.formIcon} />
+          <input type="text" placeholder="پرسش خود را اینجا بنویسید..." />
+          <button>
+            <Send size={18} />
+            <span>ارسال</span>
+          </button>
+        </div>
+        <p>هنوز پرسش و پاسخی برای این محصول ثبت نشده است. اولین نفر باشید!</p>
+      </>
+    );
+  }
   return (
     <div className={styles.container}>
       <div className={styles.askQuestionForm}>
@@ -54,8 +55,8 @@ const ProductQA = () => {
       </div>
 
       <div className={styles.qaList}>
-        {mockQA.map((qa) => (
-          <QAItem key={qa.id} qa={qa} />
+        {qas.map((qa, index) => (
+          <QAItem key={index} qa={qa} />
         ))}
       </div>
     </div>

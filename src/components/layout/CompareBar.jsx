@@ -12,9 +12,9 @@ const CompareBar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { items } = useSelector((state) => state.compare);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
-  if (location.pathname === "/compare" || items.length === 0) {
+  if (items.length === 0) {
     return null;
   }
 
@@ -47,7 +47,6 @@ const CompareBar = () => {
             <span className={styles.clearText}>پاک کردن همه</span>
           </button>
         </div>
-     
       </div>
       <div className={itemsContainerClasses}>
         <div className={styles.itemsContainer}>
@@ -77,15 +76,16 @@ const CompareBar = () => {
             </div>
           ))}
         </div>
-      </div>   <button
-          className={styles.collapseButton}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          aria-label={isCollapsed ? "باز کردن" : "بستن"}
-        >
-          <div className={chevronClasses}>
-            <ChevronDown size={24} />
-          </div>
-        </button>
+      </div>{" "}
+      <button
+        className={styles.collapseButton}
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        aria-label={isCollapsed ? "باز کردن" : "بستن"}
+      >
+        <div className={chevronClasses}>
+          <ChevronDown size={24} />
+        </div>
+      </button>
     </div>
   );
 };

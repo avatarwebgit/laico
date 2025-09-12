@@ -103,7 +103,7 @@ const Carusel = ({ windowSize }) => {
       {swiperData.map((slide, index) => (
        <SwiperSlide key={index} className={classes.slide}>
         <div className={classes.slider_image_wrapper}>
-         <ImagePixelated
+         <img
           src={slide.image}
           alt={`Background for ${slide.title}`}
           isActive={index === activeIndex}
@@ -121,7 +121,7 @@ const Carusel = ({ windowSize }) => {
               opacity: 1,
               transition: {
                duration: 0.8,
-               delay: 1.5,
+               delay: 0.5,
                type: 'spring',
                stiffness: 100,
               },

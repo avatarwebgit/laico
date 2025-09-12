@@ -6,10 +6,10 @@ import storage from "redux-persist/lib/storage"; // localStorage
 import rootReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
 
-const persistConfig = {
+export const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "compare", "favorites", "cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

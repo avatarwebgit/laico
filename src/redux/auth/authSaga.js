@@ -1,9 +1,11 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import * as actionTypes from "./authActionTypes";
 import * as actions from "./authActions";
-import * as cartActionTypes from "../cart/cartActionTypes";
 import api from "../../api/auth";
 import { notify } from "../../utils/helperFucntions";
+import { clearCompare } from "../compare/compareActions";
+import { clearCart } from "../cart/cartActions";
+import { clearInstallmentCart } from "../installmentCart/installmentCartActions";
 
 function* loginSaga(action) {
   try {
@@ -37,7 +39,9 @@ function* logoutSaga() {
     yield put(actions.logoutSuccess());
     localStorage.removeItem("authToken");
     localStorage.removeItem("cartToken");
-    yield put({ type: cartActionTypes.CLEAR_CART });
+    yield put(clearCart());
+    yield put(clearCompare());
+    yield put(clearInstallmentCart());
     notify("خروج با موفقیت انجام شد", "success");
   } catch (error) {
     yield put(actions.logoutFailure(error.message));

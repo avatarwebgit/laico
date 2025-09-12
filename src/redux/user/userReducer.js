@@ -60,46 +60,6 @@ const initialState = {
   ],
   ordersLoading: false,
   ordersError: null,
-  favorites: [
-    {
-      id: "wish1",
-      name: "تلسکوپ هوشمند کهکشانی",
-      price: 499000,
-      imageUrl:
-        "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "ابزار رصد",
-      link: "/product/galaxy-scope",
-    },
-    {
-      id: "wish2",
-      name: "پوستر سحابی چشم گربه",
-      price: 75000,
-      imageUrl:
-        "https://images.unsplash.com/photo-1614726365949-9273435a25e8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "دکوراسیون",
-      link: "/product/cat-eye-nebula-poster",
-    },
-    {
-      id: "wish3",
-      name: "ماگ با طرح فضانورد",
-      price: 120000,
-      imageUrl:
-        "https://images.unsplash.com/photo-1589254066007-898d52d910d3?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "لوازم شخصی",
-      link: "/product/astronaut-mug",
-    },
-    {
-      id: "wish4",
-      name: "کتاب راهنمای ستارگان",
-      price: 210000,
-      imageUrl:
-        "https://images.unsplash.com/photo-1506880018603-3a594d78a85f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "کتاب‌ها",
-      link: "/product/star-guide-book",
-    },
-  ],
-  favoritesLoading: false,
-  favoritesError: null,
   tickets: [
     {
       id: "TKT-001",
@@ -262,34 +222,6 @@ const userReducer = (state = initialState, action) => {
       return { ...state, orders: action.payload, ordersLoading: false };
     case actionTypes.FETCH_ORDERS_FAILURE:
       return { ...state, ordersLoading: false, ordersError: action.payload };
-
-    // Favorite cases
-    case actionTypes.FETCH_FAVORITES_REQUEST:
-    case actionTypes.ADD_FAVORITE_REQUEST:
-    case actionTypes.REMOVE_FAVORITE_REQUEST:
-      return { ...state, favoritesLoading: true, favoritesError: null };
-    case actionTypes.FETCH_FAVORITES_SUCCESS:
-      return { ...state, favorites: action.payload, favoritesLoading: false };
-    case actionTypes.ADD_FAVORITE_SUCCESS:
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload],
-        favoritesLoading: false,
-      };
-    case actionTypes.REMOVE_FAVORITE_SUCCESS:
-      return {
-        ...state,
-        favorites: state.favorites.filter((fav) => fav.id !== action.payload),
-        favoritesLoading: false,
-      };
-    case actionTypes.FETCH_FAVORITES_FAILURE:
-    case actionTypes.ADD_FAVORITE_FAILURE:
-    case actionTypes.REMOVE_FAVORITE_FAILURE:
-      return {
-        ...state,
-        favoritesLoading: false,
-        favoritesError: action.payload,
-      };
 
     // Ticket cases
     case actionTypes.FETCH_TICKETS_REQUEST:

@@ -1,31 +1,7 @@
-
-import { MessageSquare, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
-import React from 'react';
-import { motion } from 'framer-motion';
-import styles from './ProductReviews.module.css';
-
-const mockReviews = [
-  {
-    id: 1,
-    author: 'آریا ستوده‌نیا',
-    date: '۲ روز پیش',
-    rating: 5,
-    title: 'فوق‌العاده و بی‌نظیر!',
-    text: 'واقعاً از کیفیت این محصول شگفت‌زده شدم. طراحی زیبا و دقیقی داره و جزئیاتش فوق‌العاده‌ست. قطعاً خریدش رو توصیه می‌کنم.',
-    likes: 12,
-    dislikes: 0,
-  },
-  {
-    id: 2,
-    author: 'زهرا احمدی',
-    date: '۱ هفته پیش',
-    rating: 4,
-    title: 'کیفیت خوب، اما...',
-    text: 'محصول خوبیه و کیفیت ساخت بالایی داره. تنها نکته منفی اینه که رنگش کمی با عکس متفاوت بود. در کل راضی هستم.',
-    likes: 5,
-    dislikes: 1,
-  },
-];
+import { MessageSquare, Star, ThumbsDown, ThumbsUp } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import styles from "./ProductReviews.module.css";
 
 const StarRating = ({ rating }) => (
   <div className={styles.starRating}>
@@ -39,14 +15,36 @@ const StarRating = ({ rating }) => (
   </div>
 );
 
-const ProductReviews = () => {
+const ProductReviews = ({ reviews = [] }) => {
+  if (!reviews || reviews.length === 0) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.summary}>
+          <p>هنوز نظری برای این محصول ثبت نشده است.</p>
+          <button className={styles.writeReviewBtn}>
+            <MessageSquare size={18} />
+            <span>اولین نظر را ثبت کنید</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const averageRating = (
+    reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+  ).toFixed(1);
+
   return (
     <div className={styles.container}>
       <div className={styles.summary}>
         <div className={styles.summaryRating}>
-          <span className={styles.averageRating}>۴.۵</span>
-          <StarRating rating={4.5} />
-          <span className={styles.reviewCount}>(بر اساس ۲ نظر)</span>
+          <span className={styles.averageRating}>
+            {averageRating.toLocaleString("fa-IR")}
+          </span>
+          <StarRating rating={averageRating} />
+          <span className={styles.reviewCount}>
+            (بر اساس {reviews.length.toLocaleString("fa-IR")} نظر)
+          </span>
         </div>
         <button className={styles.writeReviewBtn}>
           <MessageSquare size={18} />
@@ -55,9 +53,9 @@ const ProductReviews = () => {
       </div>
 
       <div className={styles.reviewList}>
-        {mockReviews.map((review) => (
+        {reviews.map((review, index) => (
           <motion.div
-            key={review.id}
+            key={index}
             className={styles.reviewCard}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,11 +78,11 @@ const ProductReviews = () => {
               <div className={styles.actionButtons}>
                 <button>
                   <ThumbsUp size={16} />
-                  <span>{review.likes}</span>
+                  <span>{review.likes || 0}</span>
                 </button>
                 <button>
                   <ThumbsDown size={16} />
-                  <span>{review.dislikes}</span>
+                  <span>{review.dislikes || 0}</span>
                 </button>
               </div>
             </div>

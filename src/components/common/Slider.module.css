@@ -1,8 +1,9 @@
-h2 {
+.h2 {
   width: 100%;
   text-align: center;
   color: var(--text-grey);
   margin: 50px 0;
+  margin-bottom: 25px;
   font-size: larger;
 }
 

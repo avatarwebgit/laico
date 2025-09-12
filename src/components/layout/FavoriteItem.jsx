@@ -22,7 +22,7 @@ const FavoriteItem = ({ data: productData, onRemove }) => {
   }
 
   const productName = productData.name || `${t("Product")} ${productData.id}`;
-  const productLink = `/${lng}/products/${productData.alias}/${productData.variation_id}`;
+  const productLink = `/product/${productData.id}`;
 
   return (
     <div

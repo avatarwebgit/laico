@@ -11,5 +11,6 @@
  cursor: pointer;
  margin: 10px;
  transition: all 0.2s ease-in-out;
+ border-radius: 5px;
 }
 

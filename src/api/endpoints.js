@@ -13,7 +13,7 @@ export default {
 
   PRODUCTS: {
     BASE: () => `${API_BASE}/products`,
-    BY_ID: (id) => `${API_BASE}/admin/products/${id}`,
+    BY_ID: (id) => `${API_BASE}/product/${id}`,
     SEARCH: () => `${API_BASE}/products/search`,
     CATEGORIES: () => `${API_BASE}/products/categories`,
   },
@@ -22,6 +22,11 @@ export default {
     BASE: () => `${API_BASE}/cart`,
     ITEM: (cartId) => `${API_BASE}/cart/${cartId}`,
     APPLY_COUPON: () => `${API_BASE}/cart/coupon`,
+  },
+
+  INSTALLMENT_CART: {
+    BASE: () => `${API_BASE}/installment-cart`,
+    ITEM: (cartId) => `${API_BASE}/installment-cart/${cartId}`,
   },
 
   USER: {
@@ -42,14 +47,18 @@ export default {
 
   BLOGS: {
     GET_BlOGS: () => `${API_BASE}/blogs`,
-    RATE_BLOG: (userId) => `${API_BASE}/blogs`,
-    LIKE_BLOG: (userId) => `${API_BASE}/blogs`,
+    RATE_BLOG: () => `${API_BASE}/blogs/rate`,
+    LIKE_BLOG: () => `${API_BASE}/blogs/like`,
     BY_ID: (id) => `${API_BASE}/blogs/${id}`,
-    CATEGORIES: () => `${API_BASE}/categories`,
-    SEARCH: () => `${API_BASE}/search/blog`,
+    CATEGORIES: () => `${API_BASE}/blogs/categories`,
+    SEARCH: () => `${API_BASE}/blogs/search`,
   },
 
   HOME: {
     GET_PRODUCTS: () => `${API_BASE}/home`,
+  },
+
+  GENERAL: {
+    INSTALLMENT_GATEWAYS: () => `${API_BASE}/general/installment-gateways`,
   },
 };

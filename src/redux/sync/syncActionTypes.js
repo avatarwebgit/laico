@@ -1,0 +1,1 @@
+export const SYNC_PERSISTED_STATE = "sync/SYNC_PERSISTED_STATE";

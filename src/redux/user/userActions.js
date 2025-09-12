@@ -103,43 +103,6 @@ export const fetchOrdersFailure = (error) => ({
   payload: error,
 });
 
-// Favorites Actions
-export const fetchFavoritesRequest = () => ({
-  type: actionTypes.FETCH_FAVORITES_REQUEST,
-});
-export const fetchFavoritesSuccess = (favorites) => ({
-  type: actionTypes.FETCH_FAVORITES_SUCCESS,
-  payload: favorites,
-});
-export const fetchFavoritesFailure = (error) => ({
-  type: actionTypes.FETCH_FAVORITES_FAILURE,
-  payload: error,
-});
-export const addFavoriteRequest = (productId) => ({
-  type: actionTypes.ADD_FAVORITE_REQUEST,
-  payload: productId,
-});
-export const addFavoriteSuccess = (product) => ({
-  type: actionTypes.ADD_FAVORITE_SUCCESS,
-  payload: product,
-});
-export const addFavoriteFailure = (error) => ({
-  type: actionTypes.ADD_FAVORITE_FAILURE,
-  payload: error,
-});
-export const removeFavoriteRequest = (productId) => ({
-  type: actionTypes.REMOVE_FAVORITE_REQUEST,
-  payload: productId,
-});
-export const removeFavoriteSuccess = (productId) => ({
-  type: actionTypes.REMOVE_FAVORITE_SUCCESS,
-  payload: productId,
-});
-export const removeFavoriteFailure = (error) => ({
-  type: actionTypes.REMOVE_FAVORITE_FAILURE,
-  payload: error,
-});
-
 // Tickets Actions
 export const fetchTicketsRequest = () => ({
   type: actionTypes.FETCH_TICKETS_REQUEST,

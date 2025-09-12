@@ -343,6 +343,7 @@ hr {
   z-index: 100000;
   width: 100%;
   border-bottom: 1px solid #d5d5d5;
+  background-color: var(--color-grey-1);
 }
 
 .fixed-header div {

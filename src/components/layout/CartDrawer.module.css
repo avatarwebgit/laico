@@ -55,6 +55,12 @@
   width: 100%;
 }
 
+.header span {
+  font-size: var(--normal-font);
+  color: var(--color-grey);
+  margin: auto 5px;
+}
+
 .title {
   font-size: var(--title-font);
   font-weight: 600;

@@ -2,6 +2,7 @@ import * as actionTypes from "./cartActionTypes";
 
 const initialState = {
   products: [],
+  count: 0,
   summary: null,
   totalPrice: 0,
   finalCart: [],
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 const cartReducer = (state = initialState, action) => {
-  console.log(state)
+  console.log(state);
   switch (action.type) {
     case actionTypes.FETCH_CART_REQUEST:
     case actionTypes.ADD_TO_CART_REQUEST:
@@ -34,6 +35,7 @@ const cartReducer = (state = initialState, action) => {
         products: action.payload.items || [],
         summary: action.payload.summary || null,
         totalPrice: action.payload.summary?.subtotal || 0,
+        count :action.payload.items.length,
         loading: false,
       };
 
@@ -53,6 +55,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        count: action.payload.items.length,
         error: action.payload,
       };
 

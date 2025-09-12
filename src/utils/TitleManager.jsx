@@ -15,6 +15,7 @@ const routeTitles = {
   "/blogs": "مقالات و بلاگ",
   "/blogs/:id": (params) => `مقاله ${params.id}`,
   "/category": "دسته بندی محصولات",
+  "/compare": "مقایسه محصولات",
   "/checkout": "تکمیل سفارش",
   "/checkout-success": "سفارش با موفقیت ثبت شد",
   "/checkout-failure": "خطا در پرداخت",

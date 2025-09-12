@@ -1,15 +1,17 @@
 import { Tooltip, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Star, Eye, Layers2 } from "lucide-react"; // Changed icon
+import { Star, Eye, Layers2 } from "lucide-react";
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ImagePixelated from "../common/ImagePixelated";
 import classes from "./CategoryProductBox.module.css";
-// import { ReactComponent as CompareIcon } from "../../assets/svgs/chart.svg"; // Removed
-import { addToCompare } from "../../redux/compare/compareActions";
+import { toggleCompare } from "../../redux/compare/compareActions";
 
 const CategoryProductBox = ({ product }) => {
   const dispatch = useDispatch();
+  const { items: compareItems } = useSelector((state) => state.compare);
+  const isInCompare = compareItems.some((item) => item.id === product.id);
+
   const {
     imageUrl,
     name,
@@ -28,10 +30,10 @@ const CategoryProductBox = ({ product }) => {
       ? Math.round(((originalPrice - price) / originalPrice) * 100)
       : 0;
 
-  const handleAddToCompare = (e) => {
+  const handleToggleCompare = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(addToCompare(product));
+    dispatch(toggleCompare(product));
   };
 
   const renderStars = () => {
@@ -71,8 +73,8 @@ const CategoryProductBox = ({ product }) => {
   const renderColors = useCallback(() => {
     return colors.slice(0, 4).map((option) => (
       <Tooltip
-        key={option.id}
-        title={option.color}
+        key={option._id || option.id || option.hex}
+        title={option.name || option.color}
         arrow
         placement="top"
         slotProps={{
@@ -84,15 +86,14 @@ const CategoryProductBox = ({ product }) => {
           <div className={`${classes["color-input-wrapper"]} ${classes.rtl}`}>
             <input
               type="color"
-              name={`color-${option.id}`}
-              id={`color-${option.id}`}
+              name={`color-${option._id || option.id || option.hex}`}
+              id={`color-${option._id || option.id || option.hex}`}
               readOnly
               hidden
             />
             <div
               className={`${classes["custom-color"]}`}
               style={{
-                background: option.image ? `url(${option.image})` : option.hex,
                 backgroundColor: option.hex,
               }}
             />
@@ -107,17 +108,17 @@ const CategoryProductBox = ({ product }) => {
       className={`${classes["product-box"]} ${
         isOutOfStock ? classes.outOfStock : ""
       }`}
-      href={isOutOfStock ? "#" : `/product/${id}/${id}`}
+      href={isOutOfStock ? "#" : `/product/${id}`}
     >
       <div className={classes["img-wrapper"]}>
         <ImagePixelated src={imageUrl} alt={name} />
         <div className={classes.overlayActions}>
-          <Tooltip title="مقایسه">
+          <Tooltip title={isInCompare ? "حذف از مقایسه" : "مقایسه"}>
             <IconButton
               className={classes.actionButton}
-              onClick={handleAddToCompare}
+              onClick={handleToggleCompare}
             >
-              <Layers2 />
+              <Layers2 fill={isInCompare ? "black" : "none"} />
             </IconButton>
           </Tooltip>
         </div>

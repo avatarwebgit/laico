@@ -14,73 +14,66 @@
   margin-bottom: 2.5rem;
 }
 
-.tableWrapper {
-  overflow-x: auto;
-  border-radius: var(--radius-lg);
-  -webkit-overflow-scrolling: touch;
+.compareWrapper {
+  overflow: auto;
   border: 1px solid #a0a0a0;
+  border-radius: var(--radius-lg);
+  max-height: 80vh;
+  position: relative;
 }
 
 /* Custom Scrollbar */
-.tableWrapper::-webkit-scrollbar {
+.compareWrapper::-webkit-scrollbar {
   height: 8px;
   width: 8px;
 }
-.tableWrapper::-webkit-scrollbar-track {
+.compareWrapper::-webkit-scrollbar-track {
   background: #cccccc;
   border-radius: var(--radius-lg);
 }
-.tableWrapper::-webkit-scrollbar-thumb {
+.compareWrapper::-webkit-scrollbar-thumb {
   background: #a0a0a0;
   border-radius: 8px;
 }
-.tableWrapper::-webkit-scrollbar-thumb:hover {
+.compareWrapper::-webkit-scrollbar-thumb:hover {
   background: #8a8a8a;
 }
 
-.compareTable {
-  width: 100%;
-  min-width: 800px;
-  border-collapse: separate; /* Changed to separate for sticky header */
-  border-spacing: 0;
-  table-layout: fixed;
+.compareGrid {
+  display: grid;
+  min-width: 800px; /* For horizontal scroll on smaller screens */
 }
 
-.compareTable th,
-.compareTable td {
-  padding: 1.25rem 1rem;
+/* Common cell styles */
+.headerCell,
+.attributeCell,
+.valueCell {
+  padding: 1rem;
   text-align: center;
-  vertical-align: middle;
-  border-bottom: 1px solid #a0a0a0;
-  border-left: 1px solid #a0a0a0;
   background-color: #8f8f8f;
   color: white;
-  transition: background-color 0.2s ease;
-  font-size: var(--normal-font);
+  border-bottom: 1px solid #a0a0a0;
+  border-left: 1px solid #a0a0a0;
 }
 
-.compareTable th:first-child,
-.compareTable td:first-child {
+.headerCell:first-child,
+.attributeCell {
   border-right: 1px solid #a0a0a0;
 }
 
-.compareTable tbody tr:hover th,
-.compareTable tbody tr:hover td {
-  background-color: #7a7a7a; /* Darken on row hover */
+.valueCell {
+  transition: background-color 0.2s ease;
 }
 
-.headerCell {
-  vertical-align: top;
-  padding: 1rem;
-  min-width: 220px;
+.compareGrid:hover .valueCell:hover {
+  background-color: #7a7a7a;
 }
 
-/* --- STICKY STYLES --- */
-.compareTable thead th {
+.stickyHeader {
   position: sticky;
-  top: 90px;
+  top: 0;
   z-index: 10;
-  background-color: #858585; /* Slightly different bg to stand out */
+  background-color: #858585;
 }
 
 .stickyColumn {
@@ -89,18 +82,18 @@
   z-index: 5;
 }
 
-.compareTable thead th.stickyColumn {
-  z-index: 15; /* Top-right corner must be on top of all */
+.stickyHeader.stickyColumn {
+  z-index: 15;
 }
 
 .attributeCell {
   text-align: right;
   font-weight: 600;
   font-size: var(--caption-font);
-  background-color: #858585;
+  background-color: #858585; /* Same as sticky header for consistency */
 }
 
-/* Product Header in TH */
+/* Product Header */
 .productHeader {
   display: flex;
   flex-direction: column;
@@ -183,11 +176,9 @@
 }
 
 @media (max-width: 768px) {
-  .compareTable {
-    table-layout: auto;
-  }
-  .compareTable th,
-  .compareTable td {
+  .headerCell,
+  .attributeCell,
+  .valueCell {
     padding: 0.75rem;
     min-width: 180px;
   }
@@ -198,4 +189,43 @@
     width: 80px;
     height: 80px;
   }
+}
+
+/* Price cell styles */
+.priceCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--normal-font);
+}
+
+.originalPrice {
+  font-size: var(--caption-font);
+  color: #d1d5db; /* Lighter grey for dark bg */
+  text-decoration: line-through;
+}
+
+.finalPrice {
+  font-size: var(--title-font);
+  font-weight: 700;
+  color: #fff;
+}
+
+.discountBadge {
+  background-color: var(--color-red);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: var(--caption-font);
+  font-weight: bold;
+}
+
+.profitBadge {
+  background-color: #e0f2f1;
+  color: #00796b;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: var(--caption-font);
+  font-weight: 500;
 }

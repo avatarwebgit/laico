@@ -24,17 +24,14 @@ function* fetchHomeProductsSaga() {
 function* fetchProductDetailsSaga(action) {
   try {
     const response = yield call(api.getById, action.payload);
-    console.log(action, response);
-    if (response.status) {
-      yield put(actions.fetchProductDetailsSuccess(response.data));
-    } else {
-      yield put(
-        actions.fetchProductDetailsFailure(
-          response.message || "Failed to fetch product details"
-        )
-      );
-    }
+
+    yield put(actions.fetchProductDetailsSuccess(response.data ));
   } catch (error) {
+    yield put(
+      actions.fetchProductDetailsFailure(
+        error.message || "Failed to fetch product details"
+      )
+    );
     const errorMessage =
       typeof error === "string"
         ? error

@@ -16,12 +16,6 @@ export default {
   getOrders: () => api.get(endpoints.USER.ORDERS()),
   getOrderDetails: (orderId) => api.get(endpoints.USER.ORDER_DETAILS(orderId)),
 
-  getFavorites: () => api.get(endpoints.USER.FAVORITES()),
-  addFavorite: (productId) =>
-    api.post(endpoints.USER.ADD_FAVORITE(), { productId }),
-  removeFavorite: (productId) =>
-    api.delete(endpoints.USER.REMOVE_FAVORITE(productId)),
-
   getTickets: () => api.get(endpoints.USER.TICKETS()),
   createTicket: (ticketData) => api.post(endpoints.USER.TICKETS(), ticketData),
   getTicketDetails: (ticketId) => api.get(endpoints.USER.TICKET(ticketId)),

@@ -1,5 +1,6 @@
 import { all } from "redux-saga/effects";
 import { cartSaga } from "./cart/cartSaga";
+import { installmentCartSaga } from "./installmentCart/installmentCartSaga";
 import { productSaga } from "./products/productSaga";
 import { favoritesSaga } from "./favorites/favoritesSaga";
 import { userSaga } from "./user/userSaga";
@@ -9,10 +10,12 @@ import { drawerSaga } from "./drawer/drawerSaga";
 import { blogSaga } from "./blogs/blogSaga";
 import { modalSaga } from "./modal/modalSaga";
 import { compareSaga } from "./compare/compareSaga";
+import { generalSaga } from "./general/generalSaga";
 
 export default function* rootSaga() {
   yield all([
     cartSaga(),
+    installmentCartSaga(),
     productSaga(),
     favoritesSaga(),
     userSaga(),
@@ -22,5 +25,6 @@ export default function* rootSaga() {
     blogSaga(),
     modalSaga(),
     compareSaga(),
+    generalSaga(),
   ]);
 }

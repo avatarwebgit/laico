@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   fetchFavoritesRequest,
-  removeFavoriteRequest,
-} from "../../redux/user/userActions";
+  removeFromFavoritesRequest,
+} from "../../redux/favorites/favoritesActions";
 import Spinner from "../common/Spinner";
 import styles from "./Favorites.module.css";
 
@@ -70,10 +70,10 @@ const WishlistItem = ({ item, onRemove, index }) => {
 const Favorites = () => {
   const dispatch = useDispatch();
   const {
-    favorites: items,
-    favoritesLoading,
-    favoritesError,
-  } = useSelector((state) => state.user);
+    items,
+    loading: favoritesLoading,
+    error: favoritesError,
+  } = useSelector((state) => state.favorites);
 
   useEffect(() => {
     if (items.length === 0) {
@@ -82,7 +82,7 @@ const Favorites = () => {
   }, [dispatch, items.length]);
 
   const handleRemoveItem = (id) => {
-    dispatch(removeFavoriteRequest(id));
+    dispatch(removeFromFavoritesRequest(id));
   };
 
   const renderContent = () => {

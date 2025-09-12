@@ -1,14 +1,10 @@
-import api from './index';
-import endpoints from './endpoints';
+import api from "./index";
+import endpoints from "./endpoints";
 
 export default {
- getOrders: userId => api.get(endpoints.ORDERS.USER_ORDERS(userId)),
+  getOrders: () => api.get(endpoints.USER.ORDERS()),
 
- getOrderDetails: (userId, orderId) =>
-  api.get(endpoints.ORDERS.ORDER_DETAILS(userId, orderId)),
+  getOrderDetails: (orderId) => api.get(endpoints.USER.ORDER_DETAILS(orderId)),
 
- createOrder: (userId, orderData) =>
-  api.post(endpoints.ORDERS.USER_ORDERS(userId), orderData),
-
- checkout: checkoutData => api.post(endpoints.ORDERS.CHECKOUT, checkoutData),
+  createOrder: (orderData) => api.post(endpoints.USER.ORDERS(), orderData),
 };

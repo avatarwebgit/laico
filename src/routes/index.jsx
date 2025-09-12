@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import Authmiddleware from "./authMiddleware";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -22,7 +21,7 @@ const Compare = lazy(() => import("../pages/Compare"));
 
 export const publicRoutes = [
   { path: "/", element: <Home />, name: "صفحه اصلی" },
-  { path: "/product/:slug/:variation", element: <Product />, name: "محصول" },
+  { path: "/product/:slug", element: <Product />, name: "محصول" },
   { path: "/blogs", element: <Blogs />, name: "وبلاگ" },
   { path: "/blogs/:id", element: <BlogPost />, name: "مقاله" },
   { path: "/category", element: <Category />, name: "دسته بندی" },

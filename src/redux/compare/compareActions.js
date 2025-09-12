@@ -1,7 +1,7 @@
 import * as actionTypes from "./compareActionTypes";
 
-export const addToCompare = (product) => ({
-  type: actionTypes.ADD_TO_COMPARE_REQUEST,
+export const toggleCompare = (product) => ({
+  type: actionTypes.TOGGLE_COMPARE_REQUEST,
   payload: product,
 });
 

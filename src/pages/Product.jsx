@@ -5,7 +5,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Expand, GalleryHorizontal, Layers2 } from "lucide-react"; // Changed icon
+import { GalleryHorizontal, Heart, Layers2, ShoppingCart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,14 +26,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
 
-import { ReactComponent as Shop } from "../assets/svgs/add_basket-white.svg";
-import { ReactComponent as HeartRed } from "../assets/svgs/heart-red.svg";
-import { ReactComponent as Heart } from "../assets/svgs/heart.svg";
-// import { ReactComponent as CompareIcon } from "../assets/svgs/chart.svg"; // Removed
 import Arrowbutton from "../components/common/ArrowButton";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import Content from "../components/common/Content";
-import Loader from "../components/common/Loader";
 import ProductBox from "../components/common/ProductBox";
 import Slider from "../components/common/Slider";
 import ColorSection from "../components/product/ColorSection";
@@ -42,47 +37,37 @@ import ProductQA from "../components/product/ProductQA";
 import ProductReviews from "../components/product/ProductReviews";
 import ProductTabs from "../components/product/ProductTabs";
 
-import { fetchProductDetailsRequest } from "../redux/products/productActions";
 import {
   addFavoriteRequest,
-  removeFavoriteRequest,
-} from "../redux/user/userActions";
-import { updateCartItemRequest } from "../redux/cart/cartActions";
-import { addToCompare } from "../redux/compare/compareActions";
+  removeFromFavoritesRequest,
+} from "../redux/favorites/favoritesActions";
+import { fetchProductDetailsRequest } from "../redux/products/productActions";
 
-import { formatNumber, notify } from "../utils/helperFucntions";
-import img from "./../assets/images/photo_2025-04-13_11-44-04.jpg";
+import { addToCartRequest } from "../redux/cart/cartActions";
+
+import { toggleCompare } from "../redux/compare/compareActions";
+
+import { formatNumber } from "../utils/helperFucntions";
 
 import classes from "./Product.module.css";
-
-const colors = [
-  { id: "1", name: "crimson", color: "#DC143C" },
-  { id: "2", name: "forest", color: "#228B22" },
-  { id: "3", name: "midnight", color: "#191970" },
-  { id: "4", name: "gold", color: "#FFD700" },
-  { id: "5", name: "orchid", color: "#DA70D6" },
-  { id: "6", name: "slate", color: "#708090" },
-  { id: "7", name: "coral", color: "#FF7F50" },
-  { id: "8", name: "teal", color: "#008080" },
-  { id: "9", name: "indigo", color: "#4B0082" },
-  { id: "10", name: "salmon", color: "#FA8072" },
-];
+import Spinner from "../components/common/Spinner";
 
 const Product = () => {
-  const { slug, variation } = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const {
-    productDetails,
-    loading: productDetailsLoading,
-    error: productDetailsError,
-  } = useSelector((state) => state.products);
+  const { loading: productDetailsLoading, error: productDetailsError } =
+    useSelector((state) => state.products);
 
-  const { favorites } = useSelector((state) => state.user);
+  const productDetails = useSelector(
+    (state) => state.products.productDetails[slug]
+  );
+
+  const { items: favorites } = useSelector((state) => state.favorites);
+  const { items: compareItems } = useSelector((state) => state.compare);
   const token = useSelector((state) => state.auth.token);
-  const euro = useSelector((state) => state.cart.euro) || 1;
 
   const [quantity, setQuantity] = useState(1);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -101,33 +86,37 @@ const Product = () => {
     }
   }, [dispatch, slug]);
 
-  const isFavorite = favorites.some((fav) => fav.variation_id === +variation);
+  const isLiked = productDetails
+    ? favorites.some((fav) => fav.id === productDetails.id)
+    : false;
+  const isInCompare = productDetails
+    ? compareItems.some((item) => item.id === productDetails.id)
+    : false;
+
   const allImages =
-    productDetails?.images && productDetails.primary_image
-      ? [productDetails.primary_image, ...productDetails.images]
-      : productDetails?.primary_image
-      ? [productDetails.primary_image]
+    productDetails?.images && productDetails.imageUrl
+      ? [productDetails.imageUrl, ...productDetails.images]
+      : productDetails?.imageUrl
+      ? [productDetails.imageUrl]
       : [];
 
-  const discountAmount = productDetails?.discount?.value
-    ? parseFloat(productDetails.discount.value)
-    : 0;
   const originalPrice = parseFloat(productDetails?.original_price);
-  const salePrice = originalPrice - discountAmount;
+  const salePrice = parseFloat(productDetails?.final_price);
+  const discountAmount =
+    originalPrice > salePrice ? originalPrice - salePrice : 0;
 
   const specs = productDetails
     ? [
-        { name_fa: "کد محصول", value_fa: productDetails.sku },
+        { name_fa: "کد محصول", value_fa: productDetails.legacy_id },
         {
-          name_fa: "کد حسابداری",
-          value_fa: productDetails.product_accounting_code,
+          name_fa: "دسته بندی",
+          value_fa: productDetails.category,
         },
-        { name_fa: "موجودی", value_fa: productDetails.stock },
-        { name_fa: "برند", value_fa: productDetails.brand?.name },
         {
-          name_fa: "دسته‌بندی",
-          value_fa: productDetails.categories?.map((c) => c.name).join(", "),
+          name_fa: "موجودی",
+          value_fa: productDetails.isOutOfStock ? "ناموجود" : "موجود",
         },
+        { name_fa: "تعداد فروش", value_fa: productDetails.sales },
       ].filter((item) => item.value_fa)
     : [];
 
@@ -165,17 +154,17 @@ const Product = () => {
         },
         {
           title: "نظرات کاربران",
-          content: <ProductReviews />,
+          content: <ProductReviews reviews={productDetails.comments || []} />,
         },
         {
           title: "پرسش و پاسخ",
-          content: <ProductQA />,
+          content: <ProductQA qas={productDetails.faqs || []} />,
         },
       ]
     : [];
 
   const handleIncrement = () => {
-    if (productDetails && quantity < productDetails.stock) {
+    if (productDetails && quantity < (productDetails.stock || 10)) {
       setQuantity((q) => q + 1);
     }
   };
@@ -186,7 +175,17 @@ const Product = () => {
     }
   };
 
-  const handleToggleFavorite = () => {};
+  const handleToggleFavorite = () => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    if (isLiked) {
+      dispatch(removeFromFavoritesRequest(productDetails.id));
+    } else {
+      dispatch(addFavoriteRequest(productDetails));
+    }
+  };
 
   const handleAddToCart = () => {
     if (!token) {
@@ -194,7 +193,7 @@ const Product = () => {
       return;
     }
     dispatch(
-      updateCartItemRequest({
+      addToCartRequest({
         product_id: productDetails.id,
         quantity: quantity,
       })
@@ -208,14 +207,14 @@ const Product = () => {
     setIsGalleryOpen(true);
   };
 
-  const handleAddToCompare = () => {
+  const handleToggleCompare = () => {
     if (productDetails) {
-      dispatch(addToCompare(productDetails));
+      dispatch(toggleCompare(productDetails));
     }
   };
 
   if (productDetailsLoading && !productDetails) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   if (productDetailsError) {
@@ -354,7 +353,7 @@ const Product = () => {
             </Typography>
 
             <ColorSection
-              colors={colors}
+              colors={productDetails?.colors || []}
               setColor={setSelectedColor}
               selectedColor={selectedColor}
             />
@@ -364,8 +363,7 @@ const Product = () => {
               color="inherit"
               variant="h3"
             >
-              {t("serial_number")}: {productDetails?.sku} /{" "}
-              {productDetails?.product_accounting_code}
+              {t("serial_number")}: {productDetails?.legacy_id}
             </Typography>
 
             <div className={classes.price_wrapper}>
@@ -378,11 +376,11 @@ const Product = () => {
               </Typography>
               {discountAmount > 0 && (
                 <span className={classes.prev_price}>
-                  <del>{formatNumber(originalPrice * euro)}</del>
+                  <del>{formatNumber(originalPrice, "toman")}</del>
                 </span>
               )}
               <p className={classes.current_price}>
-                {formatNumber(salePrice * euro)}
+                {formatNumber(salePrice, "toman")}
               </p>
             </div>
 
@@ -412,19 +410,19 @@ const Product = () => {
                 className={classes.wish_list}
                 onClick={handleToggleFavorite}
               >
-                {isFavorite ? (
-                  <HeartRed width={15} height={15} />
+                {isLiked ? (
+                  <Heart size={15} fill="red" color="red" />
                 ) : (
-                  <Heart width={15} height={15} />
+                  <Heart size={15} />
                 )}
-                <p>{t(isFavorite ? "product.remove" : "add_to_favorite")}</p>
+                <p>{t(isLiked ? "product.remove" : "add_to_favorite")}</p>
               </IconButton>
               <IconButton
                 className={classes.compare_button}
-                onClick={handleAddToCompare}
+                onClick={handleToggleCompare}
               >
-                <Layers2 />
-                <p>مقایسه</p>
+                <Layers2 size={15} fill={isInCompare ? "black" : "none"} />
+                <p>{isInCompare ? "حذف از مقایسه" : "مقایسه"}</p>
               </IconButton>
             </div>
 
@@ -434,7 +432,8 @@ const Product = () => {
               className={classes.addtocart}
               onClick={handleAddToCart}
             >
-              <Shop
+              <ShoppingCart
+                color="white"
                 style={{ width: "25px", height: "25px", margin: "0 5px" }}
               />
               افزودن به سبد خرید
@@ -446,7 +445,7 @@ const Product = () => {
                 <p className={classes.payment_title}>{t("payment")}:</p>
                 &nbsp;
                 <p className={classes.payment_value}>
-                  {formatNumber(salePrice * quantity * euro)}
+                  {formatNumber(salePrice * quantity, "toman")}
                 </p>
               </div>
             </div>
@@ -455,40 +454,24 @@ const Product = () => {
         <div className={classes.tabsSection}>
           <ProductTabs tabs={tabsData} />
         </div>
-
-        <Content
-          sectionClassname={classes.section}
-          contentClassname={classes["suggest-swiper"]}
-        >
-          <h2>محصولات مرتبط</h2>
-          <Slider
-            navigation={true}
-            autoplay={false}
-            slidesPerView={5}
-            spaceBetween={50}
-            items={[
-              <ProductBox
-                product={{
-                  id: "1736236632",
-                  variationId: "378",
-                  name: "محصول فوتی ",
-                  price: 12000000,
-                  originalPrice: 15000000,
-                  isLiked: false,
-                  imageUrl: img,
-                  rating: 4.5,
-                  totalViews: 1800,
-                  isOutOfStock: true,
-                }}
-              />,
-              <ProductBox />,
-              <ProductBox />,
-              <ProductBox />,
-              <ProductBox />,
-              <ProductBox />,
-            ]}
-          />
-        </Content>
+        {productDetails?.relatedProducts &&
+          productDetails.relatedProducts.length > 0 && (
+            <Content
+              sectionClassname={classes.section}
+              contentClassname={classes["suggest-swiper"]}
+            >
+              <h2>محصولات مرتبط</h2>
+              <Slider
+                navigation={true}
+                autoplay={false}
+                slidesPerView={5}
+                spaceBetween={50}
+                items={productDetails.relatedProducts.map((p) => (
+                  <ProductBox key={p.id} product={p} />
+                ))}
+              />
+            </Content>
+          )}
       </Content>
       <ProductGalleryModal
         images={allImages}

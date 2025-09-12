@@ -6,6 +6,7 @@ import {
   LogOut,
   ShoppingCart,
   User,
+  CreditCard,
 } from "lucide-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ import { logoutRequest } from "../../../redux/auth/authActions";
 import {
   openCartDrawer,
   openFavoritesDrawer,
+  openInstallmentCartDrawer,
 } from "../../../redux/drawer/drawerActions";
 import classes from "./FixedNavigation.module.css";
 
@@ -23,8 +25,10 @@ const FixedNavigation = () => {
 
   const { isAuthenticated } = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
-  const { favorites } = useSelector((state) => state.user);
-  const favoritesCount = favorites.length;
+  const { count: favoritesCount } = useSelector((state) => state.favorites);
+  const { count: installmentCartCount } = useSelector(
+    (state) => state.installmentCart
+  );
 
   const handleLogout = () => {
     dispatch(logoutRequest());
@@ -52,23 +56,41 @@ const FixedNavigation = () => {
         </IconButton>
       )}
 
-      <IconButton onClick={() => dispatch(openFavoritesDrawer())}>
-        <Badge
-          badgeContent={favoritesCount || 0}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          sx={{
-            "& .MuiBadge-badge": {
-              backgroundColor: "rgba(255, 255, 255, 9)",
-              color: "black",
-            },
-          }}
-        >
-          <Heart className={classes.svg} />
-        </Badge>
-      </IconButton>
+      {isAuthenticated && (
+        <>
+          <IconButton onClick={() => dispatch(openFavoritesDrawer())}>
+            <Badge
+              badgeContent={favoritesCount || 0}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              sx={{
+                "& .MuiBadge-badge": {
+                  backgroundColor: "rgba(255, 255, 255, 9)",
+                  color: "black",
+                },
+              }}
+            >
+              <Heart className={classes.svg} />
+            </Badge>
+          </IconButton>
+          <IconButton onClick={() => dispatch(openInstallmentCartDrawer())}>
+            <Badge
+              badgeContent={installmentCartCount || 0}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              sx={{
+                "& .MuiBadge-badge": {
+                  backgroundColor: "rgba(255, 255, 255, 9)",
+                  color: "black",
+                },
+              }}
+            >
+              <CreditCard className={classes.svg} />
+            </Badge>
+          </IconButton>
+        </>
+      )}
       <IconButton onClick={() => dispatch(openCartDrawer())}>
         <Badge
-          badgeContent={cart?.products.length || 0}
+          badgeContent={cart?.count || 0}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           sx={{
             "& .MuiBadge-badge": {

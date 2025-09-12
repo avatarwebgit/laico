@@ -77,7 +77,7 @@ const mockProducts = [
 
 const initialState = {
   items: [],
-  productDetails: null,
+  productDetails: {},
   popularProducts: [],
   latestProducts: [],
   specialOffersProducts: [],
@@ -106,7 +106,10 @@ const productReducer = (state = initialState, action) => {
     case actionTypes.FETCH_PRODUCT_DETAILS_SUCCESS:
       return {
         ...state,
-        productDetails: action.payload,
+        productDetails: {
+          ...state.productDetails,
+          [action.payload.id]: action.payload,
+        },
         loading: false,
       };
 

@@ -1,4 +1,4 @@
-import { takeLatest, put, call, select, takeEvery } from "redux-saga/effects";
+import { takeLatest, put, call, select } from "redux-saga/effects";
 import * as actionTypes from "./userActionTypes";
 import * as actions from "./userActions";
 import api from "../../api/user";
@@ -63,7 +63,6 @@ function* updateAddressSaga(action) {
     }
     const { addressId, addressData } = action.payload;
     const response = yield call(api.updateAddress, addressId, addressData);
-    console.log(response);
     yield put(actions.updateAddressSuccess(response.data));
     notify("آدرس با موفقیت بروزرسانی شد", "success");
   } catch (error) {
@@ -92,48 +91,18 @@ function* deleteAddressSaga(action) {
 // Orders Saga
 function* fetchOrdersSaga() {
   try {
-    const orders = yield call(api.getOrders);
-    yield put(actions.fetchOrdersSuccess(orders));
+    const response = yield call(api.getOrders);
+    yield put(actions.fetchOrdersSuccess(response.data || []));
   } catch (error) {
     yield put(actions.fetchOrdersFailure("خطا در دریافت سفارشات"));
-  }
-}
-
-// Favorites Sagas
-function* fetchFavoritesSaga() {
-  try {
-    const favorites = yield call(api.getFavorites);
-    yield put(actions.fetchFavoritesSuccess(favorites));
-  } catch (error) {
-    yield put(actions.fetchFavoritesFailure("خطا در دریافت علاقه مندی ها"));
-  }
-}
-
-function* addFavoriteSaga(action) {
-  try {
-    const productId = action.payload;
-    const favorite = yield call(api.addFavorite, productId);
-    yield put(actions.addFavoriteSuccess(favorite));
-  } catch (error) {
-    yield put(actions.addFavoriteFailure("خطا در اضافه کردن به علاقه مندی ها"));
-  }
-}
-
-function* removeFavoriteSaga(action) {
-  try {
-    const productId = action.payload;
-    yield call(api.removeFavorite, productId);
-    yield put(actions.removeFavoriteSuccess(productId));
-  } catch (error) {
-    yield put(actions.removeFavoriteFailure("خطا در حذف از علاقه مندی ها"));
   }
 }
 
 // Tickets Sagas
 function* fetchTicketsSaga() {
   try {
-    const tickets = yield call(api.getTickets);
-    yield put(actions.fetchTicketsSuccess(tickets));
+    const response = yield call(api.getTickets);
+    yield put(actions.fetchTicketsSuccess(response.data || []));
   } catch (error) {
     yield put(actions.fetchTicketsFailure("خطا در دریافت تیکت ها"));
   }
@@ -141,28 +110,32 @@ function* fetchTicketsSaga() {
 
 function* createTicketSaga(action) {
   try {
-    const ticket = yield call(api.createTicket, action.payload);
-    yield put(actions.createTicketSuccess(ticket));
+    const response = yield call(api.createTicket, action.payload);
+    yield put(actions.createTicketSuccess(response.data));
+    notify("تیکت با موفقیت ایجاد شد", "success");
   } catch (error) {
     yield put(actions.createTicketFailure("خطا در ایجاد تیکت"));
+    notify("خطا در ایجاد تیکت", "error");
   }
 }
 
 function* replyToTicketSaga(action) {
   try {
     const { ticketId, replyData } = action.payload;
-    const ticket = yield call(api.replyToTicket, ticketId, replyData);
-    yield put(actions.replyToTicketSuccess(ticket));
+    const response = yield call(api.replyToTicket, ticketId, replyData);
+    yield put(actions.replyToTicketSuccess(response.data));
+    notify("پاسخ با موفقیت ارسال شد", "success");
   } catch (error) {
     yield put(actions.replyToTicketFailure("خطا در پاسخ به تیکت"));
+    notify("خطا در پاسخ به تیکت", "error");
   }
 }
 
 // Wallet & Transactions Sagas
 function* fetchWalletSaga() {
   try {
-    const wallet = yield call(api.getWallet);
-    yield put(actions.fetchWalletSuccess(wallet));
+    const response = yield call(api.getWallet);
+    yield put(actions.fetchWalletSuccess(response.data));
   } catch (error) {
     yield put(actions.fetchWalletFailure("خطا در دریافت کیف پول"));
   }
@@ -170,8 +143,8 @@ function* fetchWalletSaga() {
 
 function* fetchTransactionsSaga() {
   try {
-    const transactions = yield call(api.getTransactions);
-    yield put(actions.fetchTransactionsSuccess(transactions));
+    const response = yield call(api.getTransactions);
+    yield put(actions.fetchTransactionsSuccess(response.data || []));
   } catch (error) {
     yield put(actions.fetchTransactionsFailure("خطا در دریافت تراکنش ها"));
   }
@@ -195,9 +168,6 @@ export function* userSaga() {
 
   // New Watchers
   yield takeLatest(actionTypes.FETCH_ORDERS_REQUEST, fetchOrdersSaga);
-  yield takeLatest(actionTypes.FETCH_FAVORITES_REQUEST, fetchFavoritesSaga);
-  yield takeLatest(actionTypes.ADD_FAVORITE_REQUEST, addFavoriteSaga);
-  yield takeLatest(actionTypes.REMOVE_FAVORITE_REQUEST, removeFavoriteSaga);
   yield takeLatest(actionTypes.FETCH_TICKETS_REQUEST, fetchTicketsSaga);
   yield takeLatest(actionTypes.CREATE_TICKET_REQUEST, createTicketSaga);
   yield takeLatest(actionTypes.REPLY_TICKET_REQUEST, replyToTicketSaga);

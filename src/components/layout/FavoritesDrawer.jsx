@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeFavoritesDrawer } from "../../redux/drawer/drawerActions";
 import {
   fetchFavoritesRequest,
-  removeFavoriteRequest,
-} from "../../redux/user/userActions";
+  removeFromFavoritesRequest,
+} from "../../redux/favorites/favoritesActions";
 
 import FavoriteItem from "./FavoriteItem";
 import classes from "./FavoritesDrawer.module.css";
@@ -36,10 +36,11 @@ const FavoritesDrawer = () => {
   const { t } = useTranslation();
   const drawerState = useSelector((state) => state.drawer.favoritesDrawerOpen);
   const {
-    favorites: products,
-    favoritesLoading: isLoadingData,
-    favoritesError: error,
-  } = useSelector((state) => state.user);
+    items: products,
+    loading: isLoadingData,
+    count,
+    error: error,
+  } = useSelector((state) => state.favorites);
   const { token } = useSelector((state) => state.auth);
   const lng = "fa";
 
@@ -61,7 +62,7 @@ const FavoritesDrawer = () => {
   }, [drawerState, dispatch, token]);
 
   const handleRemoveItem = (productId) => {
-    dispatch(removeFavoriteRequest(productId));
+    dispatch(removeFromFavoritesRequest(productId));
   };
 
   const toggleDrawer = () => {
@@ -161,7 +162,10 @@ const FavoritesDrawer = () => {
             exit="closed"
           >
             <header className={classes.header}>
-              <h2 className={classes.title}>{t("profile.favorites")}</h2>
+              <h2 className={classes.title}>
+                {t("profile.favorites")}
+                <span>({count}مورد)</span>
+              </h2>
               <motion.button
                 className={classes.closeButton}
                 onClick={toggleDrawer}

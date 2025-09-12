@@ -39,6 +39,7 @@ const CartDrawer = () => {
   const {
     products,
     summary,
+    count,
     loading: isLoadingData,
     euro,
   } = useSelector((state) => state.cart);
@@ -173,7 +174,10 @@ const CartDrawer = () => {
             exit="closed"
           >
             <header className={classes.header}>
-              <h2 className={classes.title}>{t("shopping_cart.cart")}</h2>
+              <h2 className={classes.title}>
+                {t("shopping_cart.cart")}
+                <span>({count}مورد)</span>
+              </h2>
               <motion.button
                 className={classes.closeButton}
                 onClick={toggleDrawer}

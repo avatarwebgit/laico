@@ -1,0 +1,170 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.modalContent {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background-color: #fff;
+  color: var(--text-primary);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--title-font);
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+}
+
+.modalBody {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.stateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: var(--text-secondary);
+}
+
+.gatewaysList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gatewayItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.gatewayItem:hover {
+  background-color: #f7faff;
+  border-color: #a5b4fc;
+}
+
+.gatewayItem.selected {
+  border-color: var(--main-color-2);
+  background-color: #f7faff;
+  box-shadow: 0 0 0 2px var(--main-color-2);
+}
+
+.gatewayIcon {
+  height: 36px;
+  width: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.gatewayInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.gatewayName {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--normal-font);
+}
+
+.gatewayDescription {
+  font-size: var(--caption-font);
+  color: var(--text-secondary);
+}
+
+.checkIcon {
+  margin-right: auto;
+  color: var(--main-color-2);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background-color: #f8f9fa;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: var(--normal-font);
+}
+
+.cancelButton {
+  background-color: #e2e8f0;
+  color: var(--text-secondary);
+}
+
+.cancelButton:hover {
+  background-color: #cbd5e1;
+}
+
+.confirmButton {
+  background-color: var(--main-color-2);
+  color: var(--text-white);
+}
+
+.confirmButton:hover {
+  filter: brightness(1.15);
+}
+
+.confirmButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  filter: none;
+}
