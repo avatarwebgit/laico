@@ -47,8 +47,6 @@ const ProductBox = ({ product = mockProduct }) => {
   const { items: compareItems } = useSelector((state) => state.compare);
   const isInCompare = compareItems.some((item) => item.id === product.id);
 
-  const hasInstallment = import.meta.env.VITE_APP_HAS_INSTALLMENT === "true";
-
   const {
     id,
     variationId,
@@ -61,8 +59,8 @@ const ProductBox = ({ product = mockProduct }) => {
     isOutOfStock,
   } = product;
 
-  const finalPrice = final_price;
-  const originalPrice = original_price;
+  const finalPrice = parseFloat(final_price);
+  const originalPrice = parseFloat(original_price);
 
   const isLiked = favorites.some((fav) => fav.id === id);
 
@@ -77,17 +75,10 @@ const ProductBox = ({ product = mockProduct }) => {
   };
 
   const handleAddToCart = () => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    if (hasInstallment) {
-      setPurchaseModalVisible(true);
-    } else {
-      dispatch(
-        cartActions.addToCartRequest({ product_id: product.id, quantity: 1 })
-      );
-    }
+    dispatch(
+      cartActions.addToCartRequest({ product_id: product.id, quantity: 1 })
+    );
+    // setPurchaseModalVisible(true);
   };
 
   const handlePurchaseMethodSelect = (method) => {
@@ -97,6 +88,10 @@ const ProductBox = ({ product = mockProduct }) => {
         cartActions.addToCartRequest({ product_id: product.id, quantity: 1 })
       );
     } else if (method === "installment") {
+      if (!token) {
+        navigate("/login");
+        return;
+      }
       setGatewayModalVisible(true);
     }
   };
@@ -244,26 +239,23 @@ const ProductBox = ({ product = mockProduct }) => {
             <div className={classes.outOfStockText}>ناموجود</div>
           ) : (
             <div className={classes.priceSection}>
-              <p className={classes["previous-finalPrice"]}>
-                {discount > 0 && originalPrice && (
-                  <del className={classes.originalPrice}>
-                    {originalPrice.toLocaleString("fa-IR")} <span>تومان</span>
-                  </del>
-                )}
-              </p>
-              <p className={classes.finalPrice}>
-                {finalPrice && finalPrice.toLocaleString("fa-IR")}
-                <span>تومان</span>
-              </p>
+              {discount > 0 && originalPrice && (
+                <div className={classes.profitBadge}>
+                  سود شما:{" "}
+                  {(originalPrice - finalPrice).toLocaleString("fa-IR")} تومان
+                </div>
+              )}
               <div className={classes.priceWrapper}>
                 <div className={classes.pricing}>
                   {discount > 0 && originalPrice && (
-                    <div className={classes.profitBadge}>
-                      سود شما:{" "}
-                      {(originalPrice - finalPrice).toLocaleString("fa-IR")}{" "}
-                      تومان
-                    </div>
+                    <del className={classes.originalPrice}>
+                      {originalPrice.toLocaleString("fa-IR")}
+                    </del>
                   )}
+                  <p className={classes.finalPrice}>
+                    {finalPrice ? finalPrice.toLocaleString("fa-IR") : "۰"}
+                    <span>تومان</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -288,22 +280,19 @@ const ProductBox = ({ product = mockProduct }) => {
           </motion.div>
         )}
       </div>
-      {hasInstallment && (
-        <>
-          <PurchaseMethodModal
-            open={purchaseModalVisible}
-            onCancel={() => setPurchaseModalVisible(false)}
-            onSelect={handlePurchaseMethodSelect}
-          />
 
-          <InstallmentGatewayModal
-            open={gatewayModalVisible}
-            onCancel={() => setGatewayModalVisible(false)}
-            onSelect={handleGatewaySelect}
-            product={product}
-          />
-        </>
-      )}
+      <PurchaseMethodModal
+        open={purchaseModalVisible}
+        onCancel={() => setPurchaseModalVisible(false)}
+        onSelect={handlePurchaseMethodSelect}
+      />
+
+      <InstallmentGatewayModal
+        open={gatewayModalVisible}
+        onCancel={() => setGatewayModalVisible(false)}
+        onSelect={handleGatewaySelect}
+        product={product}
+      />
     </>
   );
 };

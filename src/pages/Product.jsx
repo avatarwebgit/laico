@@ -190,10 +190,6 @@ const Product = () => {
   };
 
   const handleAddToCart = () => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
     if (hasInstallment) {
       setPurchaseModalVisible(true);
     } else {

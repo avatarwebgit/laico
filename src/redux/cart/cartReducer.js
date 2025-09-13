@@ -28,14 +28,12 @@ const cartReducer = (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_CART_SUCCESS:
-    case actionTypes.UPDATE_CART_ITEM_SUCCESS:
-    case actionTypes.REMOVE_FROM_CART_SUCCESS:
       return {
         ...state,
         products: action.payload.items || [],
         summary: action.payload.summary || null,
         totalPrice: action.payload.summary?.subtotal || 0,
-        count :action.payload.items.length,
+        count: (action.payload.items || []).length,
         loading: false,
       };
 
@@ -55,7 +53,6 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        count: action.payload.items.length,
         error: action.payload,
       };
 

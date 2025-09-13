@@ -172,10 +172,9 @@
 
 .priceSection {
   margin-top: auto;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .priceWrapper {
@@ -190,11 +189,13 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
+  margin-right: auto;
 }
 
 .originalPrice {
   font-size: 13px;
   color: #999;
+  text-decoration: line-through;
 }
 
 .previous-price {
@@ -233,6 +234,7 @@
   border-radius: 12px;
   font-size: 11px;
   font-weight: 500;
+  align-self: flex-start;
 }
 
 /* Rating styles */
@@ -340,12 +342,6 @@
 
   .priceSection {
     margin-bottom: 2rem;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
-
-  .previous-price {
-    grid-area: 1/1/1/2;
   }
 
   .shopButtonContainer {

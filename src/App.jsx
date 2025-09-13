@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import { useIsVertical } from "./hooks/useIsVertical";
@@ -53,13 +53,18 @@ function App() {
   const shouldHideElement = (hiddenPath) =>
     !(!isVertical && hiddenPath.includes(currentPath));
 
-  if (isAuthenticated) {
-    dispatch(fetchCartRequest());
-    dispatch(fetchFavoritesRequest());
-    if (hasInstallment) {
-      dispatch(fetchInstallmentCartRequest());
+  useEffect(() => {
+    const cartToken = localStorage.getItem("cartToken");
+    if (isAuthenticated || cartToken) {
+      dispatch(fetchCartRequest());
     }
-  }
+    if (isAuthenticated) {
+      dispatch(fetchFavoritesRequest());
+      if (hasInstallment) {
+        dispatch(fetchInstallmentCartRequest());
+      }
+    }
+  }, [isAuthenticated, dispatch, hasInstallment]);
 
   return (
     <Suspense fallback={<Loader />}>

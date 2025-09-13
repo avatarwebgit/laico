@@ -10,8 +10,9 @@ import { clearInstallmentCart } from "../installmentCart/installmentCartActions"
 function* loginSaga(action) {
   try {
     const response = yield call(api.login, action.payload);
-    yield put(actions.loginSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    yield put(actions.loginSuccess(response.data));
+    console.log(response)
+    localStorage.setItem("authToken", JSON.stringify(response.data.token));
     localStorage.removeItem("cartToken");
     notify("ورود با موفقیت انجام شد", "success");
   } catch (error) {
@@ -23,8 +24,8 @@ function* loginSaga(action) {
 function* registerSaga(action) {
   try {
     const response = yield call(api.register, action.payload);
-    yield put(actions.registerSuccess(response));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    yield put(actions.registerSuccess(response.data));
+    localStorage.setItem("authToken", JSON.stringify(response.datatoken));
     localStorage.removeItem("cartToken");
     notify("ثبت نام با موفقیت انجام شد", "success");
   } catch (error) {
@@ -65,7 +66,7 @@ function* verifyOtpSaga(action) {
   try {
     const { cellphone, otp } = action.payload;
     const response = yield call(api.verifyOtp, cellphone, otp);
-    yield put(actions.loginSuccess(response.data));
+    yield put(actions.loginSuccess(response));
 
     localStorage.setItem("authToken", JSON.stringify(response.data.token));
     localStorage.removeItem("cartToken");

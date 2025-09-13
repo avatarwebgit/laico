@@ -35,7 +35,7 @@ const CartDrawer = () => {
   const { t } = useTranslation();
 
   const drawerState = useSelector((state) => state.drawer.cartDrawer);
-  const token = useSelector((state) => state.auth.token);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const {
     products,
     summary,
@@ -59,10 +59,10 @@ const CartDrawer = () => {
 
   useEffect(() => {
     const cartToken = localStorage.getItem("cartToken");
-    if (drawerState && (token || cartToken)) {
+    if (drawerState && (isAuthenticated || cartToken)) {
       dispatch(cartActions.fetchCartRequest());
     }
-  }, [drawerState, dispatch, token]);
+  }, [drawerState, dispatch, isAuthenticated]);
 
   const handleQuantityUpdate = (itemId, newQuantity) => {
     dispatch(
@@ -205,7 +205,7 @@ const CartDrawer = () => {
                     <span>{formatNumber(grandTotal * euro)}</span>
                   </div>
                 </div>
-                {token ? (
+                {isAuthenticated ? (
                   <Link
                     to="/checkout"
                     className={classes.checkoutButton}

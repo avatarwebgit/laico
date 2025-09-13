@@ -46,8 +46,8 @@ const Otp = () => {
     }
     if (isAuthenticated) {
       const redirectUrl = localStorage.getItem("redirectAfterLogin");
-      localStorage.removeItem("redirectAfterLogin");
-      navigate(redirectUrl || from || "/");
+      // localStorage.removeItem("redirectAfterLogin");
+      // navigate(redirectUrl || from || "/");
     }
   }, [isAuthenticated, navigate, from, cellphone]);
 

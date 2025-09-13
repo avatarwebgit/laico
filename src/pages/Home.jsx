@@ -37,13 +37,13 @@ const Home = () => {
     useSelector((state) => state.products);
 
   const latestProductsItems = latestProducts.map((p) => (
-    <ProductBox key={p.id} product={p}  />
+    <ProductBox key={p.id} product={p} />
   ));
   const popularProductsItems = popularProducts.map((p) => (
-    <ProductBox key={p.id} product={p}  />
+    <ProductBox key={p.id} product={p} />
   ));
   const specialOffersItems = specialOffersProducts.map((p) => (
-    <ProductBox key={p.id} product={p}  />
+    <ProductBox key={p.id} product={p} />
   ));
 
   useEffect(() => {
@@ -62,10 +62,10 @@ const Home = () => {
       variationId: "378",
       name: product.name,
       imageUrl: img,
-      hasDiscount: product.has_discount || false,
-      finalPrice: +product.final_price || 0,
-      originalPrice: +product.original_price || 0,
-      discountPercent: product.discount_percent || 0,
+      has_discount: product.has_discount || false,
+      final_price: +product.final_price || 0,
+      original_price: +product.original_price || 0,
+      discount_percent: product.discount_percent || 0,
       isLiked: false,
       rating: 4.5,
       totalViews: 1800,
