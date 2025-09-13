@@ -11,7 +11,7 @@ function* loginSaga(action) {
   try {
     const response = yield call(api.login, action.payload);
     yield put(actions.loginSuccess(response.data));
-    console.log(response)
+    console.log(response);
     localStorage.setItem("authToken", JSON.stringify(response.data.token));
     localStorage.removeItem("cartToken");
     notify("ورود با موفقیت انجام شد", "success");
@@ -36,7 +36,7 @@ function* registerSaga(action) {
 
 function* logoutSaga() {
   try {
-    // yield call(api.logout);
+    yield call(api.logout);
     yield put(actions.logoutSuccess());
     localStorage.removeItem("authToken");
     localStorage.removeItem("cartToken");
@@ -66,7 +66,7 @@ function* verifyOtpSaga(action) {
   try {
     const { cellphone, otp } = action.payload;
     const response = yield call(api.verifyOtp, cellphone, otp);
-    yield put(actions.loginSuccess(response));
+    yield put(actions.loginSuccess(response.data));
 
     localStorage.setItem("authToken", JSON.stringify(response.data.token));
     localStorage.removeItem("cartToken");

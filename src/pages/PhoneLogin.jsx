@@ -71,6 +71,20 @@ const PhoneLogin = () => {
     return () => setBackgroundImage(null);
   }, [setBackgroundImage]);
 
+  const handlePhoneInputChange = (e) => {
+    let { value } = e.target;
+
+    // Remove leading '+' or '0'
+    if (value.startsWith("+") || value.startsWith("0")) {
+      value = value.substring(1);
+    }
+
+    // Only allow numbers
+    const numericValue = value.replace(/[^0-9]/g, "");
+
+    formik.setFieldValue("cellphone", numericValue);
+  };
+
   return (
     <div className={styles.container}>
       <motion.div
@@ -116,7 +130,9 @@ const PhoneLogin = () => {
                 placeholder="۹۱۲۳۴۵۶۷۸۹"
                 className={styles.phoneInput}
                 ref={mobileInputRef}
-                {...formik.getFieldProps("cellphone")}
+                value={formik.values.cellphone}
+                onChange={handlePhoneInputChange}
+                onBlur={formik.handleBlur}
               />
             </motion.div>
 

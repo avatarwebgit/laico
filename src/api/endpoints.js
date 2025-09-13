@@ -4,7 +4,7 @@ export default {
   AUTH: {
     LOGIN: () => `${API_BASE}/verify-password`,
     REGISTER: () => `${API_BASE}/auth/register`,
-    LOGOUT: () => `${API_BASE}/auth/logout`,
+    LOGOUT: () => `${API_BASE}/logout`,
     ME: () => `${API_BASE}/auth/me`,
     REFRESH: () => `${API_BASE}/auth/refresh`,
     SEND_OTP: () => `${API_BASE}/otp`,

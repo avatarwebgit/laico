@@ -21,31 +21,6 @@ const ShoppingCart = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const handleGetShoppingCart = async () => {
-      try {
-        const serverRes = await getShoppingCart(token, controller.signal);
-        if (serverRes.response.ok) {
-          dispatch(cartActions.set(serverRes.result.cart));
-        }
-      } catch (error) {
-        if (error.name === "AbortError") {
-          console.log("Shopping cart request was aborted");
-        } else {
-          console.error("Failed to fetch cart:", error);
-        }
-      }
-    };
-
-    handleGetShoppingCart();
-
-    return () => {
-      controller.abort();
-    };
-  }, [token]);
-
   return (
     <table className={classes.table}>
       <thead>
