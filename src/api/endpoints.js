@@ -62,5 +62,6 @@ export default {
     INSTALLMENT_GATEWAYS: () => `${API_BASE}/general/installment-gateways`,
     MENUS: () => `${API_BASE}/menus`,
     COUNTRIES: () => `${API_BASE}/get/countries`,
+    GET_SETTINGS: () => `${API_BASE}/admin/settings`,
   },
 };

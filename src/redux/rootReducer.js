@@ -13,6 +13,7 @@ import blogReducer from "./blogs/blogReducer";
 import modalReducer from "./modal/modalReducer";
 import compareReducer from "./compare/compareReducer";
 import generalReducer from "./general/generalReducer";
+import initialStateReducer from "./initialState/initialStateReducer";
 
 const appReducer = combineReducers({
   cart: cartReducer,
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   modal: modalReducer,
   compare: compareReducer,
   general: generalReducer,
+  initialState: initialStateReducer,
 });
 
 const rootReducer = (state, action) => {

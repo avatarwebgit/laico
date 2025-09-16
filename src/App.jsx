@@ -26,6 +26,7 @@ import PersistSync from "./utils/PersistSync";
 import TitleManager from "./utils/TitleManager";
 import InstallmentCartDrawer from "./components/layout/InstallmentCartDrawer";
 import { fetchInstallmentCartRequest } from "./redux/installmentCart/installmentCartActions";
+import { fetchInitialStateRequest } from "./redux/initialState/initialStateActions";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const isVertical = useIsVertical();
@@ -65,6 +66,11 @@ function App() {
       }
     }
   }, [isAuthenticated, dispatch, hasInstallment]);
+
+  
+  useEffect(() => {
+    dispatch(fetchInitialStateRequest());
+  }, [dispatch]);
 
   return (
     <Suspense fallback={<Loader />}>

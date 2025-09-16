@@ -47,14 +47,10 @@ const Home = () => {
   ));
 
   useEffect(() => {
-    if (
-      popularProducts.length === 0 &&
-      latestProducts.length === 0 &&
-      specialOffersProducts.length === 0
-    ) {
+    if (dispatch) {
       dispatch(fetchHomeProductsRequest());
     }
-  }, [popularProducts, latestProducts, specialOffersProducts]);
+  }, [dispatch]);
 
   const formatData = (product) => {
     return {

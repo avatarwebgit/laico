@@ -102,8 +102,13 @@ const Product = () => {
       ? [productDetails.imageUrl]
       : [];
 
-  const originalPrice = parseFloat(productDetails?.original_price);
-  const salePrice = parseFloat(productDetails?.final_price);
+  const originalPrice = productDetails?.original_price;
+
+  const salePrice =
+    productDetails?.final_price > 0
+      ? productDetails?.final_price
+      : productDetails.original_price;
+
   const discountAmount =
     originalPrice > salePrice ? originalPrice - salePrice : 0;
 
@@ -401,14 +406,15 @@ const Product = () => {
               >
                 {t("price")}:
               </Typography>
-              {discountAmount > 0 && (
+              {discountAmount > 0 ? (
                 <span className={classes.prev_price}>
                   <del>{formatNumber(originalPrice, "toman")}</del>
                 </span>
+              ) : (
+                <p className={classes.current_price}>
+                  {formatNumber(originalPrice, "toman")}
+                </p>
               )}
-              <p className={classes.current_price}>
-                {formatNumber(salePrice, "toman")}
-              </p>
             </div>
 
             <div className={classes.quantity_wrapper}>

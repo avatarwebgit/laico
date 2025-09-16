@@ -1,15 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Twitter,
   Instagram,
-  Github,
-  Send,
+  Send as Telegram,
+  MessageSquare as WhatsApp,
   CreditCard,
   ShieldCheck,
+  Mail,
+  MapPin,
+  Phone,
 } from "lucide-react";
 import styles from "./Footer.module.css";
 import logo from "../../../assets/images/Logo.png";
+import { useSelector } from "react-redux";
 
 const footerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -45,12 +48,61 @@ const supportLinks = [
   { name: "حریم خصوصی", href: "#" },
 ];
 
+const socialIconMap = {
+  instagram: <Instagram />,
+  telegram: <Telegram />,
+  whatsapp: <WhatsApp />,
+};
+
 export const Footer = () => {
+  const { settings } = useSelector((state) => state.initialState);
   const currentYear = new Date().getFullYear();
   const categories = megaMenuChildren.map((item) => ({
     name: item.category,
     href: "/category",
   }));
+
+  const dayMap = {
+    saturday: "شنبه",
+    sunday: "یکشنبه",
+    monday: "دوشنبه",
+    tuesday: "سه‌شنبه",
+    wednesday: "چهارشنبه",
+    thursday: "پنج‌شنبه",
+    friday: "جمعه",
+  };
+
+  console.log(settings);
+
+  const renderWorkingHours = () => {
+    if (!settings || !settings.working_hours) {
+      return <li>اطلاعاتی موجود نیست</li>;
+    }
+    const workingHours = settings.working_hours;
+    const activeDays = Object.entries(workingHours)
+      .filter(([, value]) => value.active)
+      .map(([day, value]) => ({
+        day: dayMap[value.day.toLowerCase()],
+        from: value.from,
+        till: value.till,
+      }));
+
+    if (activeDays.length === 0) {
+      return <li>تمام روزها تعطیل است</li>;
+    }
+
+    return activeDays.map((d) => {
+      if (d.till.trim() === "" || d.from.trim() === "") return;
+      return (
+        <li key={d.day}>
+          <span>{d.day}&nbsp;:</span>
+          <span>
+            {d.till} - {d.from}
+          </span>
+        </li>
+      );
+    });
+  };
 
   return (
     <motion.footer
@@ -76,7 +128,7 @@ export const Footer = () => {
                 required
               />
               <button type="submit" aria-label="Subscribe to newsletter">
-                <Send size={20} />
+                <Telegram size={20} />
               </button>
             </form>
           </motion.div>
@@ -105,7 +157,45 @@ export const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Column 4: Brand */}
+          {/* Column 4: Contact Info */}
+          <motion.div className={styles.column} variants={itemVariants}>
+            <h3 className={styles.columnTitle}>اطلاعات تماس</h3>
+            <ul className={`${styles.linkList} ${styles.contactList}`}>
+              {settings.main_address && (
+                <li>
+                  <MapPin size={16} />
+                  <span>{settings.main_address}</span>
+                </li>
+              )}
+              {settings.primary_phone && (
+                <li>
+                  <Phone size={16} />
+                  <span>{settings.primary_phone}</span>
+                </li>
+              )}
+              {settings.primary_email && (
+                <li>
+                  <Mail size={16} />
+                  <span>{settings.primary_email}</span>
+                </li>
+              )}
+            </ul>
+          </motion.div>
+
+          {/* Column 5: Working Hours */}
+
+          <motion.div className={styles.column} variants={itemVariants}>
+            {settings && settings.working_hours && (
+              <>
+                <h3 className={styles.columnTitle}>ساعت کاری</h3>
+                <ul className={`${styles.linkList} ${styles.workingHoursList}`}>
+                  {renderWorkingHours()}
+                </ul>
+              </>
+            )}
+          </motion.div>
+
+          {/* Column 6: Brand */}
           <motion.div
             className={`${styles.column} ${styles.brandColumn}`}
             variants={itemVariants}
@@ -122,30 +212,20 @@ export const Footer = () => {
               ارائه می‌دهد.
             </p>
             <div className={styles.socialIcons}>
-              <motion.a
-                href="#"
-                aria-label="Twitter"
-                whileHover={{ y: -3, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Twitter />
-              </motion.a>
-              <motion.a
-                href="#"
-                aria-label="Instagram"
-                whileHover={{ y: -3, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Instagram />
-              </motion.a>
-              <motion.a
-                href="#"
-                aria-label="GitHub"
-                whileHover={{ y: -3, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Github />
-              </motion.a>
+              {settings.social_links &&
+                Object.entries(settings.social_links).map(([key, value]) =>
+                  value.url && socialIconMap[key] ? (
+                    <motion.a
+                      key={key}
+                      href={value.url}
+                      aria-label={key}
+                      whileHover={{ y: -3, scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      {socialIconMap[key]}
+                    </motion.a>
+                  ) : null
+                )}
             </div>
           </motion.div>
         </div>
@@ -167,7 +247,8 @@ export const Footer = () => {
             </div>
           </div>
           <div className={styles.copyright}>
-            &copy; {currentYear} Laico تمام حقوق محفوظ است.
+            {settings.copy_right ||
+              `© ${currentYear} Laico تمام حقوق محفوظ است.`}
           </div>
         </motion.div>
       </div>

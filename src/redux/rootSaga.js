@@ -11,6 +11,7 @@ import { blogSaga } from "./blogs/blogSaga";
 import { modalSaga } from "./modal/modalSaga";
 import { compareSaga } from "./compare/compareSaga";
 import { generalSaga } from "./general/generalSaga";
+import { initialStateSaga } from "./initialState/initialStateSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -26,5 +27,6 @@ export default function* rootSaga() {
     modalSaga(),
     compareSaga(),
     generalSaga(),
+    initialStateSaga(),
   ]);
 }

@@ -22,7 +22,10 @@ api.interceptors.request.use(
       }
     } else {
       const cartToken = localStorage.getItem("cartToken");
-      if (cartToken && config.url.includes("/cart")) {
+      if (
+        (cartToken && config.url.includes("/cart")) ||
+        config.url.includes("/verify-otp")
+      ) {
         config.headers["cart_token"] = cartToken;
       }
     }
