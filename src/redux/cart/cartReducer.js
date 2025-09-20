@@ -15,12 +15,12 @@ const initialState = {
 };
 
 const cartReducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case actionTypes.FETCH_CART_REQUEST:
     case actionTypes.ADD_TO_CART_REQUEST:
     case actionTypes.REMOVE_FROM_CART_REQUEST:
     case actionTypes.UPDATE_CART_ITEM_REQUEST:
+    case actionTypes.FETCH_CART_CHECKOUT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -28,6 +28,9 @@ const cartReducer = (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_CART_SUCCESS:
+    case actionTypes.UPDATE_CART_ITEM_SUCCESS:
+    case actionTypes.REMOVE_FROM_CART_SUCCESS:
+    case actionTypes.FETCH_CART_CHECKOUT_SUCCESS:
       return {
         ...state,
         products: action.payload.items || [],
@@ -50,6 +53,7 @@ const cartReducer = (state = initialState, action) => {
     case actionTypes.ADD_TO_CART_FAILURE:
     case actionTypes.REMOVE_FROM_CART_FAILURE:
     case actionTypes.UPDATE_CART_ITEM_FAILURE:
+    case actionTypes.FETCH_CART_CHECKOUT_FAILURE:
       return {
         ...state,
         loading: false,

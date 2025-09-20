@@ -74,12 +74,10 @@ const PhoneLogin = () => {
   const handlePhoneInputChange = (e) => {
     let { value } = e.target;
 
-    // Remove leading '+' or '0'
     if (value.startsWith("+") || value.startsWith("0")) {
       value = value.substring(1);
     }
 
-    // Only allow numbers
     const numericValue = value.replace(/[^0-9]/g, "");
 
     formik.setFieldValue("cellphone", numericValue);

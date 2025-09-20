@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Instagram,
@@ -48,14 +48,12 @@ const supportLinks = [
   { name: "حریم خصوصی", href: "#" },
 ];
 
-const socialIconMap = {
-  instagram: <Instagram />,
-  telegram: <Telegram />,
-  whatsapp: <WhatsApp />,
-};
+let socialLinks = {};
 
 export const Footer = () => {
   const { settings } = useSelector((state) => state.initialState);
+  const [socialLinks, setSocialLinks] = useState({});
+  console.log(settings);
   const currentYear = new Date().getFullYear();
   const categories = megaMenuChildren.map((item) => ({
     name: item.category,
@@ -72,7 +70,11 @@ export const Footer = () => {
     friday: "جمعه",
   };
 
-  console.log(settings);
+  useEffect(() => {
+    if (settings) {
+      setSocialLinks(settings.social_links);
+    }
+  }, [settings]);
 
   const renderWorkingHours = () => {
     if (!settings || !settings.working_hours) {
@@ -211,10 +213,11 @@ export const Footer = () => {
               فروشگاه ما بهترین محصولات را با بالاترین کیفیت و قیمت مناسب به شما
               ارائه می‌دهد.
             </p>
+            {console.log(socialLinks)}
             <div className={styles.socialIcons}>
               {settings.social_links &&
                 Object.entries(settings.social_links).map(([key, value]) =>
-                  value.url && socialIconMap[key] ? (
+                  value.url && value.icon ? (
                     <motion.a
                       key={key}
                       href={value.url}
@@ -222,7 +225,7 @@ export const Footer = () => {
                       whileHover={{ y: -3, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      {socialIconMap[key]}
+                      <i className={`${value.icon}`} />
                     </motion.a>
                   ) : null
                 )}

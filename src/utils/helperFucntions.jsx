@@ -24,7 +24,7 @@ export function formatNumber(amount, currency = "toman") {
   const tomanFormatter = new Intl.NumberFormat("fa-IR");
   const rialFormatter = new Intl.NumberFormat("fa-IR");
 
-  const value = currency === "toman" ? amount / 10 : amount;
+  const value = currency === "toman" ? amount  : amount;
   const formatted =
     currency === "toman"
       ? tomanFormatter.format(value)

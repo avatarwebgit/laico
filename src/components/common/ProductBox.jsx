@@ -43,8 +43,10 @@ const ProductBox = ({ product = mockProduct }) => {
   const navigate = useNavigate();
 
   const { items: favorites } = useSelector((state) => state.favorites);
-  const { token } = useSelector((state) => state.auth);
   const { items: compareItems } = useSelector((state) => state.compare);
+
+  
+  const { token } = useSelector((state) => state.auth);
   const isInCompare = compareItems.some((item) => item.id === product.id);
 
   const {

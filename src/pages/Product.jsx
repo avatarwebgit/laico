@@ -102,12 +102,14 @@ const Product = () => {
       ? [productDetails.imageUrl]
       : [];
 
-  const originalPrice = productDetails?.original_price;
+  console.log(productDetails);
+
+  const originalPrice = productDetails?.original_price || 0;
 
   const salePrice =
-    productDetails?.final_price > 0
-      ? productDetails?.final_price
-      : productDetails.original_price;
+    // productDetails?.final_price > 0
+       productDetails?.final_price
+      // : productDetails.original_price;
 
   const discountAmount =
     originalPrice > salePrice ? originalPrice - salePrice : 0;

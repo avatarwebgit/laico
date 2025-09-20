@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
-  console.log(state, action);
   switch (action.type) {
     case actionTypes.SEND_OTP_REQUEST:
     case actionTypes.VERIFY_OTP_REQUEST:

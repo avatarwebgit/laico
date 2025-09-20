@@ -3,6 +3,7 @@ import endpoints from "./endpoints";
 
 export default {
   getCart: () => api.get(endpoints.CART.BASE()),
+  getCartCheckoutDetails: () => api.get(endpoints.CART.CHECKOUT_DETAILS()),
   addToCart: (data) => api.post(endpoints.CART.BASE(), data),
   removeFromCart: (cartId) => api.delete(endpoints.CART.ITEM(cartId)),
   updateCartItem: (cartId, data) =>

@@ -4,7 +4,7 @@ export default {
   AUTH: {
     LOGIN: () => `${API_BASE}/verify-password`,
     REGISTER: () => `${API_BASE}/auth/register`,
-    LOGOUT: () => `${API_BASE}/logout`,
+    LOGOUT: () => `${API_BASE}/auth/logout`,
     ME: () => `${API_BASE}/auth/me`,
     REFRESH: () => `${API_BASE}/auth/refresh`,
     SEND_OTP: () => `${API_BASE}/otp`,
@@ -22,6 +22,7 @@ export default {
     BASE: () => `${API_BASE}/cart`,
     ITEM: (cartId) => `${API_BASE}/cart/${cartId}`,
     APPLY_COUPON: () => `${API_BASE}/cart/coupon`,
+    CHECKOUT_DETAILS: () => `${API_BASE}/cart-checkout`,
   },
 
   INSTALLMENT_CART: {

@@ -11,9 +11,10 @@ import {
 } from "lucide-react";
 import styles from "./Contact.module.css";
 import { useSelector } from "react-redux";
+import { Skeleton } from "@mui/material";
 
 const Contact = () => {
-  const { settings } = useSelector((state) => state.initialState);
+  const { settings, loading } = useSelector((state) => state.initialState);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -165,26 +166,60 @@ const Contact = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3 className={styles.infoTitle}>راه های ارتباطی</h3>
-            <ul>
-              {settings.primary_email && (
-                <li>
-                  <Mail size={20} />
-                  <span>{settings.primary_email}</span>
-                </li>
-              )}
-              {settings.primary_phone && (
-                <li>
-                  <Phone size={20} />
-                  <span>{settings.primary_phone}</span>
-                </li>
-              )}
-              {settings.main_address && (
-                <li>
-                  <MapPin size={20} />
-                  <span>{settings.main_address}</span>
-                </li>
-              )}
-            </ul>
+            {loading ? (
+              <ul>
+                {[...Array(6)].map((_, i) => {
+                  return (
+                    <Skeleton
+                      key={i}
+                      variant="text"
+                      height={40}
+                      width={200}
+                      sx={{ margin: "0", padding: "0" }}
+                    />
+                  );
+                })}
+              </ul>
+            ) : (
+              <ul>
+                {settings.primary_email && (
+                  <li>
+                    <Mail size={20} />
+                    <span>{settings.primary_email}</span>
+                  </li>
+                )}
+                {settings.secondary_email && (
+                  <li>
+                    <Mail size={20} />
+                    <span>{settings.secondary_email}</span>
+                  </li>
+                )}
+                {settings.primary_phone && (
+                  <li>
+                    <Phone size={20} />
+                    <span>{settings.primary_phone}</span>
+                  </li>
+                )}
+                {settings.secondary_phone && (
+                  <li>
+                    <Phone size={20} />
+                    <span>{settings.secondary_phone}</span>
+                  </li>
+                )}
+                {settings.main_address && (
+                  <li>
+                    <MapPin size={20} />
+                    <span>{settings.main_address}</span>
+                  </li>
+                )}
+                {settings.secondary_address && (
+                  <li>
+                    <MapPin size={20} />
+                    <span>{settings.secondary_address}</span>
+                  </li>
+                )}
+              </ul>
+            )}
           </motion.div>
         </div>
 

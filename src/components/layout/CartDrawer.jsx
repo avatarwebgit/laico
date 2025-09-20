@@ -196,13 +196,13 @@ const CartDrawer = () => {
                 <div className={classes.summary}>
                   <div className={classes.summaryRow}>
                     <span>{t("drawer.subtotal")}</span>
-                    <span>{formatNumber((summary?.subtotal || 0) * euro)}</span>
+                    <span>{formatNumber((summary?.subtotal || 0))}</span>
                   </div>
                   <div
                     className={`${classes.summaryRow} ${classes.grandTotal}`}
                   >
                     <span>{t("shopping_cart.total", "Total")}</span>
-                    <span>{formatNumber(grandTotal * euro)}</span>
+                    <span>{formatNumber(grandTotal)}</span>
                   </div>
                 </div>
                 {isAuthenticated ? (

@@ -10,6 +10,7 @@ import "./index.css";
 import { persistor, store } from "./redux/store";
 import i18next from "./utils/i18next.jsx";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

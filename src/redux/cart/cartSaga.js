@@ -16,6 +16,19 @@ function* fetchCartSaga() {
   }
 }
 
+function* fetchCartCheckoutSaga() {
+  try {
+    const response = yield call(api.getCartCheckoutDetails);
+    yield put(
+      actions.fetchCartCheckoutSuccess(
+        response.data || { items: [], summary: null }
+      )
+    );
+  } catch (error) {
+    yield put(actions.fetchCartCheckoutFailure(error.message));
+  }
+}
+
 function* addToCartSaga(action) {
   try {
     const { product_id, quantity, variation_id } = action.payload;
@@ -26,9 +39,15 @@ function* addToCartSaga(action) {
 
     const isAuthenticated = yield select((state) => state.auth.isAuthenticated);
 
-    notify("در حال افزودن به سبد خرید...", "info");
+    const promise = api.addToCart(cartData);
 
-    const response = yield call(api.addToCart, cartData);
+    const response = yield call(() =>
+      notify.promise(promise, {
+        pending: "در حال افزودن به سبد خرید...",
+        success: "محصول به سبد خرید اضافه شد",
+        error: "خطا در افزودن به سبد خرید",
+      })
+    );
 
     if (!isAuthenticated && response.data && response.data.cart_token) {
       const existingCartToken = localStorage.getItem("cartToken");
@@ -37,13 +56,13 @@ function* addToCartSaga(action) {
       }
     }
 
-    yield put(actions.fetchCartRequest());
+    yield put(
+      actions.fetchCartSuccess(response.data || { items: [], summary: null })
+    );
     yield put(openCartDrawer());
-    notify("محصول به سبد خرید اضافه شد", "success");
   } catch (error) {
     const errorMessage = error.message || "خطا در افزودن به سبد خرید";
     yield put(actions.addToCartFailure(errorMessage));
-    notify(errorMessage, "error");
   }
 }
 
@@ -51,7 +70,8 @@ function* updateCartItemSaga(action) {
   try {
     const { cartId, quantity } = action.payload;
     const promise = api.updateCartItem(cartId, { quantity });
-    yield call(() =>
+
+    const response = yield call(() =>
       notify.promise(promise, {
         pending: "در حال بروزرسانی سبد خرید...",
         success: "سبد خرید با موفقیت بروزرسانی شد",
@@ -59,7 +79,11 @@ function* updateCartItemSaga(action) {
       })
     );
 
-    yield put(actions.fetchCartRequest());
+    yield put(
+      actions.updateCartItemSuccess(
+        response.data || { items: [], summary: null }
+      )
+    );
   } catch (error) {
     yield put(actions.updateCartItemFailure(error.message));
   }
@@ -68,14 +92,20 @@ function* updateCartItemSaga(action) {
 function* removeFromCartSaga(action) {
   try {
     const promise = api.removeFromCart(action.payload);
-    yield call(() =>
+
+    const response = yield call(() =>
       notify.promise(promise, {
         pending: "در حال حذف از سبد خرید...",
         success: "محصول از سبد خرید حذف شد",
         error: "خطا در حذف محصول",
       })
     );
-    yield put(actions.fetchCartRequest());
+
+    yield put(
+      actions.removeFromCartSuccess(
+        response.data || { items: [], summary: null }
+      )
+    );
   } catch (error) {
     yield put(actions.removeFromCartFailure(error.message));
   }
@@ -83,6 +113,10 @@ function* removeFromCartSaga(action) {
 
 export function* cartSaga() {
   yield takeLatest(actionTypes.FETCH_CART_REQUEST, fetchCartSaga);
+  yield takeLatest(
+    actionTypes.FETCH_CART_CHECKOUT_REQUEST,
+    fetchCartCheckoutSaga
+  );
   yield takeLatest(actionTypes.ADD_TO_CART_REQUEST, addToCartSaga);
   yield takeLatest(actionTypes.UPDATE_CART_ITEM_REQUEST, updateCartItemSaga);
   yield takeLatest(actionTypes.REMOVE_FROM_CART_REQUEST, removeFromCartSaga);

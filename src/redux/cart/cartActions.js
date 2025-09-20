@@ -86,3 +86,17 @@ export const setPaymentMethod = (methodId) => ({
   type: actionTypes.SET_PAYMENT_METHOD,
   payload: methodId,
 });
+
+export const fetchCartCheckoutRequest = () => ({
+  type: actionTypes.FETCH_CART_CHECKOUT_REQUEST,
+});
+
+export const fetchCartCheckoutSuccess = (cartData) => ({
+  type: actionTypes.FETCH_CART_CHECKOUT_SUCCESS,
+  payload: cartData,
+});
+
+export const fetchCartCheckoutFailure = (error) => ({
+  type: actionTypes.FETCH_CART_CHECKOUT_FAILURE,
+  payload: error,
+});

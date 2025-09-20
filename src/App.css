@@ -1,5 +1,6 @@
 @import url(./styles/common.css);
 @import url(./styles/variables.css);
+@import url(./styles/fontawesome-icons.css);
 
 body{
     background-color: #f8f8f8;

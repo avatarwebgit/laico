@@ -19,6 +19,7 @@ const validationSchema = Yup.object({
 });
 
 const Login = () => {
+  const BASE_CODE = "+98";
   const { setBackgroundImage } = useContext(BackgroundContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,7 +47,10 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      dispatch(authActions.loginRequest(values));
+      const mobile = BASE_CODE + values.mobile;
+      const payload = { mobile, password: values.password };
+      console.log(payload);
+      dispatch(authActions.loginRequest({ ...payload }));
     },
   });
 
